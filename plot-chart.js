@@ -1,4 +1,4 @@
-Highcharts.chart('container', {
+chartOptions = {
     chart: { type: 'spline' },
     title: { text: '' },
     subtitle: { text: '' },
@@ -16,7 +16,11 @@ Highcharts.chart('container', {
       headerFormat: '<b>{series.name}</b><br>',
       pointFormat: '{point.y} BPM at {point.x}:00'
     },
-
+    events: {
+      click: function(event) {
+        debugger;
+      }
+    },
     plotOptions: {
       spline: {
         marker: {
@@ -112,4 +116,6 @@ Highcharts.chart('container', {
           [24, 158]
         ]
     }]
-});
+}
+
+chart = new Highcharts.Chart('container', chartOptions)
