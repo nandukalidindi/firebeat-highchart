@@ -18,30 +18,27 @@ chartOptions = {
     },
     plotOptions: {
       series: {
-        point: {
-          events: {
-            // click: function(event) {
-            //   if (!this.visible)
-            //     return true;
-            //
-            //   var seriesIndex = this.series.index;
-            //   var series = this.series.chart.series;
-            //
-            //   for (var i = 0; i < series.length; i++) {
-            //     if (series[i].index != seriesIndex) {
-            //       if(series[i].visible) {
-            //         series[i].options.dashStyle = "longdash";
-            //         this.series.chart.update(this.series.options);
-            //         series[i].hide();
-            //       } else {
-            //         series[i].show();
-            //       }
-            //       // series[i].visible ? series[i].options.color = "" : series[i].show();
-            //     }
-            //   }
-            //
-            //   return false;
-            // }
+        events: {
+          click: function(event) {
+            if (!this.visible)
+              return true;
+
+            var seriesIndex = this.index;
+            var series = this.chart.series;
+
+            for (var i = 0; i < series.length; i++) {
+              if (series[i].index != seriesIndex) {
+                if(series[i].visible) {
+                  var options = this.chart.options;
+                  options.series[this.index].dashStyle = "longdash";
+                } else {
+                  series[i].show();
+                }
+                // series[i].visible ? series[i].options.color = "" : series[i].show();
+              }
+            }
+            chart = new Highcharts.Chart('container', options);
+            return false;
           }
         }
       },
@@ -63,30 +60,6 @@ chartOptions = {
                 series[i].visible ? series[i].hide() : series[i].show();
               }
             }
-
-            return false;
-          },
-          click: function(event) {
-            if (!this.visible)
-              return true;
-
-            var seriesIndex = this.index;
-            var series = this.chart.series;
-
-            for (var i = 0; i < series.length; i++) {
-              if (series[i].index != seriesIndex) {
-                if(series[i].visible) {
-                  // series[i].dashStyle = "longdash";
-                  var options = chart.options;
-                  options.series[this.index].dashStyle = "longdash";
-                  this.chart = new Highcharts.Chart(options);
-                } else {
-                  series[i].show();
-                }
-                // series[i].visible ? series[i].options.color = "" : series[i].show();
-              }
-            }
-
             return false;
           }
         }
