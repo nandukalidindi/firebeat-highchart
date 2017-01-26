@@ -3,16 +3,13 @@ Highcharts.chart('container', {
     title: { text: '' },
     subtitle: { text: '' },
     exporting: { enabled: false },
+    credits: { enabled: false },
     xAxis: {
-      title: {
-        text: 'Date'
-      },
+      title: { text: '' },
       min: 0
     },
     yAxis: {
-      title: {
-        text: 'Snow depth (m)'
-      },
+      title: { text: '' },
       min: 0
     },
     tooltip: {
