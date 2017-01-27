@@ -29,8 +29,10 @@ chartOptions = {
 
             for (var i = 0; i < series.length; i++) {
               if (series[i].index !== seriesIndex && options.series[i].dashStyle !== "solid") {
-                  options.series[i].dashStyle = "longdash";
+                  options.series[i].dashStyle = "shortdash";
+                  options.series[i].color = "#DEDEDE";
                 } else {
+                  options.series[i].color = null;
                   options.series[i].dashStyle = "solid";
               }
             }
