@@ -238,9 +238,9 @@ chartOptions = {
 
 chart = new Highcharts.Chart('container', chartOptions)
 
-function updateChart(event) {
-  var from = parseInt(document.getElementById("from").value) || 1,
-      to = parseInt(document.getElementById("to").value) || 24;
+function updateChartOnTime(event) {
+  var from = parseInt(document.getElementById("fromTime").value) || 1,
+      to = parseInt(document.getElementById("toTime").value) || 24;
 
   var options = chart.options;
 
@@ -253,4 +253,22 @@ function updateChart(event) {
   chart = new Highcharts.Chart('container', options);
 }
 
-document.getElementById("fire").addEventListener("click", updateChart);
+document.getElementById("fireTime").addEventListener("click", updateChartOnTime);
+
+function updateChartOnBPM(event) {
+  var from = parseInt(document.getElementById("fromBPM").value) || 60,
+      to = parseInt(document.getElementById("toBPM").value) || 160;
+
+  var options = chart.options;
+
+  options.series.forEach(function(series) {
+    series.data = series.data.filter(function(data) {
+      return data[1] >= from && data[1] <= to;
+    });
+  });
+
+  chart = new Highcharts.Chart('container', options);
+
+}
+
+document.getElementById("fireBPM").addEventListener("click", updateChartOnBPM);
