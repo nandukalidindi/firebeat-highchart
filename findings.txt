@@ -1,0 +1,4 @@
+Updating the color/style of a series dynamically is quite not possible according to this thread http://forum.highcharts.com/viewtopic.php?f=9&t=7075&p=33437
+The entire chart has to be re-rendered inorder for the color change to take affect.
+
+There is a redraw, method which seem to do the re-render job a little faster than expected.

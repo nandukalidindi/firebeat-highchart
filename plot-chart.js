@@ -5,12 +5,10 @@ chartOptions = {
     exporting: { enabled: false },
     credits: { enabled: false },
     xAxis: {
-      title: { text: '' },
-      min: 0
+      title: { text: '' }
     },
     yAxis: {
-      title: { text: '' },
-      min: 0
+      title: { text: '' }
     },
     tooltip: {
       headerFormat: '<b>{series.name}</b><br>',
@@ -37,7 +35,6 @@ chartOptions = {
               }
             }
             chart = new Highcharts.Chart('container', options);
-            return false;
           }
         }
       },
@@ -151,7 +148,109 @@ chartOptions = {
           [23, 148],
           [24, 158]
         ]
-    }]
+    }, {
+      name: 'Parth',
+      data: [
+        [1, 62],
+        [2, 114],
+        [3, 149],
+        [4, 156],
+        [5, 64],
+        [6, 107],
+        [7, 77],
+        [8, 105],
+        [9, 78],
+        [10, 77],
+        [11, 69],
+        [12, 145],
+        [13, 149],
+        [14, 117],
+        [15, 93],
+        [16, 106],
+        [17, 82],
+        [18, 148],
+        [19, 100],
+        [20, 122],
+        [21, 144],
+        [22, 110],
+        [23, 114],
+        [24, 97]
+      ]
+    }, {
+      name: 'Ananth',
+      data: [
+        [1, 121],
+        [2, 101],
+        [3, 81],
+        [4, 73],
+        [5, 68],
+        [6, 158],
+        [7, 115],
+        [8, 87],
+        [9, 133],
+        [10, 159],
+        [11, 159],
+        [12, 134],
+        [13, 124],
+        [14, 106],
+        [15, 119],
+        [16, 142],
+        [17, 75],
+        [18, 145],
+        [19, 156],
+        [20, 100],
+        [21, 77],
+        [22, 139],
+        [23, 137],
+        [24, 99]
+      ]
+    }, {
+      name: "Dongwuei",
+      data: [
+        [1, 148],
+        [2, 123],
+        [3, 104],
+        [4, 121],
+        [5, 110],
+        [6, 71],
+        [7, 135],
+        [8, 108],
+        [9, 131],
+        [10, 69],
+        [11, 80],
+        [12, 78],
+        [13, 71],
+        [14, 104],
+        [15, 72],
+        [16, 149],
+        [17, 63],
+        [18, 137],
+        [19, 119],
+        [20, 77],
+        [21, 122],
+        [22, 127],
+        [23, 109],
+        [24, 125]
+      ]
+    }
+  ]
 }
 
 chart = new Highcharts.Chart('container', chartOptions)
+
+function updateChart(event) {
+  var from = parseInt(document.getElementById("from").value) || 1,
+      to = parseInt(document.getElementById("to").value) || 24;
+
+  var options = chart.options;
+
+  options.series.forEach(function(series) {
+    series.data = series.data.filter(function(data) {
+      return data[0] >= from && data[0] <= to;
+    });
+  });
+
+  chart = new Highcharts.Chart('container', options);
+}
+
+document.getElementById("fire").addEventListener("click", updateChart);
