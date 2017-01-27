@@ -25,16 +25,13 @@ chartOptions = {
 
             var seriesIndex = this.index;
             var series = this.chart.series;
+            var options = this.chart.options;
 
             for (var i = 0; i < series.length; i++) {
-              if (series[i].index != seriesIndex) {
-                if(series[i].visible) {
-                  var options = this.chart.options;
-                  options.series[this.index].dashStyle = "longdash";
+              if (series[i].index !== seriesIndex && options.series[i].dashStyle !== "solid") {
+                  options.series[i].dashStyle = "longdash";
                 } else {
-                  series[i].show();
-                }
-                // series[i].visible ? series[i].options.color = "" : series[i].show();
+                  options.series[i].dashStyle = "solid";
               }
             }
             chart = new Highcharts.Chart('container', options);
