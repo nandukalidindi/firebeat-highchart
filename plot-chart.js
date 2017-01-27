@@ -272,3 +272,39 @@ function updateChartOnBPM(event) {
 }
 
 document.getElementById("fireBPM").addEventListener("click", updateChartOnBPM);
+
+function calculateAverage(data) {
+  var size = data.length,
+      sum = 0;
+  data.forEach(function(entry) {
+    sum += entry[1];
+  });
+
+  return sum/size;
+}
+
+function updateChartOnAverage(event) {
+  var average = parseInt(document.getElementById('averageBPM').value) || 150;
+
+  // var options = chart.options;
+
+  chart.series.forEach(function(series) {
+    var mappedData = series.data.map(function(data) {
+      return [data.x, data.y];
+    })
+    if(calculateAverage(mappedData) >= average) {
+      series.show();
+    } else {
+      series.hide();
+      // series.setVisible(false, false);
+    }
+  });
+  chart.redraw();
+  // options.series = options.series.filter(function(series) {
+  //   return calculateAverage(series.data) >= average;
+  // });
+  //
+  // chart = new Highcharts.Chart('container', options);
+}
+
+document.getElementById("fireAverage").addEventListener("click", updateChartOnAverage);
