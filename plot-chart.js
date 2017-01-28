@@ -286,8 +286,6 @@ function calculateAverage(data) {
 function updateChartOnAverage(event) {
   var average = parseInt(document.getElementById('averageBPM').value) || 150;
 
-  // var options = chart.options;
-
   chart.series.forEach(function(series) {
     var mappedData = series.data.map(function(data) {
       return [data.x, data.y];
@@ -296,15 +294,9 @@ function updateChartOnAverage(event) {
       series.show();
     } else {
       series.hide();
-      // series.setVisible(false, false);
     }
   });
-  chart.redraw();
-  // options.series = options.series.filter(function(series) {
-  //   return calculateAverage(series.data) >= average;
-  // });
-  //
-  // chart = new Highcharts.Chart('container', options);
+  chart.redraw();  
 }
 
 document.getElementById("fireAverage").addEventListener("click", updateChartOnAverage);
