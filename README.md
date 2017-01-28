@@ -1,3 +1,6 @@
+# Firebeat Highchart
+
+**Instruction**
 Chrome prevents any local html files to be run due to a security policy.
 
 To run the file open chrome using
