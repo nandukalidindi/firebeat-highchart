@@ -171,14 +171,28 @@ var data = [
 }
 ]
 
-var script = document.getElementById('sub-chart');
+data.forEach(function(series) {
+  var node = document.createElement("div");
+  node.style = "height: 100px; float: left; width: 80%"
 
-var names = script.getAttribute('user-container-id').split(",");
+  node.id = series.name
 
-names.forEach(function(name, index) {
-  var container = name,
-      dataIndex = index;
+  document.getElementById('sub-chart-list').appendChild(node);
+});
 
+// var node = document.createElement("div");
+// node.style = "height: 100px; float: left; width: 80%"
+//
+// node.id = "prabodh"
+//
+// document.getElementById('sub-chart-list').appendChild(node);
+
+var parentElement = document.getElementById('sub-chart-list'),
+    childElements = parentElement.children;
+
+for(var i = 0; i < childElements.length; i++) {
+  var container = childElements[i].id;
+      dataIndex = i;
 
   var subChartOptions = {
       chart: {
@@ -199,7 +213,7 @@ names.forEach(function(name, index) {
           }
       },
       yAxis: {
-          tickInterval: 120,  
+          tickInterval: 120,
           title: { text: '' },
           labels: {
             align: 'left',
@@ -250,4 +264,4 @@ names.forEach(function(name, index) {
   }
 
   chart = new Highcharts.Chart(container, subChartOptions);
-});
+}
