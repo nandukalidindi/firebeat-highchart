@@ -171,27 +171,46 @@ var data = [
 }
 ]
 
+function createSubChartContainer() {
+  var parentDiv = document.createElement('div');
+  var childDiv = document.createElement('div');
+  childDiv.style = "float:left; width: 20%";
+
+  var input = document.createElement('input');
+  input.type = "checkbox";
+
+  childDiv.appendChild(input);
+  parentDiv.appendChild(childDiv);
+}
+
 data.forEach(function(series) {
+  var leftPanelDiv = document.getElementById('left-panel')
+  var parentDiv = document.createElement('div');
+  var childDiv = document.createElement('div');
+  childDiv.style = "float:left; width: 20%";
+
+  var input = document.createElement('input');
+  input.type = "checkbox";
+
+  childDiv.appendChild(input);
+  parentDiv.appendChild(childDiv);
+
   var node = document.createElement("div");
   node.style = "height: 100px; float: left; width: 80%"
 
   node.id = series.name
+  parentDiv.appendChild(node);
 
-  document.getElementById('sub-chart-list').appendChild(node);
+
+  leftPanelDiv.appendChild(parentDiv);
+  // document.getElementById('sub-chart-list').appendChild(node);
 });
 
-// var node = document.createElement("div");
-// node.style = "height: 100px; float: left; width: 80%"
-//
-// node.id = "prabodh"
-//
-// document.getElementById('sub-chart-list').appendChild(node);
-
-var parentElement = document.getElementById('sub-chart-list'),
+var parentElement = document.getElementById('left-panel'),
     childElements = parentElement.children;
 
 for(var i = 0; i < childElements.length; i++) {
-  var container = childElements[i].id;
+  var container = childElements[i].children[1].id;
       dataIndex = i;
 
   var subChartOptions = {
