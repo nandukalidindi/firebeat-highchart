@@ -22,16 +22,44 @@
     <link href="dashboard.css" rel="stylesheet">
 
     <style>
-      ul{
-        list-style-type: none;
+      body{
+        padding-top:0px;
       }
-      ul.list-items div{
+      .sidebar{
+        top:0;
+      }
+      .bg-white{
+        background: #fff;
+      }
+      .list-item{
         font-size: 10px;
+        padding: 5px;
+        border-bottom: 1px solid #eee;
+      }
+      .user-name{
+        font-weight: bold;
+        padding-right: 5px;
       }
 
-      ul.list-items div.list-col{
-        float:left;
-        padding-right: 20px;
+      .custom-nav{
+        height: 50px;
+      }
+      .custom-nav a{
+        /*border: 1px solid #ccc;*/
+        padding:15px;
+      }
+      .custom-nav span{
+        text-align: center;
+        color: #999;
+      }
+      .custom-nav div{
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 12px;
+      }
+      .app-name{
+        font-weight: bold;
+        font-size: 20px;
+        padding-left: 10px;
       }
     </style>
 
@@ -46,34 +74,13 @@
   <body>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <nav class="navbar navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">FireBeats</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true">Overview</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true">Customize Chart</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-blackboard" aria-hidden="true">Report</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true">Settings</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true">Profile</a></li>
-          </ul>
-
-        </div>
-      </div>
-    </nav>
-
     <div class="container-fluid">
       <div class="row">
 
         <div class="col-md-3 sidebar">
+          <div>
+            <img src="heart-beat.png" width="32" height="32"/><span class="app-name">FireBeats</span>
+          </div>
           <ul class="nav nav-sidebar">
              <form class="">
                 <input type="text" class="form-control" placeholder="Search by name">
@@ -91,7 +98,7 @@
                </button>
              </div>
 
-             <!-- BEFORE MINI CHART -->
+
              <!-- <div style="height:100px" class="media">
                <div style="height:100px; text-align:center" class="media-left">
                    <img style="margin-left: 5px; margin-right: -5px;" class="media-object" src="user-icon.png" width="24" alt="...">
@@ -104,10 +111,11 @@
                </div>
              </div> -->
 
-             <div id="left-panel">               
+             <div id="left-panel">
              </div>
 
              <script src="plot-sub-chart.js"></script>
+
             <!-- <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reports</a></li>
             <li><a href="#">Analytics</a></li>
@@ -127,7 +135,18 @@
           </ul> -->
         </div>
         <div class="col-md-9 col-md-offset-3 main">
-          <div class="well">
+
+
+          <div class="custom-nav">
+
+              <a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"><div>Overview</div></a>
+              <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"><div>Customize Chart</div></a>
+              <a href="#"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"><div>Report</div></a>
+              <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"><div>Settings</div></a>
+              <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"><div>Profile</div></a>
+
+          </div>
+          <div class="well bg-white">
 
             <div class="row">
               <div class="col-md-1">
@@ -172,69 +191,32 @@
 
             <br><br>
 
-              <!-- <div class="list-group">
-                <img src="user-icon.png" width="64" height="64"/>
-                Some text
-              </div> -->
-              <ul class="list-items">
-                <li>
-                  <div class="list-col">
-                    <img src="user-icon.png" width="48" alt="...">
-                  </div>
 
-                  <div class="list-col">
-                      <div>Michael Cole</div>
-                      <div>Male</div>
-                      <div>Age: 23</div>
-                  </div>
-                  <div class="list-col">
-                      <div>Current: 132 bpm</div>
-                      <div>Rest: 78 bpm</div>
-                      <div>Average: 110 bmp (last 5hrs)</div>
-                  </div>
-                  <div class="list-col">
-                    <div>Cell: (917) 123-456</div>
-                    <div>District: Queens</div>
-                    <div>Current Location: 42nd street</div>
-                  </div>
-                  <div class="list-col">
-                    <button class="btn btn-danger">Notify <span class="glyphicon glyphicon-bell" aria-hidden="true"></button>
-                  </div>
-
-
-                </li>
-
-              </ul>
-
-
-              <!-- <div class="media">
-                <div class="media-left">
-                    <img class="media-object" src="user-icon.png" width="48" alt="...">
+              <div class="row list-item">
+                <div class="col-md-1"><img src="user-icon.png" width="48"></div>
+                <div class="col-md-11">
+                    <div><span class="user-name">Michael Cole </span><span><img src="online-icon.png" width="8"></span></div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div>Male</div>
+                        <div>Age: 23</div>
+                      </div>
+                      <div class="col-md-4">
+                        <div>Current: 132 bpm</div>
+                        <div>Rest: 78 bpm</div>
+                        <div>Average: 110 bmp (last 5hrs)</div>
+                      </div>
+                      <div class="col-md-4">
+                        <div>Cell: (917) 123-456</div>
+                        <div>District: Queens</div>
+                        <div>Current Location: 42nd street</div>
+                      </div>
+                      <div class="col-md-2">
+                        <button class="btn btn-xs btn-danger">Notify <span class="glyphicon glyphicon-bell" aria-hidden="true"></button>
+                      </div>
+                    </div>
                 </div>
-                <div class="media-left">
-                  <h5 class="media-heading">Michael Cole</h5>
-                  <div>Male</div>
-                  <div>Age: 23</div>
-                </div>
-                <div class="media-left">
-
-                </br>
-                  <div>Current: 132 bpm</div>
-                  <div>Rest: 78 bpm</div>
-                  <div>Average: 110 bmp (last 5hrs)</div>
-                </div>
-                <div class="media-left">
-
-                  </br>
-                  <div>Cell: (917) 123-456</div>
-                  <div>District: Queens</div>
-                  <div>Current Location: 42nd street</div>
-                </div>
-                <div class="media-right">
-                  </br>
-                  <button class="btn btn-danger">Notify <span class="glyphicon glyphicon-bell" aria-hidden="true"></button>
-                </div>
-              </div> -->
+              </div>
 
         </div>
 
@@ -254,6 +236,7 @@
     <script src="highcharts.js"></script>
     <script src="highcharts-more.js"></script>
 -->
+
 
 
 
@@ -375,117 +358,117 @@
     });
 
 
-    // Highcharts.chart('main-chart', {
-    //     chart: {
-    //         zoomType: 'xy'
-    //     },
-    //     title: {
-    //         text: ''
-    //     },
-    //     // subtitle: {
-    //     //     text: 'Source: WorldClimate.com'
-    //     // },
-    //     xAxis: [{
-    //         categories: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-    //             '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
-    //         crosshair: true
-    //     }],
-    //     yAxis: [{ // Primary yAxis
-    //         labels: {
-    //             // format: '{value}°C',
-    //             style: {
-    //                 color: Highcharts.getOptions().colors[0]
-    //             }
-    //         },
-    //         title: {
-    //             text: 'Heart Rate',
-    //             style: {
-    //                 color: Highcharts.getOptions().colors[0]
-    //             }
-    //         },
-    //         // opposite: true
-    //
-    //     },
-    //     // { // Secondary yAxis
-    //     //     gridLineWidth: 0,
-    //     //     title: {
-    //     //         text: 'Rainfall',
-    //     //         style: {
-    //     //             color: Highcharts.getOptions().colors[0]
-    //     //         }
-    //     //     },
-    //     //     labels: {
-    //     //         format: '{value} mm',
-    //     //         style: {
-    //     //             color: Highcharts.getOptions().colors[0]
-    //     //         }
-    //     //     }
-    //
-    //     // },
-    //     { // Tertiary yAxis
-    //         gridLineWidth: 0,
-    //         title: {
-    //             text: 'Heart Rate 2',
-    //             style: {
-    //                 color: Highcharts.getOptions().colors[1]
-    //             }
-    //         },
-    //         labels: {
-    //             // format: '{value} mb',
-    //             style: {
-    //                 color: Highcharts.getOptions().colors[1]
-    //             }
-    //         },
-    //         opposite: true
-    //     }
-    //     ],
-    //     tooltip: {
-    //         shared: true
-    //     },
-    //     // legend: {
-    //     //     layout: 'vertical',
-    //     //     align: 'left',
-    //     //     x: 80,
-    //     //     verticalAlign: 'top',
-    //     //     y: 55,
-    //     //     floating: true,
-    //     //     backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-    //     // },
-    //     series: [
-    //     // {
-    //     //     name: 'Rainfall',
-    //     //     type: 'column',
-    //     //     yAxis: 1,
-    //     //     data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-    //     //     tooltip: {
-    //     //         valueSuffix: ' mm'
-    //     //     }
-    //
-    //     // },
-    //     {
-    //         name: 'Heart Rate',
-    //         type: 'spline',
-    //         yAxis: 1,
-    //         data: [120, 125, 140, 135, 147, 129, 133, 142, 141, 130, 146, 138],
-    //         marker: {
-    //             enabled: false
-    //         },
-    //         dashStyle: 'shortdot',
-    //         // tooltip: {
-    //         //     valueSuffix: ' mb'
-    //         // }
-    //
-    //     },
-    //     {
-    //         name: 'Heart Rate 2',
-    //         type: 'spline',
-    //         data: [149, 160, 155, 157, 87, 93, 95, 100, 110, 120, 131, 88],
-    //         tooltip: {
-    //             // valueSuffix: ' °C'
-    //         }
-    //     }
-    //     ]
-    // });
+    Highcharts.chart('main-chart', {
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: ''
+        },
+        // subtitle: {
+        //     text: 'Source: WorldClimate.com'
+        // },
+        xAxis: [{
+            categories: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+                '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                // format: '{value}°C',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            title: {
+                text: 'Heart Rate',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            // opposite: true
+
+        },
+        // { // Secondary yAxis
+        //     gridLineWidth: 0,
+        //     title: {
+        //         text: 'Rainfall',
+        //         style: {
+        //             color: Highcharts.getOptions().colors[0]
+        //         }
+        //     },
+        //     labels: {
+        //         format: '{value} mm',
+        //         style: {
+        //             color: Highcharts.getOptions().colors[0]
+        //         }
+        //     }
+
+        // },
+        { // Tertiary yAxis
+            gridLineWidth: 0,
+            title: {
+                text: 'Heart Rate 2',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            labels: {
+                // format: '{value} mb',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            opposite: true
+        }
+        ],
+        tooltip: {
+            shared: true
+        },
+        // legend: {
+        //     layout: 'vertical',
+        //     align: 'left',
+        //     x: 80,
+        //     verticalAlign: 'top',
+        //     y: 55,
+        //     floating: true,
+        //     backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        // },
+        series: [
+        // {
+        //     name: 'Rainfall',
+        //     type: 'column',
+        //     yAxis: 1,
+        //     data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+        //     tooltip: {
+        //         valueSuffix: ' mm'
+        //     }
+
+        // },
+        {
+            name: 'Heart Rate',
+            type: 'spline',
+            yAxis: 1,
+            data: [120, 125, 140, 135, 147, 129, 133, 142, 141, 130, 146, 138],
+            marker: {
+                enabled: false
+            },
+            dashStyle: 'shortdot',
+            // tooltip: {
+            //     valueSuffix: ' mb'
+            // }
+
+        },
+        {
+            name: 'Heart Rate 2',
+            type: 'spline',
+            data: [149, 160, 155, 157, 87, 93, 95, 100, 110, 120, 131, 88],
+            tooltip: {
+                // valueSuffix: ' °C'
+            }
+        }
+        ]
+    });
 });
 
 
