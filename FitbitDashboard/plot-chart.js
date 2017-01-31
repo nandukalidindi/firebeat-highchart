@@ -348,7 +348,8 @@ document.getElementById("show-serious-10").addEventListener("click", showSerious
 function showSelected(event) {
   var newData = [];
   data().forEach(function(series) {
-    var checked = document.getElementById(series.name + "-checkbox").checked;
+    var element = document.getElementById(series.name + "-checkbox");
+    var checked = element && element.checked;
     if(checked) {
       series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
       newData.push(series);
@@ -361,3 +362,223 @@ function showSelected(event) {
   chart = new Highcharts.Chart('main-chart', options);
 }
 document.getElementById("show-selected").addEventListener("click", showSelected);
+
+
+function renderChartForData(data) {
+  var leftPanelDiv = document.getElementById('left-panel')
+  while (leftPanelDiv.hasChildNodes()) {
+    leftPanelDiv.removeChild(leftPanelDiv.lastChild);
+  }
+
+  data.forEach(function(series, index) {
+    var parentDiv = document.createElement('div');
+    parentDiv.style = "height: 130px; margin-top: 20px;";
+    var childDiv = document.createElement('div');
+    childDiv.style = "float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;";
+
+    var input = document.createElement('input');
+    input.type = "checkbox";
+    input.id = series.name + "-checkbox";
+    input.checked = false;
+    input.style = "display:block";
+
+    var imageTag = document.createElement('img');
+    imageTag.src = "user-icon.png";
+    imageTag.style = "height:44px; width:44px"
+
+    childDiv.appendChild(imageTag);
+    childDiv.appendChild(input);
+
+    parentDiv.appendChild(childDiv);
+
+
+    var anotherDiv = document.createElement('div');
+    anotherDiv.style = "height: 30px; width: 80%; float:left";
+    var name = document.createElement('div');
+    name.className = "sub-chart-name";
+    name.textContent = series.name;
+
+    var avg = document.createElement('div');
+    avg.className = "sub-chart-avg";
+    avg.textContent = parseInt(calculateAverage(series.data));
+
+    var avgDim = document.createElement('div');
+    avgDim.className = "dim-font";
+    avgDim.textContent = "AVG BPM";
+
+    var rest = document.createElement('div');
+    rest.className = "sub-chart-avg";
+    rest.textContent = "82";
+
+    var restDim = document.createElement('div');
+    restDim.className = "dim-font";
+    restDim.textContent = "REST BPM";
+
+    anotherDiv.appendChild(name);
+    anotherDiv.appendChild(avg);
+    anotherDiv.appendChild(avgDim);
+    anotherDiv.appendChild(rest);
+    anotherDiv.appendChild(restDim);
+
+    parentDiv.appendChild(anotherDiv);
+
+    var node = document.createElement("div");
+    node.style = "height: 100px; float: left; width: 80%"
+
+    node.id = series.name
+    parentDiv.appendChild(node);
+
+
+    leftPanelDiv.appendChild(parentDiv);
+    // document.getElementById('sub-chart-list').appendChild(node);
+  // });
+
+  // var parentElement = document.getElementById('left-panel'),
+  //     childElements = parentElement.children;
+
+    var container = series.name;
+
+    var subChartOptions = {
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            title: { text: '' },
+            labels: {
+              align: 'left',
+              x: 3,
+              y: -3
+            }
+        },
+        yAxis: {
+            tickInterval: 120,
+            title: { text: '' },
+            labels: {
+              align: 'left',
+              x: 3,
+              y: -3
+            }
+        },
+        exporting: { enabled: false },
+        credits: { enabled: false },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+          headerFormat: '<b>{series.name}</b><br>',
+          pointFormat: '{point.y} BPM at {point.x}:00'
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 0
+                    },
+                    stops: [
+                        [0, "#FF0000"]
+                    ]
+                },
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+
+        series: [{
+            type: 'area',
+            name: 'Generic Fireman',
+            data: series.data
+        }]
+    }
+
+    subChartOptions.plotOptions.area.fillColor.stops[0][1] = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
+
+    subChartOptions.series[0].color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
+
+    subChart = new Highcharts.Chart(container, subChartOptions);
+  });
+}
+
+function getDataBetween(above, below) {
+  var data = this.data();
+  return data.filter(function(series) {
+    var average = parseInt(calculateAverage(series.data));
+    if(average < below && average > above) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+var redRangeMin = 120;
+    redRangeMax = 200;
+
+    yellowRangeMin = 110;
+    yellowRangeMax = 120;
+
+    greenRangeMin = 0;
+    greenRangeMax = 110;
+
+function createBPMTypeMap() {
+  var data = this.data();
+  var typeMap = {red: 0, yellow: 0, green: 0};
+
+  data.forEach(function(series) {
+    var average = calculateAverage(series.data);
+    if(average > redRangeMin && average < redRangeMax) {
+      typeMap.red = typeMap.red + 1;
+    } else if (average > yellowRangeMin && average < yellowRangeMax) {
+      typeMap.yellow = typeMap.yellow + 1;
+    } else if (average > greenRangeMin && average < greenRangeMax) {
+      typeMap.green = typeMap.green + 1;
+    }
+  });
+
+  return typeMap;
+}
+
+var typeMap = createBPMTypeMap();
+
+Object.keys(typeMap).forEach(function(type) {
+  var element = document.getElementById(type + '-heart');
+  element.children[1].textContent = typeMap[type];
+});
+
+renderChartForData(data());
+
+function truncateData(color, event) {
+  switch (color) {
+    case 'red':
+      renderChartForData(getDataBetween(redRangeMin, redRangeMax));
+      break;
+    case 'yellow':
+      renderChartForData(getDataBetween(yellowRangeMin, yellowRangeMax));
+      break;
+    case 'green':
+      renderChartForData(getDataBetween(greenRangeMin, greenRangeMax));
+      break;
+    default:
+      return data();
+  }
+}
+
+document.getElementById('red-heart').addEventListener('click', truncateData.bind(null, 'red'));
+document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
+document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
