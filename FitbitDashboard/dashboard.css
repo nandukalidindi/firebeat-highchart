@@ -84,6 +84,62 @@ body {
   margin-top: 0;
 }
 
+.sub-chart-name {
+  width: 25%;
+  float: left;
+  font-family: LucidaGrande;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #2f3841;
+}
+
+.sub-chart-avg {
+  float: left;
+  width: 30%
+	font-family: .SFNSDisplay;
+	font-size: 30px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.5px;
+	text-align: center;
+	color: #2f3841;
+}
+
+.dim-font {
+  width: 20%;
+  float: left;
+	font-family: .SFNSText;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.9px;
+	text-align: center;
+	color: #b5b5b5;
+}
+
+.button-count-text {
+  width: 11.8px;
+	height: 35.8px;
+	font-family: HelveticaNeue;
+	font-size: 30px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: #2f3841;
+}
+
 
 /*
  * Placeholder dashboard ideas
