@@ -171,49 +171,14 @@ var data = [
 }
 ]
 
-function createSubChartContainer() {
-  var parentDiv = document.createElement('div');
-  var childDiv = document.createElement('div');
-  childDiv.style = "float:left; width: 20%";
+var script = document.getElementById('sub-chart');
 
-  var input = document.createElement('input');
-  input.type = "checkbox";
+var names = script.getAttribute('user-container-id').split(",");
 
-  childDiv.appendChild(input);
-  parentDiv.appendChild(childDiv);
-}
+names.forEach(function(name, index) {
+  var container = name,
+      dataIndex = index;
 
-data.forEach(function(series) {
-  var leftPanelDiv = document.getElementById('left-panel')
-  var parentDiv = document.createElement('div');
-  var childDiv = document.createElement('div');
-  childDiv.style = "float:left; width: 20%";
-
-  var input = document.createElement('input');
-  input.type = "checkbox";
-  input.id = series.name + "-checkbox";
-  input.checked = false;
-
-  childDiv.appendChild(input);
-  parentDiv.appendChild(childDiv);
-
-  var node = document.createElement("div");
-  node.style = "height: 100px; float: left; width: 80%"
-
-  node.id = series.name
-  parentDiv.appendChild(node);
-
-
-  leftPanelDiv.appendChild(parentDiv);
-  // document.getElementById('sub-chart-list').appendChild(node);
-});
-
-var parentElement = document.getElementById('left-panel'),
-    childElements = parentElement.children;
-
-for(var i = 0; i < childElements.length; i++) {
-  var container = childElements[i].children[1].id;
-      dataIndex = i;
 
   var subChartOptions = {
       chart: {
@@ -226,21 +191,10 @@ for(var i = 0; i < childElements.length; i++) {
           text: ''
       },
       xAxis: {
-          title: { text: '' },
-          labels: {
-            align: 'left',
-            x: 3,
-            y: -3
-          }
+          title: { text: '' }
       },
       yAxis: {
-          tickInterval: 120,
-          title: { text: '' },
-          labels: {
-            align: 'left',
-            x: 3,
-            y: -3
-          }
+          title: { text: '' }
       },
       exporting: { enabled: false },
       credits: { enabled: false },
@@ -285,4 +239,4 @@ for(var i = 0; i < childElements.length; i++) {
   }
 
   chart = new Highcharts.Chart(container, subChartOptions);
-}
+});

@@ -341,7 +341,19 @@ function showSeriousNumber(number, event) {
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
 document.getElementById("show-serious-10").addEventListener("click", showSeriousNumber.bind(null, 10));
 
-function showSelected(number, event) {
+function showSelected(event) {
+  var newData = [];
+  data().forEach(function(series) {
+    var checked = document.getElementById(series.name + "-checkbox").checked;
+    if(checked) {
+      series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
+      newData.push(series);
+    }
+  });
 
+  var options = chart.options;
+  options.series = newData;
+
+  chart = new Highcharts.Chart('main-chart', options);
 }
-document.getElementById("show-selected").addEventListener("click", showAll.bind(null, 0));
+document.getElementById("show-selected").addEventListener("click", showSelected);
