@@ -285,12 +285,16 @@ function updateChartOnHeartRateOrTimeFrameChange(event) {
   chart = new Highcharts.Chart('main-chart', options);
 }
 
-document.getElementById("duration-input").addEventListener("blur", updateChartOnHeartRateOrTimeFrameChange);
-document.getElementById("heart-rate-input").addEventListener("blur", updateChartOnHeartRateOrTimeFrameChange);
+document.getElementById("duration-input").addEventListener("keyup", updateChartOnHeartRateOrTimeFrameChange);
+document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnHeartRateOrTimeFrameChange);
 
 function showAll(number, event) {
   var options = chart.options;
   options.series = data();
+
+  document.getElementById('heart-rate-input').value = 60;
+  document.getElementById('duration-input').value = 1;
+
   chart = new Highcharts.Chart('main-chart', options);
 }
 

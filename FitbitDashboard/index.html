@@ -86,15 +86,15 @@
                 <input type="text" class="form-control" placeholder="Search by name">
              </form>
 
-             <div class="btn-group" role="group" aria-label="...">
-               <button type="button" class="btn btn-default">
-                 <span class="glyphicon glyphicon-heart" style="color:#E9484B" aria-hidden="true"></span> 4
+             <div class="btn-group" style="width: 100%" role="group" aria-label="...">
+               <button id="red-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
+                 <img src="red-heart.png" width="32" height="32" style="margin-bottom:5px"/> <span class="button-count-text"> 4 </span>
                </button>
-               <button type="button" class="btn btn-default">
-                 <span class="glyphicon glyphicon-heart" style="color:#FBCB59" aria-hidden="true"></span> 22
+               <button id="yellow-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
+                <img src="yellow-heart.png" width="32" height="32" style="margin-bottom:5px"/><span class="button-count-text"> 22 </span>
                </button>
-               <button type="button" class="btn btn-default">
-                 <span class="glyphicon glyphicon-heart" style="color:#97F56D" aria-hidden="true"></span> 102
+               <button id="green-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
+                <img src="green-heart.png" width="32" height="32" style="margin-bottom:5px"/> <span class="button-count-text"> 102 </span>
                </button>
              </div>
 
@@ -112,9 +112,11 @@
              </div> -->
 
              <div id="left-panel">
-             </div>
 
-             <script src="plot-sub-chart.js"></script>
+             </div>
+             <script src="plot-sub-chart.js"> </script>
+
+
 
             <!-- <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reports</a></li>
