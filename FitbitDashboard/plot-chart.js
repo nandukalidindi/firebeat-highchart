@@ -431,9 +431,10 @@ function renderChartForData(data) {
     name.className = "sub-chart-name";
     name.textContent = series.name;
 
+    var avgInt = parseInt(calculateAverage(series.data));
     var avg = document.createElement('div');
     avg.className = "sub-chart-avg";
-    avg.textContent = parseInt(calculateAverage(series.data));
+    avg.textContent = avgInt;
 
     var avgDim = document.createElement('div');
     avgDim.className = "dim-font";
@@ -441,7 +442,7 @@ function renderChartForData(data) {
 
     var rest = document.createElement('div');
     rest.className = "sub-chart-avg";
-    rest.textContent = "82";
+    rest.textContent = (avgInt - 25).toString();
 
     var restDim = document.createElement('div');
     restDim.className = "dim-font";
