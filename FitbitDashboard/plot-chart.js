@@ -2,6 +2,10 @@ function data() {
   return [
     {
       name: 'Prabodh',
+      gender: 'Male',
+      age: 23,
+      cell: '(917) 123-456',
+      district: 'Queens',
       data: [
         [1, 105],
         [2, 130],
@@ -31,6 +35,10 @@ function data() {
     },
     {
       name: 'Waqid',
+      gender: 'Male',
+      age: 26,
+      cell: '(917) 123-456',
+      district: 'Queens',
       data: [
         [1, 157],
         [2, 158],
@@ -59,6 +67,10 @@ function data() {
       ]
   }, {
       name: 'Nandu',
+      gender: 'Male',
+      age: 25,
+      cell: '(646) 100-929',
+      district: 'Queens',
       data: [
         [1, 93],
         [2, 155],
@@ -87,6 +99,10 @@ function data() {
       ]
   }, {
     name: 'Parth',
+    gender: 'Male',
+    age: 24,
+    cell: '(917) 909-552',
+    district: 'Queens',
     data: [
       [1, 62],
       [2, 114],
@@ -115,6 +131,10 @@ function data() {
     ]
   }, {
     name: 'Ananth',
+    gender: 'Male',
+    age: 22,
+    cell: '(646) 222-190',
+    district: 'Queens',
     data: [
       [1, 121],
       [2, 101],
@@ -143,6 +163,10 @@ function data() {
     ]
   }, {
     name: "Dongwuei",
+    gender: 'Male',
+    age: 23,
+    cell: '(616) 123-456',
+    district: 'Queens',
     data: [
       [1, 148],
       [2, 123],
@@ -283,6 +307,9 @@ function updateChartOnHeartRateOrTimeFrameChange(event) {
   });
 
   chart = new Highcharts.Chart('main-chart', options);
+
+
+
 }
 
 document.getElementById("duration-input").addEventListener("keyup", updateChartOnHeartRateOrTimeFrameChange);
@@ -296,6 +323,8 @@ function showAll(number, event) {
   document.getElementById('duration-input').value = 1;
 
   chart = new Highcharts.Chart('main-chart', options);
+
+
 }
 
 document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
@@ -340,6 +369,8 @@ function showSeriousNumber(number, event) {
   options.series = newSeries;
 
   chart = new Highcharts.Chart('main-chart', options);
+
+
 }
 
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
@@ -359,5 +390,7 @@ function showSelected(event) {
   options.series = newData;
 
   chart = new Highcharts.Chart('main-chart', options);
+
+
 }
 document.getElementById("show-selected").addEventListener("click", showSelected);

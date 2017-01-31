@@ -1,6 +1,10 @@
 var data = [
   {
     name: 'Prabodh',
+    gender: 'Male',
+    age: 23,
+    cell: '(917) 123-456',
+    district: 'Queens',
     data: [
       [1, 105],
       [2, 130],
@@ -30,6 +34,10 @@ var data = [
   },
   {
     name: 'Waqid',
+    gender: 'Male',
+    age: 26,
+    cell: '(917) 123-456',
+    district: 'Queens',
     data: [
       [1, 157],
       [2, 158],
@@ -58,6 +66,10 @@ var data = [
     ]
 }, {
     name: 'Nandu',
+    gender: 'Male',
+    age: 25,
+    cell: '(646) 100-929',
+    district: 'Queens',
     data: [
       [1, 93],
       [2, 155],
@@ -86,6 +98,10 @@ var data = [
     ]
 }, {
   name: 'Parth',
+  gender: 'Male',
+  age: 24,
+  cell: '(917) 909-552',
+  district: 'Queens',
   data: [
     [1, 62],
     [2, 114],
@@ -114,6 +130,10 @@ var data = [
   ]
 }, {
   name: 'Ananth',
+  gender: 'Male',
+  age: 22,
+  cell: '(646) 222-190',
+  district: 'Queens',
   data: [
     [1, 121],
     [2, 101],
@@ -142,6 +162,10 @@ var data = [
   ]
 }, {
   name: "Dongwuei",
+  gender: 'Male',
+  age: 23,
+  cell: '(616) 123-456',
+  district: 'Queens',
   data: [
     [1, 148],
     [2, 123],
