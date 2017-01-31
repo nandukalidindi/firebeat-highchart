@@ -280,7 +280,7 @@ function calculateAverage(data) {
     sum += entry[1];
   });
 
-  return sum/size;
+  return Math.round(sum/size);
 }
 
 function updateChartOnHeartRateOrTimeFrameChange(event) {
@@ -308,7 +308,7 @@ function updateChartOnHeartRateOrTimeFrameChange(event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-
+  updateList(series.data);
 
 }
 
@@ -324,7 +324,7 @@ function showAll(number, event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-
+  updateList(options.series.data);
 }
 
 document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
@@ -370,7 +370,7 @@ function showSeriousNumber(number, event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-
+  updateList(newSeries);
 }
 
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
@@ -391,6 +391,44 @@ function showSelected(event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-
+  updateList(newData);
 }
 document.getElementById("show-selected").addEventListener("click", showSelected);
+
+
+
+function updateList(data){
+  $('#list-item-group').html('');
+  data.forEach(function(item){
+    var htmlItem =
+    `<div class="row list-item">
+      <div class="col-md-1"><img src="user-icon.png" width="48"></div>
+      <div class="col-md-11">
+          <div><span class="user-name">${item.name}</span><span><img src="online-icon.png" width="8"></span></div>
+          <div class="row">
+            <div class="col-md-2">
+              <div>${item.gender}</div>
+              <div>Age: ${item.age}</div>
+            </div>
+            <div class="col-md-4">
+              <div>Current: 132 bpm</div>
+              <div>Rest: 78 bpm</div>
+              <div>Average: ${calculateAverage(item.data)} bmp (last 5hrs)</div>
+            </div>
+            <div class="col-md-4">
+              <div>Cell: ${item.cell}</div>
+              <div>District: ${item.district}</div>
+              <div>Current Location: </div>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-xs btn-danger">Notify <span class="glyphicon glyphicon-bell" aria-hidden="true"></button>
+            </div>
+          </div>
+      </div>
+    </div>`;
+
+
+    $('#list-item-group').append(htmlItem);
+  });
+
+}
