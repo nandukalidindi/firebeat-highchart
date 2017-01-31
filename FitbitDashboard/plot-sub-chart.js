@@ -191,6 +191,8 @@ data.forEach(function(series) {
 
   var input = document.createElement('input');
   input.type = "checkbox";
+  input.id = series.name + "-checkbox";
+  input.checked = false;
 
   childDiv.appendChild(input);
   parentDiv.appendChild(childDiv);
