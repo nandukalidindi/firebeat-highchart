@@ -232,6 +232,135 @@ body {
 	box-shadow: 0 -2px 5px 0 rgba(31, 32, 34, 0.34), 0 -1px 3px 0 rgba(0, 0, 0, 0.33);
 }
 
+.top-navigation {
+	height: 103px;
+	border-radius: 5px;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+}
+
+.clickable-controls {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.main-chart-menu {
+  /*background: black;*/
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.main-chart-heading {
+  width: 148.7px;
+	height: 27px;
+	font-family: AvenirNext;
+	font-size: 20px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: #2f3841;
+}
+
+.main-chart-spinners {
+  width: 100.8px;
+	height: 43px;
+	border-radius: 10px;
+	background-color: #f9f9f9;
+	box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.13);
+}
+
+.show-all {
+  width: 100.8px;
+	height: 32px;
+	border-radius: 17px;
+	border: solid 1px #2f3841;
+  font-family: AvenirNext;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: center;
+	color: #2f3841;
+}
+
+.show-all-text {
+  width: 75.9px;
+	height: 25px;
+}
+
+.show-count-selection {
+	font-family: AvenirNext;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: #5f5f59;
+}
+
+.bottom-icon {
+  height: 102px;
+  opacity: 0.99;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.bottom-details {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bottom-sub-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-text-name {
+	font-family: LucidaGrande;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.38;
+	letter-spacing: normal;
+	text-align: left;
+	color: #2f3841;
+}
+
+.bottom-text {
+  font-family: LucidaGrande;
+	font-size: 16px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.38;
+	letter-spacing: normal;
+	text-align: left;
+	color: #2f3841;
+}
+
+.notify-button {
+  width: 116.4px;
+	height: 41px;
+	border-radius: 6px;
+	background-image: linear-gradient(to bottom, #eb4646, #ce3131);
+	box-shadow: 0 1px 0 0 #920000;
+}
+
+
 /*
  * Placeholder dashboard ideas
  */

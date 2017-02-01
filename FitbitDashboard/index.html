@@ -110,106 +110,104 @@
                <img src="sort-alphabet.png">
              </div>
 
-
-             <!-- <div style="height:100px" class="media">
-               <div style="height:100px; text-align:center" class="media-left">
-                   <img style="margin-left: 5px; margin-right: -5px;" class="media-object" src="user-icon.png" width="24" alt="...">
-                 </br>
-                   <img style="margin-left: 10px;" class="media-object" src="online-icon.png" width="8" alt="...">
-                 </br>
-                    <input type="checkbox">
-               </div>
-               <div style="height:100px" id="mini-chart" class="media-left">
-               </div>
-             </div> -->
-
              <div id="left-panel">
 
              </div>
-             <!-- <script src="plot-sub-chart.js"> </script> -->
-
-
-
-            <!-- <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li> -->
           </div>
-          <!-- <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul> -->
         </div>
-        <div class="col-md-9 col-md-offset-3 main">
+        <div style="float:right; width: 71.5%">
 
 
-          <div class="custom-nav">
+          <div class="top-navigation">
+            <div class="clickable-controls">
+              <a href="#">
+                <img src="overview-icon.png">
+              </a>
 
-              <a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"><div>Overview</div></a>
-              <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"><div>Customize Chart</div></a>
-              <a href="#"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"><div>Report</div></a>
-              <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"><div>Settings</div></a>
-              <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"><div>Profile</div></a>
+              <a href="#">
+                <img src="customize-icon.png">
+              </a>
 
+              <a href="#">
+                <img src="report-icon.png">
+              </a>
+
+              <a href="#">
+                <img src="settings-icon.png">
+              </a>
+
+              <a href="#">
+                <img src="profile-icon.png">
+              </a>
+            </div>
           </div>
           <div class="well bg-white">
 
-            <div class="row">
-              <div class="col-md-1">
-                <div class="input-group input-group-sm">
-                  <img src="heart-beat.png" width="32" height="32"/>
-                </div>
-              </div> <!-- end of col -->
+            <div class="main-chart-menu">
+              <div>
+                <img src="heart-top.png" width="32.9" height="29.8"/>
+              </div>
+              <div>
+                <span class="main-chart-heading">
+                  Heart Rate
+                <span>
+              </div>
 
-              <div class="col-md-3">
-                <div class="input-group input-group-sm">
-                  <span class="input-group-addon" id="basic-addon1">Heart Rate</span>
-                  <input type="number" id="heart-rate-input" class="form-control" value="60" aria-describedby="basic-addon1">
-                </div>
-              </div> <!-- end of col -->
+              <div>
+                <input type="number" id="heart-rate-input" class="main-chart-spinners" value="60">
+              </div>
 
-              <div class="col-md-3">
-                <div class="input-group input-group-sm">
-                  <span class="input-group-addon" id="basic-addon2">Duration</span>
-                  <input type="number" id="duration-input" class="form-control" value="1" aria-describedby="basic-addon2">
-                </div>
-              </div> <!-- end of col -->
+              <div>
+                <span class="main-chart-heading">
+                  Duration
+                <span>
+              </div>
 
-              <div class="col-md-5">
-                <!-- <div class="input-group input-group-sm"> -->
-                  <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                    <button type="button" id="show-all" class="btn btn-default">Show All</button>
-                    <button type="button" id="show-serious-5" class="btn btn-default">Serious 5</button>
-                    <button type="button" id="show-serious-10" class="btn btn-default">Serious 10</button>
-                    <button type="button" id="show-selected" class="btn btn-default">Show Selected</button>
-                  </div>
-                <!-- </div> -->
-              </div> <!-- end of col -->
+              <div>
+                <input type="number" id="duration-input" class="main-chart-spinners" value="1">
+              </div>
 
+              <div>
+                <input type="button" id="show-all" class="show-all" value="Show All">
+              </div>
 
-            </div> <!-- end of row -->
+              <div>
+                <a id="show-serious-5">
+                  <span class="show-count-selection">
+                    Serious 5
+                  </span>
+                </a>
+              </div>
+
+              <div>
+                <a id="show-serious-10">
+                  <span class="show-count-selection">
+                    Serious 10
+                  </span>
+                </a>
+              </div>
+
+              <div>
+                <a id="show-selected">
+                  <span class="show-count-selection">
+                    Show Selected
+                  </span>
+                </a>
+              </div>
+            </div>
 
             <br><br>
-              <div id="main-chart">
+            <div id="main-chart">
 
-              </div>
-              <script src="plot-chart.js"> </script>
+            </div>
+            <script src="plot-chart.js"> </script>
 
             <br><br>
 
             <div id="list-item-group">
-              <!-- dynamically append list items -->
             </div>
 
-        </div>
+          </div>
 
 
         </div>
@@ -229,236 +227,5 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="ie10-viewport-bug-workaround.js"></script>
-
-    <!-- <script>
-    $(function () {
-    Highcharts.chart('mini-chart', {
-        chart: {
-            zoomType: 'xy'
-        },
-        title: {
-            text: ''
-        },
-        // subtitle: {
-        //     text: 'Source: WorldClimate.com'
-        // },
-        xAxis: [{
-            categories: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
-            crosshair: true
-        }],
-        yAxis: [{ // Primary yAxis
-            labels: {
-                // format: '{value}°C',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            title: {
-                text: 'Heart Rate',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            // opposite: true
-
-        },
-        // { // Secondary yAxis
-        //     gridLineWidth: 0,
-        //     title: {
-        //         text: 'Rainfall',
-        //         style: {
-        //             color: Highcharts.getOptions().colors[0]
-        //         }
-        //     },
-        //     labels: {
-        //         format: '{value} mm',
-        //         style: {
-        //             color: Highcharts.getOptions().colors[0]
-        //         }
-        //     }
-
-        // },
-        { // Tertiary yAxis
-            gridLineWidth: 0,
-            title: {
-                text: 'Heart Rate 2',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            labels: {
-                // format: '{value} mb',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            opposite: true
-        }
-        ],
-        tooltip: {
-            shared: true
-        },
-        // legend: {
-        //     layout: 'vertical',
-        //     align: 'left',
-        //     x: 80,
-        //     verticalAlign: 'top',
-        //     y: 55,
-        //     floating: true,
-        //     backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-        // },
-        series: [
-        // {
-        //     name: 'Rainfall',
-        //     type: 'column',
-        //     yAxis: 1,
-        //     data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-        //     tooltip: {
-        //         valueSuffix: ' mm'
-        //     }
-
-        // },
-        {
-            name: 'Heart Rate',
-            type: 'spline',
-            yAxis: 1,
-            data: [120, 125, 140, 135, 147, 129, 133, 142, 141, 130, 146, 138],
-            marker: {
-                enabled: false
-            },
-            dashStyle: 'shortdot',
-            // tooltip: {
-            //     valueSuffix: ' mb'
-            // }
-
-        },
-        {
-            name: 'Heart Rate 2',
-            type: 'spline',
-            data: [149, 160, 155, 157, 87, 93, 95, 100, 110, 120, 131, 88],
-            tooltip: {
-                // valueSuffix: ' °C'
-            }
-        }
-        ]
-    });
-
-
-    Highcharts.chart('main-chart', {
-        chart: {
-            zoomType: 'xy'
-        },
-        title: {
-            text: ''
-        },
-        // subtitle: {
-        //     text: 'Source: WorldClimate.com'
-        // },
-        xAxis: [{
-            categories: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
-            crosshair: true
-        }],
-        yAxis: [{ // Primary yAxis
-            labels: {
-                // format: '{value}°C',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            title: {
-                text: 'Heart Rate',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            // opposite: true
-
-        },
-        // { // Secondary yAxis
-        //     gridLineWidth: 0,
-        //     title: {
-        //         text: 'Rainfall',
-        //         style: {
-        //             color: Highcharts.getOptions().colors[0]
-        //         }
-        //     },
-        //     labels: {
-        //         format: '{value} mm',
-        //         style: {
-        //             color: Highcharts.getOptions().colors[0]
-        //         }
-        //     }
-
-        // },
-        { // Tertiary yAxis
-            gridLineWidth: 0,
-            title: {
-                text: 'Heart Rate 2',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            labels: {
-                // format: '{value} mb',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            opposite: true
-        }
-        ],
-        tooltip: {
-            shared: true
-        },
-        // legend: {
-        //     layout: 'vertical',
-        //     align: 'left',
-        //     x: 80,
-        //     verticalAlign: 'top',
-        //     y: 55,
-        //     floating: true,
-        //     backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-        // },
-        series: [
-        // {
-        //     name: 'Rainfall',
-        //     type: 'column',
-        //     yAxis: 1,
-        //     data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-        //     tooltip: {
-        //         valueSuffix: ' mm'
-        //     }
-
-        // },
-        {
-            name: 'Heart Rate',
-            type: 'spline',
-            yAxis: 1,
-            data: [120, 125, 140, 135, 147, 129, 133, 142, 141, 130, 146, 138],
-            marker: {
-                enabled: false
-            },
-            dashStyle: 'shortdot',
-            // tooltip: {
-            //     valueSuffix: ' mb'
-            // }
-
-        },
-        {
-            name: 'Heart Rate 2',
-            type: 'spline',
-            data: [149, 160, 155, 157, 87, 93, 95, 100, 110, 120, 131, 88],
-            tooltip: {
-                // valueSuffix: ' °C'
-            }
-        }
-        ]
-    });
-});
-
-
-    </script> -->
   </body>
 </html>

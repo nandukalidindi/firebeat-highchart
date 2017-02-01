@@ -370,7 +370,7 @@ function showSeriousNumber(number, event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-  updateList(newSeries);
+  // updateList(newSeries);
 }
 
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
@@ -400,34 +400,40 @@ document.getElementById("show-selected").addEventListener("click", showSelected)
 
 function updateList(data){
   $('#list-item-group').html('');
+
   data.forEach(function(item){
     var htmlItem =
-    `<div class="row list-item">
-      <div class="col-md-1"><img src="user-icon.png" width="48"></div>
-      <div class="col-md-11">
-          <div><span class="user-name">${item.name}</span><span><img src="online-icon.png" width="8"></span></div>
-          <div class="row">
-            <div class="col-md-2">
-              <div>${item.gender}</div>
-              <div>Age: ${item.age}</div>
-            </div>
-            <div class="col-md-4">
-              <div>Current: 132 bpm</div>
-              <div>Rest: 78 bpm</div>
-              <div>Average: ${calculateAverage(item.data)} bmp (last 5hrs)</div>
-            </div>
-            <div class="col-md-4">
-              <div>Cell: ${item.cell}</div>
-              <div>District: ${item.district}</div>
-              <div>Current Location: </div>
-            </div>
-            <div class="col-md-2">
-              <button class="btn btn-xs btn-danger">Notify <span class="glyphicon glyphicon-bell" aria-hidden="true"></button>
-            </div>
+    `<div class="" style="display:flex; justify-content:space-between; margin-left:10px; margin-right:10px;">
+      <div style="width:15%"><img src="user-icon.png" class="bottom-icon"></div>
+
+      <div class="bottom-details">
+        <div>
+          <span class="bottom-text-name">${item.name}</span><span>
+            <img src="online-icon.png" width="8"></span>
+        </div>
+        <div class="bottom-sub-details">
+          <div class="bottom-text">
+            <div>${item.gender}</div>
+            <div>Age: ${item.age}</div>
           </div>
+          <div class="bottom-text">
+            <div>Current: 132 bpm</div>
+            <div>Rest: 78 bpm</div>
+            <div>Average: ${calculateAverage(item.data)} bmp (last 5hrs)</div>
+          </div>
+          <div class="bottom-text">
+            <div>Cell: ${item.cell} </div>
+            <div>District: ${item.district} </div>
+            <div>Current Location: New York</div>
+          </div>
+          <div class="">
+            <a id="notify-button">
+              <img src="notify-button.png" class="notify-button">
+            </a>
+          </div>
+        </div>
       </div>
     </div>`;
-
 
     $('#list-item-group').append(htmlItem);
   });
@@ -436,10 +442,9 @@ function updateList(data){
 
 function buildUserStatisticDOM(series) {
   var leftPanelDiv = document.getElementById('left-panel');
-  // $('#left-panel').html('');
   var avgInt = parseInt(calculateAverage(series.data));
   var statisticHTML =
-  `<div style="height: 130px; margin-top: 20px;">
+  `<div style="height: 140px; margin-top: 20px;">
       <div style="float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;">
        <img class="profile-icon-left-panel" src="user-icon.png">
        <input class="checkbox-left-panel" type="checkbox" id="${series.name}-checkbox">
@@ -457,66 +462,6 @@ function buildUserStatisticDOM(series) {
     </div>`;
 
   $("#left-panel").append(statisticHTML);
-
-  // var parentDiv = document.createElement('div');
-  // parentDiv.style = "height: 130px; margin-top: 20px;";
-  //
-  // var childDiv = document.createElement('div');
-  // childDiv.style = "float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;";
-  //
-  // var input = document.createElement('input');
-  // input.type = "checkbox";
-  // input.id = series.name + "-checkbox";
-  // input.checked = false;
-  // input.style = "display:block";
-  //
-  // var imageTag = document.createElement('img');
-  // imageTag.src = "user-icon.png";
-  // imageTag.style = "height:44px; width:44px"
-  //
-  // childDiv.appendChild(imageTag);
-  // childDiv.appendChild(input);
-  //
-  // parentDiv.appendChild(childDiv);
-  //
-  // var anotherDiv = document.createElement('div');
-  // anotherDiv.style = "height: 30px; width: 80%; float:left";
-  // var name = document.createElement('div');
-  // name.className = "sub-chart-name";
-  // name.textContent = series.name;
-  //
-  // var avgInt = parseInt(calculateAverage(series.data));
-  // var avg = document.createElement('div');
-  // avg.className = "sub-chart-avg";
-  // avg.textContent = avgInt;
-  //
-  // var avgDim = document.createElement('div');
-  // avgDim.className = "dim-font";
-  // avgDim.textContent = "AVG BPM";
-  //
-  // var rest = document.createElement('div');
-  // rest.className = "sub-chart-avg";
-  // rest.textContent = (avgInt - 25).toString();
-  //
-  // var restDim = document.createElement('div');
-  // restDim.className = "dim-font";
-  // restDim.textContent = "REST BPM";
-  //
-  // anotherDiv.appendChild(name);
-  // anotherDiv.appendChild(avg);
-  // anotherDiv.appendChild(avgDim);
-  // anotherDiv.appendChild(rest);
-  // anotherDiv.appendChild(restDim);
-  //
-  // parentDiv.appendChild(anotherDiv);
-  //
-  // var node = document.createElement("div");
-  // node.style = "height: 100px; float: left; width: 80%"
-  //
-  // node.id = series.name
-  // parentDiv.appendChild(node);
-  //
-  // leftPanelDiv.appendChild(parentDiv);
 }
 
 function renderChartForData(data) {
