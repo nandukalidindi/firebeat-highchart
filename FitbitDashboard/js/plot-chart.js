@@ -404,12 +404,12 @@ function updateList(data){
   data.forEach(function(item){
     var htmlItem =
     `<div class="" style="display:flex; justify-content:space-between; margin: 10px;">
-      <div style="width:15%"><img src="user-icon.png" class="bottom-icon"></div>
+      <div style="width:15%"><img src="icons/user-icon.png" class="bottom-icon"></div>
 
       <div class="bottom-details">
         <div>
           <span class="bottom-text-name">${item.name}</span><span>
-            <img src="online-icon.png" width="8"></span>
+            <img src="icons/online-icon.png" width="8"></span>
         </div>
         <div class="bottom-sub-details">
           <div class="bottom-text">
@@ -428,7 +428,7 @@ function updateList(data){
           </div>
           <div class="">
             <a id="notify-button">
-              <img src="notify-button.png" class="notify-button">
+              <img src="icons/notify-button.png" class="notify-button">
             </a>
           </div>
         </div>
@@ -446,7 +446,7 @@ function buildUserStatisticDOM(series) {
   var statisticHTML =
   `<div style="height: 140px; margin-top: 20px;">
       <div style="float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;">
-       <img class="profile-icon-left-panel" src="user-icon.png">
+       <img class="profile-icon-left-panel" src="icons/user-icon.png">
        <input class="checkbox-left-panel" type="checkbox" id="${series.name}-checkbox">
       </div>
       <div class="sub-chart-container">
