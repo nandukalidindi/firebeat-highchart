@@ -435,67 +435,88 @@ function updateList(data){
 }
 
 function buildUserStatisticDOM(series) {
-  var leftPanelDiv = document.getElementById('left-panel')
-
-  var parentDiv = document.createElement('div');
-  parentDiv.style = "height: 130px; margin-top: 20px;";
-
-  var childDiv = document.createElement('div');
-  childDiv.style = "float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;";
-
-  var input = document.createElement('input');
-  input.type = "checkbox";
-  input.id = series.name + "-checkbox";
-  input.checked = false;
-  input.style = "display:block";
-
-  var imageTag = document.createElement('img');
-  imageTag.src = "user-icon.png";
-  imageTag.style = "height:44px; width:44px"
-
-  childDiv.appendChild(imageTag);
-  childDiv.appendChild(input);
-
-  parentDiv.appendChild(childDiv);
-
-  var anotherDiv = document.createElement('div');
-  anotherDiv.style = "height: 30px; width: 80%; float:left";
-  var name = document.createElement('div');
-  name.className = "sub-chart-name";
-  name.textContent = series.name;
-
+  var leftPanelDiv = document.getElementById('left-panel');
+  // $('#left-panel').html('');
   var avgInt = parseInt(calculateAverage(series.data));
-  var avg = document.createElement('div');
-  avg.className = "sub-chart-avg";
-  avg.textContent = avgInt;
+  var statisticHTML =
+  `<div style="height: 130px; margin-top: 20px;">
+      <div style="float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;">
+       <img class="profile-icon-left-panel" src="user-icon.png">
+       <input class="checkbox-left-panel" type="checkbox" id="${series.name}-checkbox">
+      </div>
+      <div class="sub-chart-container">
+        <div style="height: 40px; width: 100%; float:left; margin-left: 10px;">
+          <div class="sub-chart-name"> ${series.name} </div>
+          <div class="sub-chart-avg"> ${avgInt} </div>
+          <div class="dim-font"> AVG BPM </div>
+          <div class="sub-chart-avg"> ${avgInt - 15} </div>
+          <div class="dim-font"> REST BPM </div>
+         </div>
+         <div style="height: 100px; float: left; width: 100%" id=${series.name}>
+       </div>
+    </div>`;
 
-  var avgDim = document.createElement('div');
-  avgDim.className = "dim-font";
-  avgDim.textContent = "AVG BPM";
+  $("#left-panel").append(statisticHTML);
 
-  var rest = document.createElement('div');
-  rest.className = "sub-chart-avg";
-  rest.textContent = (avgInt - 25).toString();
-
-  var restDim = document.createElement('div');
-  restDim.className = "dim-font";
-  restDim.textContent = "REST BPM";
-
-  anotherDiv.appendChild(name);
-  anotherDiv.appendChild(avg);
-  anotherDiv.appendChild(avgDim);
-  anotherDiv.appendChild(rest);
-  anotherDiv.appendChild(restDim);
-
-  parentDiv.appendChild(anotherDiv);
-
-  var node = document.createElement("div");
-  node.style = "height: 100px; float: left; width: 80%"
-
-  node.id = series.name
-  parentDiv.appendChild(node);
-
-  leftPanelDiv.appendChild(parentDiv);
+  // var parentDiv = document.createElement('div');
+  // parentDiv.style = "height: 130px; margin-top: 20px;";
+  //
+  // var childDiv = document.createElement('div');
+  // childDiv.style = "float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;";
+  //
+  // var input = document.createElement('input');
+  // input.type = "checkbox";
+  // input.id = series.name + "-checkbox";
+  // input.checked = false;
+  // input.style = "display:block";
+  //
+  // var imageTag = document.createElement('img');
+  // imageTag.src = "user-icon.png";
+  // imageTag.style = "height:44px; width:44px"
+  //
+  // childDiv.appendChild(imageTag);
+  // childDiv.appendChild(input);
+  //
+  // parentDiv.appendChild(childDiv);
+  //
+  // var anotherDiv = document.createElement('div');
+  // anotherDiv.style = "height: 30px; width: 80%; float:left";
+  // var name = document.createElement('div');
+  // name.className = "sub-chart-name";
+  // name.textContent = series.name;
+  //
+  // var avgInt = parseInt(calculateAverage(series.data));
+  // var avg = document.createElement('div');
+  // avg.className = "sub-chart-avg";
+  // avg.textContent = avgInt;
+  //
+  // var avgDim = document.createElement('div');
+  // avgDim.className = "dim-font";
+  // avgDim.textContent = "AVG BPM";
+  //
+  // var rest = document.createElement('div');
+  // rest.className = "sub-chart-avg";
+  // rest.textContent = (avgInt - 25).toString();
+  //
+  // var restDim = document.createElement('div');
+  // restDim.className = "dim-font";
+  // restDim.textContent = "REST BPM";
+  //
+  // anotherDiv.appendChild(name);
+  // anotherDiv.appendChild(avg);
+  // anotherDiv.appendChild(avgDim);
+  // anotherDiv.appendChild(rest);
+  // anotherDiv.appendChild(restDim);
+  //
+  // parentDiv.appendChild(anotherDiv);
+  //
+  // var node = document.createElement("div");
+  // node.style = "height: 100px; float: left; width: 80%"
+  //
+  // node.id = series.name
+  // parentDiv.appendChild(node);
+  //
+  // leftPanelDiv.appendChild(parentDiv);
 }
 
 function renderChartForData(data) {

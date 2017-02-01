@@ -21,6 +21,10 @@
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+    <script src="bootstrap.min.js"></script>
+
     <style>
       body{
         padding-top:0px;
@@ -74,19 +78,19 @@
   <body>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <div class="container-fluid">
       <div class="row">
 
-        <div class="col-md-3 sidebar">
-          <div>
-            <img src="firebeats.png" width="32" height="32"/><span class="app-name">FireBeats</span>
+        <div class="sidebar">
+          <div class="logo-placeholder">
+            <img src="firebeats.png" width="64" height="65.6"/>
+            <span class="fire-beats-title">FireBeats</span>
           </div>
-          <ul class="nav nav-sidebar">
-             <form class="">
-                <input type="text" class="form-control" placeholder="Search by name">
-             </form>
+          <div class="left-panel-content-holder">
+            <div style="margin: 10px;">
+              <input type="text" class="search-bar" placeholder="Search by name">
+            </div>
 
-             <div class="btn-group" style="width: 100%" role="group" aria-label="...">
+             <div class="btn-group" style="width: 100%; padding: 10px;" role="group" aria-label="...">
                <button id="red-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
                  <img src="red-heart.png" width="32" height="32" style="margin-bottom:5px"/> <span class="button-count-text"> 0 </span>
                </button>
@@ -96,6 +100,14 @@
                <button id="green-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
                 <img src="green-heart.png" width="32" height="32" style="margin-bottom:5px"/> <span class="button-count-text"> 0 </span>
                </button>
+             </div>
+
+             <div class="sorting-placeholder">
+               <button type="button" class="select-all-button">
+                 Select all
+               </button>
+
+               <img src="sort-alphabet.png">
              </div>
 
 
@@ -122,7 +134,7 @@
             <li><a href="#">Reports</a></li>
             <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li> -->
-          </ul>
+          </div>
           <!-- <ul class="nav nav-sidebar">
             <li><a href="">Nav item</a></li>
             <li><a href="">Nav item again</a></li>
@@ -202,14 +214,10 @@
 
         </div>
       </div>
-    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
-    <script src="bootstrap.min.js"></script>
 
 <!--
     <script src="highcharts.js"></script>
