@@ -403,7 +403,7 @@ function updateList(data){
 
   data.forEach(function(item){
     var htmlItem =
-    `<div class="" style="display:flex; justify-content:space-between; margin-left:10px; margin-right:10px;">
+    `<div class="" style="display:flex; justify-content:space-between; margin: 10px;">
       <div style="width:15%"><img src="user-icon.png" class="bottom-icon"></div>
 
       <div class="bottom-details">
