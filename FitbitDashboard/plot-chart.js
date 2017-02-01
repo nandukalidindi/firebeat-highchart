@@ -538,7 +538,7 @@ function renderChartForData(data) {
 
         series: [{
             type: 'area',
-            name: 'Generic Fireman',
+            name: series.name,
             data: series.data
         }]
     }
@@ -619,13 +619,38 @@ document.getElementById('red-heart').addEventListener('click', truncateData.bind
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
 document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
 
-function selectAllAvaiableCheckboxes() {
+function selectDeselectAllAvaiableCheckboxes(value, event) {
   data().forEach(function(series) {
     var element = document.getElementById(series.name + "-checkbox");
     if(element) {
-      element.checked = true;
+      element.checked = value;
     }
   });
+
+  if(value) {
+    event.target.innerText = "Deselect all";
+  } else {
+    event.target.innerText = "Select all";
+  }
+  event.target.removeEventListener('click', selectDeselectAllAvaiableCheckboxes.bind(null, value));
+  event.target.addEventListener('click', selectDeselectAllAvaiableCheckboxes.bind(null, !value));
+
 }
 
-document.getElementById('select-all').addEventListener('click', selectAllAvaiableCheckboxes);
+document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes.bind(null, true));
+
+function filterData(event) {
+  var searchString = event.target.value.toLowerCase();
+
+  var filteredData = data().filter(function(series) {
+    if(series.name.toLowerCase().indexOf(searchString) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  renderChartForData(filteredData);
+}
+
+document.getElementById('search-bar').addEventListener('keyup', filterData);
