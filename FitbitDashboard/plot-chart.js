@@ -618,3 +618,14 @@ function truncateData(color, event) {
 document.getElementById('red-heart').addEventListener('click', truncateData.bind(null, 'red'));
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
 document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
+
+function selectAllAvaiableCheckboxes() {
+  data().forEach(function(series) {
+    var element = document.getElementById(series.name + "-checkbox");
+    if(element) {
+      element.checked = true;
+    }
+  });
+}
+
+document.getElementById('select-all').addEventListener('click', selectAllAvaiableCheckboxes);
