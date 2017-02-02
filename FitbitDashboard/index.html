@@ -93,7 +93,7 @@
             </div>
 
              <div class="btn-group" style="width: 100%; padding: 10px;" role="group" aria-label="...">
-               <button id="red-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
+               <button id="red-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px" autofocus="true">
                  <img src="icons/red-heart.png" width="32" height="32" style="margin-bottom:5px"/> <span class="button-count-text"> 0 </span>
                </button>
                <button id="yellow-heart" type="button" class="btn btn-default" style="width: 33.3%; height: 60px">
@@ -105,11 +105,13 @@
              </div>
 
              <div class="sorting-placeholder">
-               <button type="button" id="select-all" class="select-all-button select-all-text">
+               <button type="button" id="select-all" class="btn btn-default">
                  Select all
                </button>
 
-               <img src="icons/sort-alphabet.png">
+                <button type="button" class="btn btn-default" id="sort-alphabet">
+                  <img src="icons/sort-alphabet.png">
+                </button>
              </div>
 
              <div id="left-panel">
@@ -202,6 +204,8 @@
             <div id="main-chart">
 
             </div>
+            <script src="js/main-chart-options.js"> </script>
+            <script src="js/data.js"> </script>
             <script src="js/plot-chart.js"> </script>
 
             <br><br>
