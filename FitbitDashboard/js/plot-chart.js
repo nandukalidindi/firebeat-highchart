@@ -360,7 +360,7 @@ document.getElementById('select-all').addEventListener('click', selectDeselectAl
 function filterData(event) {
   var searchString = event.target.value.toLowerCase();
 
-  var filteredData = data().filter(function(series) {
+  var filteredData = leftPanelData.filter(function(series) {
     if(series.name.toLowerCase().indexOf(searchString) !== -1) {
       return true;
     } else {
