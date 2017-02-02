@@ -18,21 +18,20 @@ function calculateAverage(data) {
   return Math.round(sum/size);
 }
 
-function updateChartOnHeartRateOrTimeFrameChange(event) {
+function getFilteredDataOnBpmAndTime() {
   var average = parseInt(document.getElementById('heart-rate-input').value) || 60,
       from = parseInt(document.getElementById("duration-input").value) || 1,
       to = 24;
 
-  var options = chart.options;
-
-  options.series = data();
-  options.series.forEach(function(series) {
+  var filterData = [];
+  filterData = data();
+  filterData.forEach(function(series) {
     series.data = series.data.filter(function(data) {
       return data[0] >= from && data[0] <= to;
     });
   });
 
-  options.series = options.series.filter(function(series) {
+  filterData = filterData.filter(function(series) {
     if(calculateAverage(series.data) >= average) {
       series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
       return true;
@@ -41,9 +40,18 @@ function updateChartOnHeartRateOrTimeFrameChange(event) {
     }
   });
 
+  return filterData;
+}
+
+function updateChartOnHeartRateOrTimeFrameChange(event) {
+
+  var options = chart.options;
+
+  options.series = getFilteredDataOnBpmAndTime();
+
   chart = new Highcharts.Chart('main-chart', options);
 
-  updateList(series.data);
+  updateList(options.series);
 
 }
 
@@ -59,33 +67,17 @@ function showAll(number, event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-  updateList(options.series.data);
+  updateList(options.series);
 }
 
 document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
 
 function showSeriousNumber(number, event) {
-  var average = parseInt(document.getElementById('heart-rate-input').value) || 60,
-      from = parseInt(document.getElementById("duration-input").value) || 1,
-      to = 24;
-
   var options = chart.options;
 
-  options.series = data();
-  options.series.forEach(function(series) {
-    series.data = series.data.filter(function(data) {
-      return data[0] >= from && data[0] <= to;
-    });
-  });
+  options.series = getFilteredDataOnBpmAndTime();
 
-  options.series = options.series.filter(function(series) {
-    if(calculateAverage(series.data) >= average) {
-      series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
-      return true;
-    } else {
-      return false;
-    }
-  });
+  // options
 
   var mappedAverage = {};
   options.series.forEach(function(series) {
@@ -105,7 +97,7 @@ function showSeriousNumber(number, event) {
 
   chart = new Highcharts.Chart('main-chart', options);
 
-  // updateList(newSeries);
+  updateList(newSeries);
 }
 
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
@@ -290,7 +282,7 @@ function getDataBetween(above, below) {
   var data = this.data();
   return data.filter(function(series) {
     var average = parseInt(calculateAverage(series.data));
-    if(average < below && average > above) {
+    if(average <= below && average > above) {
       return true;
     } else {
       return false;
@@ -313,11 +305,11 @@ function createBPMTypeMap() {
 
   data.forEach(function(series) {
     var average = calculateAverage(series.data);
-    if(average > redRangeMin && average < redRangeMax) {
+    if(average > redRangeMin && average <= redRangeMax) {
       typeMap.red = typeMap.red + 1;
-    } else if (average > yellowRangeMin && average < yellowRangeMax) {
+    } else if (average > yellowRangeMin && average <= yellowRangeMax) {
       typeMap.yellow = typeMap.yellow + 1;
-    } else if (average > greenRangeMin && average < greenRangeMax) {
+    } else if (average > greenRangeMin && average <= greenRangeMax) {
       typeMap.green = typeMap.green + 1;
     }
   });
