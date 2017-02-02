@@ -77,27 +77,18 @@ function showSeriousNumber(number, event) {
 
   options.series = getFilteredDataOnBpmAndTime();
 
-  // options
+  options.series = options.series.sort(function(a, b) {
+    var averageA = calculateAverage(a.data),
+        averageB = calculateAverage(b.data);
 
-  var mappedAverage = {};
-  options.series.forEach(function(series) {
-    mappedAverage[calculateAverage(series.data)] = series;
+    return (averageA < averageB ? 1 : averageA > averageB ? -1 : 0);
   });
 
-  var sortedAverageList = Object.keys(mappedAverage).sort().reverse();
-
-  var newSeries = [];
-
-  var counter = sortedAverageList.length < number  ? sortedAverageList.length : number;
-
-  for(var i=0; i<counter; i++) {
-    newSeries.push(mappedAverage[sortedAverageList[i]]);
-  }
-  options.series = newSeries;
+  options.series = options.series.slice(0, number);
 
   chart = new Highcharts.Chart('main-chart', options);
 
-  updateList(newSeries);
+  updateList(options.series);
 }
 
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
@@ -278,6 +269,8 @@ function renderChartForData(data) {
   });
 }
 
+var leftPanelData = data();
+
 function getDataBetween(above, below) {
   var data = this.data();
   return data.filter(function(series) {
@@ -326,24 +319,25 @@ Object.keys(typeMap).forEach(function(type) {
 function truncateData(color, event) {
   switch (color) {
     case 'red':
-      renderChartForData(getDataBetween(redRangeMin, redRangeMax));
+      leftPanelData = getDataBetween(redRangeMin, redRangeMax);
       break;
     case 'yellow':
-      renderChartForData(getDataBetween(yellowRangeMin, yellowRangeMax));
+      leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
       break;
     case 'green':
-      renderChartForData(getDataBetween(greenRangeMin, greenRangeMax));
+      leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
       break;
     default:
-      return data();
+      leftPanelData = data();
   }
+
+  renderChartForData(leftPanelData);
 }
 document.getElementById('red-heart').addEventListener('click', truncateData.bind(null, 'red'));
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
 document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
 
 document.getElementById('red-heart').click();
-// renderChartForData(data());
 
 var selectAllToggle = true;
 function selectDeselectAllAvaiableCheckboxes(event) {
@@ -379,8 +373,8 @@ function filterData(event) {
 document.getElementById('search-bar').addEventListener('keyup', filterData);
 
 var sortToggle = true;
-function sortAlphabetically(value, event) {
-  var sortedData = data();
+function sortAlphabetically(event) {
+  var sortedData = leftPanelData;
   sortedData.sort(function(a,b) {
     var x = a.name.toLowerCase();
     var y = b.name.toLowerCase();
@@ -388,6 +382,8 @@ function sortAlphabetically(value, event) {
   });
 
   sortToggle = !sortToggle;
+
+  event.target.src = sortToggle ? "icons/sort-alphabet-descending.png" : "icons/sort-alphabet.png";
 
   renderChartForData(sortedData);
 }
