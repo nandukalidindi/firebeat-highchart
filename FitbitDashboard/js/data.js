@@ -4,7 +4,8 @@ var fullData = [
     gender: 'Male',
     age: 23,
     cell: '(917) 123-456',
-    district: 'Queens',
+    district: 'Brooklyn',
+    current_location: 'Abu Dhabi',
     data: [
       [1, 105],
       [2, 130],
@@ -37,7 +38,8 @@ var fullData = [
     gender: 'Male',
     age: 26,
     cell: '(917) 123-456',
-    district: 'Queens',
+    district: 'Bronx',
+    current_location: 'NJ',
     data: [
       [1, 157],
       [2, 158],
@@ -69,7 +71,8 @@ var fullData = [
     gender: 'Male',
     age: 25,
     cell: '(646) 100-929',
-    district: 'Queens',
+    district: 'Bayridge',
+    current_location: 'Mercer St',
     data: [
       [1, 93],
       [2, 155],
@@ -101,7 +104,8 @@ var fullData = [
   gender: 'Male',
   age: 24,
   cell: '(917) 909-552',
-  district: 'Queens',
+  district: 'NJ',
+  current_location: 'Brooklyn',
   data: [
     [1, 62],
     [2, 114],
@@ -133,7 +137,8 @@ var fullData = [
   gender: 'Male',
   age: 22,
   cell: '(646) 222-190',
-  district: 'Queens',
+  district: 'Staten Island',
+  current_location: 'Brooklyn',
   data: [
     [1, 121],
     [2, 101],
@@ -165,7 +170,8 @@ var fullData = [
   gender: 'Male',
   age: 23,
   cell: '(616) 123-456',
-  district: 'Queens',
+  district: 'Manhattan',
+  current_location: "Brooklyn",
   data: [
     [1, 148],
     [2, 123],

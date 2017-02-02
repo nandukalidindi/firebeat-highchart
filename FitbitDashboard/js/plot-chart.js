@@ -119,7 +119,11 @@ document.getElementById("show-selected").addEventListener("click", showSelected)
 function updateList(data){
   $('#list-item-group').html('');
 
-  data.forEach(function(item){
+  data.forEach(function(item) {
+    var currentTime = (new Date()).getHours(),
+        currentBPM = item.data.find(function(entry) { return entry[0] == currentTime; })[1];
+
+    var average = calculateAverage(item.data);
     var htmlItem =
     `<div class="" style="display:flex; justify-content:space-between; margin: 10px;">
       <div style="width:15%"><img src="icons/user-icon.png" class="bottom-icon"></div>
@@ -130,21 +134,21 @@ function updateList(data){
             <img src="icons/online-icon.png" width="8"></span>
         </div>
         <div class="bottom-sub-details">
-          <div class="bottom-text">
+          <div class="bottom-text" style="width: 10%;">
             <div>${item.gender}</div>
             <div>Age: ${item.age}</div>
           </div>
-          <div class="bottom-text">
-            <div>Current: 132 bpm</div>
-            <div>Rest: 78 bpm</div>
-            <div>Average: ${calculateAverage(item.data)} bmp (last 5hrs)</div>
+          <div class="bottom-text" style="width: 20%;">
+            <div>Current: ${currentBPM} bpm</div>
+            <div>Rest: ${average - 15} bpm</div>
+            <div>Average: ${average} bpm </div>
           </div>
-          <div class="bottom-text">
+          <div class="bottom-text" style="width: 35%;">
             <div>Cell: ${item.cell} </div>
             <div>District: ${item.district} </div>
-            <div>Current Location: New York</div>
+            <div>Current Location: ${item.current_location} </div>
           </div>
-          <div class="">
+          <div class="" style="width: 15%">
             <a id="notify-button">
               <img src="icons/notify-button.png" class="notify-button">
             </a>
