@@ -219,6 +219,8 @@ body {
 }
 
 .checkbox-left-panel {
+  zoom: 1.1;
+  background: white;
   width: 28px;
 	height: 28px;
 	border-radius: 6px;
@@ -296,7 +298,7 @@ body {
 	line-height: normal;
 	letter-spacing: normal;
 	text-align: center;
-	color: #2f3841;
+	background: white;
 }
 
 .show-all-text {
@@ -368,6 +370,7 @@ body {
 }
 
 .search-bar-font {
+  padding-left: 22.8px;
 	font-family: HelveticaNeue;
 	font-size: 21px;
 	font-weight: 500;

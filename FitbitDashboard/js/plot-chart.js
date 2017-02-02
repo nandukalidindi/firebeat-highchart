@@ -275,6 +275,77 @@ function renderChartForData(data) {
 
 var leftPanelData = data();
 
+var selectAllToggle = true;
+function selectDeselectAllAvaiableCheckboxes(event) {
+  data().forEach(function(series) {
+    var element = document.getElementById(series.name + "-checkbox");
+    if(element) {
+      element.checked = selectAllToggle;
+    }
+  });
+
+  if(selectAllToggle) {
+    event.target.innerText = "Deselect all";
+  } else {
+    event.target.innerText = "Select all";
+  }
+  selectAllToggle = !selectAllToggle;
+}
+document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes);
+
+function filterData(event) {
+  var searchString = event.target.value.toLowerCase();
+
+  var filteredData = leftPanelData.filter(function(series) {
+    if(series.name.toLowerCase().indexOf(searchString) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  renderChartForData(filteredData);
+}
+document.getElementById('search-bar').addEventListener('keyup', filterData);
+
+var sortAlphabeticToggle = true;
+function sortAlphabetically(event) {
+  var sortedData = leftPanelData;
+  sortedData.sort(function(a,b) {
+    var x = a.name.toLowerCase();
+    var y = b.name.toLowerCase();
+    return sortAlphabeticToggle ? (x < y ? -1 : x > y ? 1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
+  });
+
+  sortAlphabeticToggle = !sortAlphabeticToggle;
+
+  event.target.src = sortAlphabeticToggle ? "icons/sort-alphabet-descending.png" : "icons/sort-alphabet-ascending.png";
+
+  renderChartForData(sortedData);
+}
+
+var sortNumericToggle = true;
+function sortNumerically(event) {
+  var sortedData = leftPanelData;
+
+  sortedData.sort(function(a, b) {
+    var x = calculateAverage(a.data),
+        y = calculateAverage(b.data);
+
+    return sortNumericToggle ? (x < y ? -1 : x > y ? 1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
+  });
+
+  sortNumericToggle = !sortNumericToggle;
+
+  event.target.src = sortNumericToggle ? "icons/sort-numeric-descending.png" : "icons/sort-numeric-ascending.png";
+
+  renderChartForData(sortedData);
+}
+
+document.getElementById('sort-alphabet').addEventListener('click', sortAlphabetically);
+
+document.getElementById('sort-numeric').addEventListener('click', sortNumerically);
+
 function getDataBetween(above, below) {
   var data = this.data();
   return data.filter(function(series) {
@@ -323,12 +394,15 @@ Object.keys(typeMap).forEach(function(type) {
 function truncateData(color, event) {
   switch (color) {
     case 'red':
+      resetAll()
       leftPanelData = getDataBetween(redRangeMin, redRangeMax);
       break;
     case 'yellow':
+      resetAll();
       leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
       break;
     case 'green':
+      resetAll();
       leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
       break;
     default:
@@ -343,75 +417,21 @@ document.getElementById('green-heart').addEventListener('click', truncateData.bi
 
 document.getElementById('red-heart').click();
 
-var selectAllToggle = true;
-function selectDeselectAllAvaiableCheckboxes(event) {
-  data().forEach(function(series) {
-    var element = document.getElementById(series.name + "-checkbox");
-    if(element) {
-      element.checked = selectAllToggle;
-    }
-  });
+function resetAll() {
+    selectAllToggle = false;
+    sortAlphabeticToggle = false;
+    sortNumericToggle = false;
 
-  if(selectAllToggle) {
-    event.target.innerText = "Deselect all";
-  } else {
-    event.target.innerText = "Select all";
-  }
-  selectAllToggle = !selectAllToggle;
+    data().forEach(function(series) {
+      var element = document.getElementById(series.name + '-checkbox');
+      if(element) {
+        element.checked = false;
+      }
+    });
+
+    document.getElementById('select-all').innerText = "Select all";
+
+    document.getElementById('sort-alphabet').children[0].src = "icons/sort-alphabet-ascending.png";
+    document.getElementById('sort-numeric').children[0].src = "icons/sort-numeric-ascending.png";
+
 }
-document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes);
-
-function filterData(event) {
-  var searchString = event.target.value.toLowerCase();
-
-  var filteredData = leftPanelData.filter(function(series) {
-    if(series.name.toLowerCase().indexOf(searchString) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  renderChartForData(filteredData);
-}
-document.getElementById('search-bar').addEventListener('keyup', filterData);
-
-var sortToggle = true;
-function sortAlphabetically(event) {
-  var sortedData = leftPanelData;
-  sortedData.sort(function(a,b) {
-    var x = a.name.toLowerCase();
-    var y = b.name.toLowerCase();
-    return sortToggle ? (x < y ? -1 : x > y ? 1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
-  });
-
-  sortToggle = !sortToggle;
-
-  event.target.src = sortToggle ? "icons/sort-alphabet-descending.png" : "icons/sort-alphabet-ascending.png";
-
-  renderChartForData(sortedData);
-}
-
-var sortNumericToggle = true;
-function sortNumerically(event) {
-  var sortedData = leftPanelData;
-
-  sortedData.sort(function(a, b) {
-    var x = calculateAverage(a.data),
-        y = calculateAverage(b.data);
-
-    return sortNumericToggle ? (x < y ? -1 : x > y ? 1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
-  });
-
-  sortNumericToggle = !sortNumericToggle;
-
-  event.target.src = sortNumericToggle ? "icons/sort-numeric-descending.png" : "icons/sort-numeric-ascending.png";
-
-  renderChartForData(sortedData);
-}
-
-document.getElementById('sort-alphabet').addEventListener('click', sortAlphabetically);
-
-
-
-document.getElementById('sort-numeric').addEventListener('click', sortNumerically);
