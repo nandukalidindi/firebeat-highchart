@@ -391,10 +391,12 @@ Object.keys(typeMap).forEach(function(type) {
   element.children[1].textContent = typeMap[type];
 });
 
+var heartList = [document.getElementById('red-heart'), document.getElementById('yellow-heart'), document.getElementById('green-heart')];
+
 function truncateData(color, event) {
   switch (color) {
     case 'red':
-      resetAll()
+      resetAll();
       leftPanelData = getDataBetween(redRangeMin, redRangeMax);
       break;
     case 'yellow':
@@ -408,6 +410,14 @@ function truncateData(color, event) {
     default:
       leftPanelData = data();
   }
+
+  heartList.forEach(function(element) {
+    if(element.id == event.target.id) {
+      $("#" + element.id).addClass('active');
+    } else {
+      $("#" + element.id).removeClass('active');
+    }
+  })
 
   renderChartForData(leftPanelData);
 }
