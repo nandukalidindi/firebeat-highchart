@@ -383,8 +383,31 @@ function sortAlphabetically(event) {
 
   sortToggle = !sortToggle;
 
-  event.target.src = sortToggle ? "icons/sort-alphabet-descending.png" : "icons/sort-alphabet.png";
+  event.target.src = sortToggle ? "icons/sort-alphabet-descending.png" : "icons/sort-alphabet-ascending.png";
 
   renderChartForData(sortedData);
 }
+
+var sortNumericToggle = true;
+function sortNumerically(event) {
+  var sortedData = leftPanelData;
+
+  sortedData.sort(function(a, b) {
+    var x = calculateAverage(a.data),
+        y = calculateAverage(b.data);
+
+    return sortNumericToggle ? (x < y ? -1 : x > y ? 1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
+  });
+
+  sortNumericToggle = !sortNumericToggle;
+
+  event.target.src = sortNumericToggle ? "icons/sort-numeric-descending.png" : "icons/sort-numeric-ascending.png";
+
+  renderChartForData(sortedData);
+}
+
 document.getElementById('sort-alphabet').addEventListener('click', sortAlphabetically);
+
+
+
+document.getElementById('sort-numeric').addEventListener('click', sortNumerically);
