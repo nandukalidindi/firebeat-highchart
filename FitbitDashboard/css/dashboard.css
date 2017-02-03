@@ -210,6 +210,10 @@ body {
 	box-shadow: 1px 1px 9px 0 rgba(0, 0, 0, 0.09);
 }
 
+.sub-chart-container text {
+    font-size: 9px !important;
+}
+
 .profile-icon-left-panel {
   width: 44px;
 	height: 44px;
@@ -380,6 +384,7 @@ body {
 	letter-spacing: normal;
 	text-align: left;
 	color: #b8b8b8;
+  margin-top:8px;
 }
 
 

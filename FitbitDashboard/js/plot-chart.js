@@ -277,6 +277,7 @@ var leftPanelData = data();
 
 var selectAllToggle = true;
 function selectDeselectAllAvaiableCheckboxes(event) {
+
   data().forEach(function(series) {
     var element = document.getElementById(series.name + "-checkbox");
     if(element) {
@@ -425,10 +426,10 @@ document.getElementById('red-heart').addEventListener('click', truncateData.bind
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
 document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
 
-document.getElementById('red-heart').click();
+
 
 function resetAll() {
-    selectAllToggle = false;
+    selectAllToggle = true;
     sortAlphabeticToggle = false;
     sortNumericToggle = false;
 
@@ -445,3 +446,12 @@ function resetAll() {
     document.getElementById('sort-numeric').children[0].src = "icons/sort-numeric-ascending.png";
 
 }
+
+
+
+
+document.getElementById('red-heart').click();
+document.getElementById('select-all').click();
+setTimeout(function(){
+  document.getElementById('show-selected').click();
+},100);
