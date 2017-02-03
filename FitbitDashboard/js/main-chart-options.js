@@ -22,15 +22,16 @@ var mainChartOptions = {
         // lineWidth: 2,
         events: {
           click: function(event) {
-            if (!this.visible)
-              return true;
-
-            var seriesIndex = this.index;
+            var seriesName = this.name;
             var series = this.chart.series;
             var options = this.chart.options;
+            var currentSeries = "";
 
             for (var i = 0; i < series.length; i++) {
-              if (series[i].index !== seriesIndex && options.series[i].dashStyle !== "solid") {
+              if(options.series[i].name === this.name) {
+                currentSeries = options.series[i];
+              }
+              if (options.series[i].name !== seriesName) {
                   options.series[i].dashStyle = "shortdash";
                   options.series[i].color = "#DEDEDE";
                 } else {

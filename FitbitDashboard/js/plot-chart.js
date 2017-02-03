@@ -2,11 +2,8 @@ function data() {
   return fullData;
 }
 
-mainChartOptions.series = data();
-
-chart = new Highcharts.Chart('main-chart', mainChartOptions)
-
-var colors = chart.series.map(function(series) { return { color: series.color, name: series.name }; });
+var contextData = data();
+var sortAlphabeticToggle = true;
 
 function calculateAverage(data) {
   var size = data.length,
@@ -43,24 +40,35 @@ function getFilteredDataOnBpmAndTime() {
   return filterData;
 }
 
-function updateChartOnHeartRateOrTimeFrameChange(event) {
-
-  var options = chart.options;
-
-  options.series = getFilteredDataOnBpmAndTime();
-
-  chart = new Highcharts.Chart('main-chart', options);
-
-  updateList(options.series);
-
+function updateChartOnHeartRate(event) {
+  if(event.target.value >= 200) {
+    event.target.value = 200;
+  }
+  genericUpdate();
 }
 
-document.getElementById("duration-input").addEventListener("keyup", updateChartOnHeartRateOrTimeFrameChange);
-document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnHeartRateOrTimeFrameChange);
+function updateChartOnTime(event) {
+  if(event.target.value >= 24) {
+    event.target.value = 24;
+  }
+  genericUpdate();
+}
+
+function genericUpdate() {
+  var options = chart.options;
+  options.series = getFilteredDataOnBpmAndTime();
+  chart = new Highcharts.Chart('main-chart', options);
+  updateList(options.series);
+}
 
 function showAll(number, event) {
   var options = chart.options;
   options.series = data();
+
+  options.series.forEach(function(series) {
+    series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
+    series.dashStyle = "solid";
+  });
 
   document.getElementById('heart-rate-input').value = 60;
   document.getElementById('duration-input').value = 1;
@@ -70,49 +78,60 @@ function showAll(number, event) {
   updateList(options.series);
 }
 
-document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
-
 function showSeriousNumber(number, event) {
   var options = chart.options;
-
   options.series = getFilteredDataOnBpmAndTime();
 
   options.series = options.series.sort(function(a, b) {
+    a.color = colors.find(function(chartSeries) { return chartSeries.name === a.name }).color;
+    a.dashStyle = "solid";
+    b.color = colors.find(function(chartSeries) { return chartSeries.name === b.name }).color;
+    b.dashStyle = "solid";
     var averageA = calculateAverage(a.data),
         averageB = calculateAverage(b.data);
-
     return (averageA < averageB ? 1 : averageA > averageB ? -1 : 0);
   });
 
   options.series = options.series.slice(0, number);
+  chart = new Highcharts.Chart('main-chart', options);
+  updateList(options.series);
+}
+
+function showSelected(selectedData=[], event) {
+  var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : data();
+  var newData = [];
+  minifiedData.forEach(function(series) {
+    var element = document.getElementById(series.name + "-checkbox");
+    var checked = element && element.checked;
+    if(checked) {
+      series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
+      series.dashStyle = "solid";
+      newData.push(series);
+    }
+  });
+
+  var options = chart.options;
+  options.series = newData.length === 0 ? minifiedData : newData;
 
   chart = new Highcharts.Chart('main-chart', options);
 
   updateList(options.series);
 }
 
+mainChartOptions.series = data();
+
+chart = new Highcharts.Chart('main-chart', mainChartOptions)
+
+const colors = chart.series.map(function(series) { return { color: series.color, name: series.name }; });
+
+
+document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnHeartRate);
+document.getElementById("duration-input").addEventListener("keyup", updateChartOnTime);
+
+document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
 document.getElementById("show-serious-10").addEventListener("click", showSeriousNumber.bind(null, 10));
-
-function showSelected(event) {
-  var newData = [];
-  data().forEach(function(series) {
-    var element = document.getElementById(series.name + "-checkbox");
-    var checked = element && element.checked;
-    if(checked) {
-      series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
-      newData.push(series);
-    }
-  });
-
-  var options = chart.options;
-  options.series = newData;
-
-  chart = new Highcharts.Chart('main-chart', options);
-
-  updateList(newData);
-}
-document.getElementById("show-selected").addEventListener("click", showSelected);
+document.getElementById("show-selected").addEventListener("click", showSelected.bind(null, []));
 
 
 
@@ -187,7 +206,7 @@ function buildUserStatisticDOM(series) {
   $("#left-panel").append(statisticHTML);
 }
 
-function renderChartForData(data) {
+function renderChartForData(data, retainSortOptions=true) {
   var leftPanelDiv = document.getElementById('left-panel')
   while (leftPanelDiv.hasChildNodes()) {
     leftPanelDiv.removeChild(leftPanelDiv.lastChild);
@@ -266,6 +285,10 @@ function renderChartForData(data) {
         }]
     }
 
+    if(retainSortOptions) {
+      resetAll();
+    }
+
     subChartOptions.plotOptions.area.fillColor.stops[0][1] = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
 
     subChartOptions.series[0].color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
@@ -310,7 +333,6 @@ function filterData(event) {
 }
 document.getElementById('search-bar').addEventListener('keyup', filterData);
 
-var sortAlphabeticToggle = true;
 function sortAlphabetically(event) {
   var sortedData = leftPanelData;
   sortedData.sort(function(a,b) {
@@ -320,10 +342,8 @@ function sortAlphabetically(event) {
   });
 
   sortAlphabeticToggle = !sortAlphabeticToggle;
-
   event.target.src = sortAlphabeticToggle ? "icons/sort-alphabet-descending.png" : "icons/sort-alphabet-ascending.png";
-
-  renderChartForData(sortedData);
+  renderChartForData(sortedData, false);
 }
 
 var sortNumericToggle = true;
@@ -333,15 +353,12 @@ function sortNumerically(event) {
   sortedData.sort(function(a, b) {
     var x = calculateAverage(a.data),
         y = calculateAverage(b.data);
-
     return sortNumericToggle ? (x < y ? -1 : x > y ? 1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
   });
 
   sortNumericToggle = !sortNumericToggle;
-
   event.target.src = sortNumericToggle ? "icons/sort-numeric-descending.png" : "icons/sort-numeric-ascending.png";
-
-  renderChartForData(sortedData);
+  renderChartForData(sortedData, false);
 }
 
 document.getElementById('sort-alphabet').addEventListener('click', sortAlphabetically);
@@ -398,23 +415,23 @@ var heartList = [document.getElementById('red-heart'), document.getElementById('
 function truncateData(color, event) {
   switch (color) {
     case 'red':
-      resetAll();
       leftPanelData = getDataBetween(redRangeMin, redRangeMax);
       break;
     case 'yellow':
-      resetAll();
       leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
       break;
     case 'green':
-      resetAll();
       leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
       break;
     default:
       leftPanelData = data();
   }
 
+  showSelected(leftPanelData, null);
+
   heartList.forEach(function(element) {
-    if(element.id == event.target.id) {
+    var button = event.target.tagName == "BUTTON" ? event.target : event.target.parentElement;
+    if(element.id == button.id) {
       $("#" + element.id).addClass('active');
     } else {
       $("#" + element.id).removeClass('active');
@@ -437,22 +454,14 @@ function resetAll() {
     data().forEach(function(series) {
       var element = document.getElementById(series.name + '-checkbox');
       if(element) {
-        element.checked = false;
+        element.checked = true;
       }
     });
 
-    document.getElementById('select-all').innerText = "Select all";
+    document.getElementById('select-all').innerText = "Deselect all";
 
     document.getElementById('sort-alphabet').children[0].src = "icons/sort-alphabet-ascending.png";
     document.getElementById('sort-numeric').children[0].src = "icons/sort-numeric-ascending.png";
-
 }
 
-
-
-
 document.getElementById('red-heart').click();
-document.getElementById('select-all').click();
-setTimeout(function(){
-  document.getElementById('show-selected').click();
-},100);
