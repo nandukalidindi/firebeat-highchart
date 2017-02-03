@@ -444,8 +444,6 @@ document.getElementById('red-heart').addEventListener('click', truncateData.bind
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
 document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
 
-
-
 function resetAll() {
     selectAllToggle = true;
     sortAlphabeticToggle = false;
