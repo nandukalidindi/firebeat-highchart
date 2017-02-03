@@ -388,6 +388,11 @@ body {
   margin-top:8px;
 }
 
+.notification-holder {
+  text-align: center;
+  margin-top: -40px;
+}
+
 
 /*
  * Placeholder dashboard ideas
