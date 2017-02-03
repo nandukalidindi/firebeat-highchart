@@ -33,6 +33,7 @@ body {
 .sidebar {
   position: absolute;
   width: 100%;
+  height: 900px;
   top: 51px;
   bottom: 0;
   left: 0;
@@ -257,7 +258,7 @@ body {
 .main-chart-heading {
   width: 148.7px;
 	height: 27px;
-	font-family: AvenirNext;
+	/*font-family: AvenirNext;*/
 	font-size: 20px;
 	font-weight: bold;
 	font-style: normal;
@@ -278,7 +279,7 @@ body {
 
 .spinner-text {
   text-align: center;
-  font-family: AvenirNext;
+  /*font-family: AvenirNext;*/
 	font-size: 18px;
 	font-weight: normal;
 	font-style: normal;
@@ -294,7 +295,7 @@ body {
 	height: 32px;
 	border-radius: 17px;
 	border: solid 1px #2f3841;
-  font-family: AvenirNext;
+  /*font-family: AvenirNext;*/
 	font-size: 18px;
 	font-weight: normal;
 	font-style: normal;
@@ -311,7 +312,7 @@ body {
 }
 
 .show-count-selection {
-	font-family: AvenirNext;
+	/*font-family: AvenirNext;*/
 	font-size: 18px;
 	font-weight: normal;
 	font-style: normal;
