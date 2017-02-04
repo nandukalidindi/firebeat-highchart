@@ -2,6 +2,17 @@ function data() {
   return fullData;
 }
 
+var context = "red";
+
+var redRangeMin = 120,
+    redRangeMax = 200,
+
+    yellowRangeMin = 110,
+    yellowRangeMax = 120,
+
+    greenRangeMin = 0,
+    greenRangeMax = 110;
+
 var contextData = data();
 var sortAlphabeticToggle = true;
 
@@ -21,8 +32,10 @@ function getFilteredDataOnBpmAndTime() {
       to = 24;
 
   var filterData = [];
-  filterData = data();
-  filterData.forEach(function(series) {
+  dataMap[context].forEach(function(series) {
+    filterData.push(jQuery.extend(true, {}, series));
+  });
+  filterData.forEach(function(series, index) {
     series.data = series.data.filter(function(data) {
       return data[0] >= from && data[0] <= to;
     });
@@ -124,6 +137,12 @@ chart = new Highcharts.Chart('main-chart', mainChartOptions)
 
 const colors = chart.series.map(function(series) { return { color: series.color, name: series.name }; });
 
+const redData = truncateData("red", null);
+const yellowData = truncateData("yellow", null);
+const greenData = truncateData("green", null);
+
+const dataMap = { "red": redData, "yellow": yellowData, "green": greenData };
+
 
 document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnHeartRate);
 document.getElementById("duration-input").addEventListener("keyup", updateChartOnTime);
@@ -140,7 +159,7 @@ function updateList(data){
 
   data.forEach(function(item) {
     var currentTime = (new Date()).getHours(),
-        currentBPM = item.data.find(function(entry) { return entry[0] == currentTime; })[1];
+        currentBPM = 100;//item.data.find(function(entry) { return entry[0] == currentTime; })[1];
 
     var average = calculateAverage(item.data);
     var htmlItem =
@@ -377,15 +396,6 @@ function getDataBetween(above, below) {
   });
 }
 
-var redRangeMin = 120;
-    redRangeMax = 200;
-
-    yellowRangeMin = 110;
-    yellowRangeMax = 120;
-
-    greenRangeMin = 0;
-    greenRangeMax = 110;
-
 function createBPMTypeMap() {
   var data = this.data();
   var typeMap = {red: 0, yellow: 0, green: 0};
@@ -427,18 +437,22 @@ function truncateData(color, event) {
       leftPanelData = data();
   }
 
+  context = color;
   showSelected(leftPanelData, null);
 
-  heartList.forEach(function(element) {
-    var button = event.target.tagName == "BUTTON" ? event.target : event.target.parentElement;
-    if(element.id == button.id) {
-      $("#" + element.id).addClass('active');
-    } else {
-      $("#" + element.id).removeClass('active');
-    }
-  })
+  if(event != null) {
+    heartList.forEach(function(element) {
+      var button = event.target.tagName == "BUTTON" ? event.target : event.target.parentElement;
+      if(element.id == button.id) {
+        $("#" + element.id).addClass('active');
+      } else {
+        $("#" + element.id).removeClass('active');
+      }
+    });
+  }
 
   renderChartForData(leftPanelData);
+  return leftPanelData;
 }
 document.getElementById('red-heart').addEventListener('click', truncateData.bind(null, 'red'));
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
