@@ -16,23 +16,50 @@ var redRangeMin = 120,
 var contextData = data();
 var sortAlphabeticToggle = true;
 
-function calculateAverage(data) {
+// function calculateAverage(data) {
+//   var size = data.length,
+//       sum = 0;
+//   data.forEach(function(entry) {
+//     sum += entry[1];
+//   });
+//
+//   return Math.round(sum/size);
+// }
+
+function calculateAverage(data, lastHours = 5) {
+  var currentTime = (new Date()).getHours();
   var size = data.length,
       sum = 0;
+  if(currentTime < lastHours) {
+    currentTime = lastHours;
+  }
+  size = lastHours;
   data.forEach(function(entry) {
-    sum += entry[1];
+    if(currentTime - entry[0] >= 0 && currentTime - entry[0] < lastHours) {
+      sum += entry[1];
+    }
   });
 
   return Math.round(sum/size);
 }
 
-function getFilteredDataOnBpmAndTime() {
+function getFilteredDataOnBpmAndTime(initialData = null) {
+  var currentTime = (new Date()).getHours();
   var average = parseInt(document.getElementById('heart-rate-input').value) || 60,
-      from = parseInt(document.getElementById("duration-input").value) || 1,
+      from = parseInt(document.getElementById("duration-input").value) || 5,
       to = 24;
 
+  if(currentTime < from) {
+    from = 1;
+    to = currentTime;
+  } else {
+    from = currentTime - from;
+    to = currentTime;
+  }
+
   var filterData = [];
-  dataMap[context].forEach(function(series) {
+  var finalData = initialData ? initialData : dataMap[context]
+  finalData.forEach(function(series) {
     filterData.push(jQuery.extend(true, {}, series));
   });
   filterData.forEach(function(series, index) {
@@ -76,15 +103,15 @@ function genericUpdate() {
 
 function showAll(number, event) {
   var options = chart.options;
-  options.series = data();
+  options.series = getFilteredDataOnBpmAndTime(data());
 
   options.series.forEach(function(series) {
     series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
     series.dashStyle = "solid";
   });
 
-  document.getElementById('heart-rate-input').value = 60;
-  document.getElementById('duration-input').value = 1;
+  // document.getElementById('heart-rate-input').value = 60;
+  // document.getElementById('duration-input').value = "-";
 
   chart = new Highcharts.Chart('main-chart', options);
 
@@ -93,7 +120,7 @@ function showAll(number, event) {
 
 function showSeriousNumber(number, event) {
   var options = chart.options;
-  options.series = getFilteredDataOnBpmAndTime();
+  options.series = getFilteredDataOnBpmAndTime(data());
 
   options.series = options.series.sort(function(a, b) {
     a.color = colors.find(function(chartSeries) { return chartSeries.name === a.name }).color;
@@ -111,7 +138,7 @@ function showSeriousNumber(number, event) {
 }
 
 function showSelected(selectedData=[], event) {
-  var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : data();
+  var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : getFilteredDataOnBpmAndTime(data());
   var newData = [];
   minifiedData.forEach(function(series) {
     var element = document.getElementById(series.name + "-checkbox");
@@ -257,10 +284,14 @@ function renderChartForData(data, retainSortOptions=true) {
             tickInterval: 120,
             title: { text: '' },
             labels: {
-              align: 'left',
-              x: 3,
-              y: -3
-            }
+              enabled: false
+              // align: 'left',
+              // x: 3,
+              // y: -3
+            },
+            gridLineWidth: 0,
+            minorTickLength: 0,
+            tickLength: 0
         },
         exporting: { enabled: false },
         credits: { enabled: false },
@@ -385,8 +416,8 @@ document.getElementById('sort-alphabet').addEventListener('click', sortAlphabeti
 document.getElementById('sort-numeric').addEventListener('click', sortNumerically);
 
 function getDataBetween(above, below) {
-  var data = this.data();
-  return data.filter(function(series) {
+  var filterData = data();
+  return filterData.filter(function(series) {
     var average = parseInt(calculateAverage(series.data));
     if(average <= below && average > above) {
       return true;
@@ -438,7 +469,7 @@ function truncateData(color, event) {
   }
 
   context = color;
-  showSelected(leftPanelData, null);
+  showSelected(getFilteredDataOnBpmAndTime(leftPanelData), null);
 
   if(event != null) {
     heartList.forEach(function(element) {
