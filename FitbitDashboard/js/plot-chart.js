@@ -45,7 +45,7 @@ function calculateAverage(data, lastHours = 5) {
 
 function getFilteredDataOnBpmAndTime(initialData = null) {
   var currentTime = (new Date()).getHours();
-  var average = parseInt(document.getElementById('heart-rate-input').value) || 60,
+  var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
       from = parseInt(document.getElementById("duration-input").value) || 5,
       to = 24;
 
@@ -195,8 +195,10 @@ function updateList(data){
 
       <div class="bottom-details">
         <div>
-          <span class="bottom-text-name">${item.name}</span><span>
-            <img src="icons/online-icon.png" width="8"></span>
+          <div class="bottom-text-name detail-separation">${item.name}</div>
+          <div id=${item.name}online class="detail-separation" data-toggle="tooltip" data-placement="right" title="On duty">
+            <img src="icons/online-icon.png" width="8">
+          </div>
         </div>
         <div class="bottom-sub-details">
           <div class="bottom-text" style="width: 10%;">
@@ -223,6 +225,7 @@ function updateList(data){
     </div>`;
 
     $('#list-item-group').append(htmlItem);
+    $('#' + item.name + 'online').tooltip();
   });
 
 }

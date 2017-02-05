@@ -181,7 +181,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  width: 70%;  
+  width: 70%;
   height: 35px;
   padding-left: 10px;
 }
@@ -395,6 +395,19 @@ body {
 .notification-holder {
   text-align: center;
   margin-top: -40px;
+}
+
+.status-container {
+  width: 71px;
+	height: 28px;
+	border-radius: 4px;
+	background-color: #ffffff;
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.28);
+}
+
+.detail-separation {
+  float: left;
+  margin-right: 10px;
 }
 
 
