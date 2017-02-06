@@ -40,6 +40,10 @@ var mainChartOptions = {
                   options.series[i].dashStyle = "solid";
               }
             }
+            var thisSeries = options.series.find(function(series) {
+              return series.name === this.name;
+            }.bind(this));
+            updateList([thisSeries]);
             chart = new Highcharts.Chart('main-chart', options);
           }
         }
