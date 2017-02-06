@@ -16,31 +16,32 @@ var redRangeMin = 120,
 var contextData = data();
 var sortAlphabeticToggle = true;
 
-// function calculateAverage(data) {
-//   var size = data.length,
-//       sum = 0;
-//   data.forEach(function(entry) {
-//     sum += entry[1];
-//   });
-//
-//   return Math.round(sum/size);
-// }
+function calculateAverageOnWholeData(data) {
+  var size = data.length,
+      sum = 0;
+  data.forEach(function(entry) {
+    sum += entry[1];
+  });
+
+  return Math.round(sum/size);
+}
 
 function calculateAverage(data, lastHours = 5) {
   var currentTime = (new Date()).getHours();
   var size = data.length,
-      sum = 0;
+      sum = 0,
+      count = 0;
   if(currentTime < lastHours) {
     currentTime = lastHours;
   }
-  size = lastHours;
   data.forEach(function(entry) {
     if(currentTime - entry[0] >= 0 && currentTime - entry[0] < lastHours) {
       sum += entry[1];
+      count += 1;
     }
   });
 
-  return Math.round(sum/size);
+  return Math.round(sum/count);
 }
 
 function getFilteredDataOnBpmAndTime(initialData = null) {
@@ -186,7 +187,7 @@ function updateList(data){
 
   data.forEach(function(item) {
     var currentTime = (new Date()).getHours(),
-        currentBPM = 100;//item.data.find(function(entry) { return entry[0] == currentTime; })[1];
+        currentBPM = item.data.find(function(entry) { return entry[0] == currentTime; })[1];
 
     var average = calculateAverage(item.data);
     var htmlItem =
@@ -205,17 +206,17 @@ function updateList(data){
             <div>${item.gender}</div>
             <div>Age: ${item.age}</div>
           </div>
-          <div class="bottom-text" style="width: 20%;">
+          <div class="bottom-text" style="width: 35%;">
             <div>Current: ${currentBPM} bpm</div>
             <div>Rest: ${average - 15} bpm</div>
-            <div>Average: ${average} bpm </div>
+            <div>Average: ${average} bpm (Last 5 hours) </div>
           </div>
-          <div class="bottom-text" style="width: 35%;">
+          <div class="bottom-text" style="width: 30%;">
             <div>Cell: ${item.cell} </div>
             <div>District: ${item.district} </div>
             <div>Current Location: ${item.current_location} </div>
           </div>
-          <div class="" style="width: 15%">
+          <div class="" style="width: 10%">
             <a id="notify-button">
               <img src="icons/notify-button.png" class="notify-button">
             </a>
@@ -232,7 +233,8 @@ function updateList(data){
 
 function buildUserStatisticDOM(series) {
   var leftPanelDiv = document.getElementById('left-panel');
-  var avgInt = parseInt(calculateAverage(series.data));
+  var avgInt = parseInt(calculateAverageOnWholeData(series.data));
+
   var statisticHTML =
   `<div style="height: 140px; margin-top: 20px;">
       <div style="float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;">
