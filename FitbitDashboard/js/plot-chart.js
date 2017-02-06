@@ -240,7 +240,7 @@ function buildUserStatisticDOM(series) {
       <div style="float:left; width: 20%; height: 130px; display:flex; flex-direction: column; justify-content: space-between; align-items: center;">
        <img class="profile-icon-left-panel" src="icons/user-icon.png">
        <img class="" src="icons/online-icon.png" width=12>
-       <input class="checkbox-left-panel" type="checkbox" id="${series.name}-checkbox">
+       <input class="checkbox-left-panel" type="checkbox" checked=true id="${series.name}-checkbox">
       </div>
       <div class="sub-chart-container">
         <div style="height: 40px; width: 100%; float:left; margin-left: 10px;">
@@ -507,7 +507,6 @@ function resetAll() {
     });
 
     document.getElementById('select-all').innerText = "Deselect all";
-
     document.getElementById('sort-alphabet').children[0].src = "icons/sort-alphabet-ascending.png";
     document.getElementById('sort-numeric').children[0].src = "icons/sort-numeric-ascending.png";
 }
