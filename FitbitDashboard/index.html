@@ -117,7 +117,7 @@
   <body>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-      <div class="row" style="width:100%; margin-right:0px; margin-left:0px">
+      <div class="row main-container-flex" style="width:100%; margin-right:0px; margin-left:0px">
 
         <div class="sidebar" style="background:#fff">
           <div class="logo-placeholder">
@@ -160,117 +160,119 @@
              </div>
           </div>
         </div>
-        <div class="top-navigation" style="float:right; position: relative">
-          <div class="clickable-controls">
-            <a href="#">
-              <img src="icons/overview-icon.png">
-            </a>
+        <div style="min-width:950px;">
+          <div class="top-navigation">
+            <div class="clickable-controls">
+              <a href="#">
+                <img src="icons/overview-icon.png">
+              </a>
 
-            <a href="#">
-              <img src="icons/customize-icon.png">
-            </a>
+              <a href="#">
+                <img src="icons/customize-icon.png">
+              </a>
 
-            <a href="#">
-              <img src="icons/report-icon.png">
-            </a>
+              <a href="#">
+                <img src="icons/report-icon.png">
+              </a>
 
-            <a href="#">
-              <img src="icons/settings-icon.png">
-            </a>
+              <a href="#">
+                <img src="icons/settings-icon.png">
+              </a>
 
-            <a href="#">
-              <img src="icons/profile-icon.png">
-            </a>
+              <a href="#">
+                <img src="icons/profile-icon.png">
+              </a>
 
-            <div style="position:absolute; right:20px;">
-              <div>
-                <span class="welcome-user">Welcome, Michael</span><span class="log-out">Logout</span>
-                <img src="icons/user-icon.png" width=80 height=80 >
-                <div class="notification-holder">
-                  <a href="#">
-                    <img src="icons/notification-bell.png">
+              <div style="float:right; right:20px;">
+                <div>
+                  <span class="welcome-user">Welcome, Michael</span><span class="log-out">Logout</span>
+                  <img src="icons/user-icon.png" width=80 height=80 >
+                  <div class="notification-holder">
+                    <a href="#">
+                      <img src="icons/notification-bell.png">
+                    </a>
+                    <a href="#">
+                      <img src="icons/message-icon.png">
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div style="background: #e6eaef; padding: 15px;left: auto; ">
+            <div class="well bg-white">
+
+              <div class="main-chart-menu">
+                <div>
+                  <img src="icons/heart-top.png" width="32.9" height="29.8"/>
+                </div>
+                <div>
+                  <span class="main-chart-heading">
+                    Heart Rate
+                  <span>
+                </div>
+
+                <div>
+                  <input type="number" id="heart-rate-input" style="text-align:center;" class="main-chart-spinners spinner-text" value="0" max="200">
+                </div>
+
+                <div>
+                  <span class="main-chart-heading">
+                    Duration
+                  <span>
+                </div>
+
+                <div>
+                  <input type="number" id="duration-input" style="text-align:center" class="main-chart-spinners spinner-text" value="5">
+                </div>
+
+                <div>
+                  <input type="button" id="show-all" class="show-all" value="Show All">
+                </div>
+
+                <div>
+                  <a id="show-serious-5">
+                    <span class="show-count-selection">
+                      Serious 5
+                    </span>
                   </a>
-                  <a href="#">
-                    <img src="icons/message-icon.png">
+                </div>
+
+                <div>
+                  <a id="show-serious-10">
+                    <span class="show-count-selection">
+                      Serious 10
+                    </span>
+                  </a>
+                </div>
+
+                <div>
+                  <a id="show-selected">
+                    <span class="show-count-selection">
+                      Show Selected
+                    </span>
                   </a>
                 </div>
               </div>
+
+              <br><br>
+              <div id="main-chart">
+
+              </div>
+
+              <br><br>
+
+              <div id="list-item-group">
+              </div>
+
+              <script src="js/main-chart-options.js"> </script>
+              <script src="js/data.js"> </script>
+              <script src="js/plot-chart.js"> </script>
             </div>
+
 
           </div>
-        </div>
-        <div style="float:right; position: relative; width:73%; background: #e6eaef; padding: 15px;left: auto; ">
-          <div class="well bg-white">
-
-            <div class="main-chart-menu">
-              <div>
-                <img src="icons/heart-top.png" width="32.9" height="29.8"/>
-              </div>
-              <div>
-                <span class="main-chart-heading">
-                  Heart Rate
-                <span>
-              </div>
-
-              <div>
-                <input type="number" id="heart-rate-input" style="text-align:center;" class="main-chart-spinners spinner-text" value="0" max="200">
-              </div>
-
-              <div>
-                <span class="main-chart-heading">
-                  Duration
-                <span>
-              </div>
-
-              <div>
-                <input type="number" id="duration-input" style="text-align:center" class="main-chart-spinners spinner-text" value="5">
-              </div>
-
-              <div>
-                <input type="button" id="show-all" class="show-all" value="Show All">
-              </div>
-
-              <div>
-                <a id="show-serious-5">
-                  <span class="show-count-selection">
-                    Serious 5
-                  </span>
-                </a>
-              </div>
-
-              <div>
-                <a id="show-serious-10">
-                  <span class="show-count-selection">
-                    Serious 10
-                  </span>
-                </a>
-              </div>
-
-              <div>
-                <a id="show-selected">
-                  <span class="show-count-selection">
-                    Show Selected
-                  </span>
-                </a>
-              </div>
-            </div>
-
-            <br><br>
-            <div id="main-chart">
-
-            </div>
-
-            <br><br>
-
-            <div id="list-item-group">
-            </div>
-
-            <script src="js/main-chart-options.js"> </script>
-            <script src="js/data.js"> </script>
-            <script src="js/plot-chart.js"> </script>
-          </div>
-
-
         </div>
       </div>
 

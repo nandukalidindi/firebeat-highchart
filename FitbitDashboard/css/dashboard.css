@@ -31,8 +31,10 @@ body {
 
 /* Hide for mobile, show later */
 .sidebar {
-  position: absolute;
-  width: 27%;
+  /*position: absolute;*/
+  /*width: 27%;*/
+  max-width: 340px;
+  min-width: 300px;
   height: 900px;
   top: 51px;
   bottom: 0;
@@ -77,6 +79,11 @@ body {
 }
 .main .page-header {
   margin-top: 0;
+}
+
+.main-container-flex {
+  display: flex;
+  justify-content: space-between;
 }
 
 .sub-chart-name {
@@ -240,11 +247,11 @@ body {
 	height: 103px;
 	border-radius: 5px;
 	background: white;
-  width: 72%;
+  /*width: 72%;*/
 }
 
 .clickable-controls {
-  width: 70%;
+  /*width: 70%;*/
   height: 100%;
   display: flex;
   justify-content: space-around;
