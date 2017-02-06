@@ -104,7 +104,7 @@ function genericUpdate() {
 
 function showAll(number, event) {
   var options = chart.options;
-  options.series = getFilteredDataOnBpmAndTime(data());
+  options.series = getFilteredDataOnBpmAndTime(leftPanelData);
 
   options.series.forEach(function(series) {
     series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
@@ -121,7 +121,7 @@ function showAll(number, event) {
 
 function showSeriousNumber(number, event) {
   var options = chart.options;
-  options.series = getFilteredDataOnBpmAndTime(data());
+  options.series = getFilteredDataOnBpmAndTime(leftPanelData);
 
   options.series = options.series.sort(function(a, b) {
     a.color = colors.find(function(chartSeries) { return chartSeries.name === a.name }).color;
