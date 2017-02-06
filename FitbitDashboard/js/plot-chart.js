@@ -206,17 +206,17 @@ function updateList(data){
             <div>${item.gender}</div>
             <div>Age: ${item.age}</div>
           </div>
-          <div class="bottom-text" style="width: 35%;">
+          <div class="bottom-text" style="width: 32%;">
             <div>Current: ${currentBPM} bpm</div>
             <div>Rest: ${average - 15} bpm</div>
             <div>Average: ${average} bpm (Last 5 hours) </div>
           </div>
-          <div class="bottom-text" style="width: 30%;">
+          <div class="bottom-text" style="width: 28%;">
             <div>Cell: ${item.cell} </div>
             <div>District: ${item.district} </div>
             <div>Current Location: ${item.current_location} </div>
           </div>
-          <div class="" style="width: 10%">
+          <div class="" style="width: 10%; margin-right: 10px">
             <a id="notify-button">
               <img src="icons/notify-button.png" class="notify-button">
             </a>
@@ -233,7 +233,7 @@ function updateList(data){
 
 function buildUserStatisticDOM(series) {
   var leftPanelDiv = document.getElementById('left-panel');
-  var avgInt = parseInt(calculateAverageOnWholeData(series.data));
+  var avgInt = parseInt(calculateAverage(series.data));
 
   var statisticHTML =
   `<div style="height: 140px; margin-top: 20px;">

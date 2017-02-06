@@ -32,7 +32,7 @@ body {
 /* Hide for mobile, show later */
 .sidebar {
   position: absolute;
-  width: 100%;
+  width: 27%;
   height: 900px;
   top: 51px;
   bottom: 0;
@@ -138,7 +138,6 @@ body {
 }
 
 .logo-placeholder {
-  width: 344px;
 	height: 103px;
   position: relative;
   padding-top: 30px;
@@ -157,7 +156,7 @@ body {
 }
 
 .left-panel-content-holder {
-  width: 344px;
+  width: 100%;
 	border-radius: 4px;
 	background-color: #fefefe;
 	box-shadow: 1px 1px 9px 0 rgba(0, 0, 0, 0.09);
@@ -207,7 +206,7 @@ body {
 }
 
 .sub-chart-container {
-  width: 261px;
+  width: 78%;
   float: left;
 	height: 125px;
 	border-radius: 4px;
@@ -241,6 +240,7 @@ body {
 	height: 103px;
 	border-radius: 5px;
 	background: white;
+  width: 72%;
 }
 
 .clickable-controls {
@@ -300,7 +300,7 @@ body {
 	border-radius: 17px;
 	border: solid 1px #2f3841;
   /*font-family: AvenirNext;*/
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: normal;
 	font-style: normal;
 	font-stretch: normal;
@@ -317,7 +317,7 @@ body {
 
 .show-count-selection {
 	/*font-family: AvenirNext;*/
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: normal;
 	font-style: normal;
 	font-stretch: normal;
@@ -360,7 +360,7 @@ body {
 
 .bottom-text {
   font-family: LucidaGrande;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: normal;
 	font-style: normal;
 	font-stretch: normal;
@@ -371,8 +371,8 @@ body {
 }
 
 .notify-button {
-  width: 116.4px;
-	height: 41px;
+  width: 100px;
+	height: 35px;
 	border-radius: 6px;
 	background-image: linear-gradient(to bottom, #eb4646, #ce3131);
 	box-shadow: 0 1px 0 0 #920000;
