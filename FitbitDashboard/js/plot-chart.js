@@ -16,6 +16,13 @@ var redRangeMin = 120,
 var contextData = data();
 var sortAlphabeticToggle = true;
 
+var typeMap = createBPMTypeMap();
+Object.keys(typeMap).forEach(function(type) {
+  typeMap[type+'min'] = Math.min.apply(null, typeMap[type]);
+  var element = document.getElementById(type + '-heart');
+  element.children[1].textContent = typeMap[type].length;
+});
+
 function calculateAverageOnWholeData(data) {
   var size = data.length,
       sum = 0;
@@ -434,27 +441,21 @@ function getDataBetween(above, below) {
 
 function createBPMTypeMap() {
   var data = this.data();
-  var typeMap = {red: 0, yellow: 0, green: 0};
+  var typeMap = {red: [], yellow: [], green: []};
 
   data.forEach(function(series) {
     var average = calculateAverage(series.data);
     if(average > redRangeMin && average <= redRangeMax) {
-      typeMap.red = typeMap.red + 1;
+      typeMap.red.push(average);
     } else if (average > yellowRangeMin && average <= yellowRangeMax) {
-      typeMap.yellow = typeMap.yellow + 1;
+      typeMap.yellow.push(average);
     } else if (average > greenRangeMin && average <= greenRangeMax) {
-      typeMap.green = typeMap.green + 1;
+      typeMap.green.push(average);
     }
   });
 
   return typeMap;
 }
-
-var typeMap = createBPMTypeMap();
-Object.keys(typeMap).forEach(function(type) {
-  var element = document.getElementById(type + '-heart');
-  element.children[1].textContent = typeMap[type];
-});
 
 var heartList = [document.getElementById('red-heart'), document.getElementById('yellow-heart'), document.getElementById('green-heart')];
 
@@ -462,12 +463,15 @@ function truncateData(color, event) {
   switch (color) {
     case 'red':
       leftPanelData = getDataBetween(redRangeMin, redRangeMax);
+      document.getElementById('heart-rate-input').value = typeMap['redmin'];
       break;
     case 'yellow':
       leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
+      document.getElementById('heart-rate-input').value = typeMap['yellowmin'];
       break;
     case 'green':
       leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
+      document.getElementById('heart-rate-input').value = typeMap['greenmin'];
       break;
     default:
       leftPanelData = data();
