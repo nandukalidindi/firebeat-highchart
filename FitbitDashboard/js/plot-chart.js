@@ -34,7 +34,8 @@ function calculateAverageOnWholeData(data) {
 }
 
 function calculateAverage(data, lastHours = 5) {
-  var currentTime = (new Date()).getHours();
+  // var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));;
+  var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));
   var size = data.length,
       sum = 0,
       count = 0;
@@ -52,7 +53,7 @@ function calculateAverage(data, lastHours = 5) {
 }
 
 function getFilteredDataOnBpmAndTime(initialData = null, calculateColors = true) {
-  var currentTime = (new Date()).getHours();
+  var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));;
   var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
       from = parseInt(document.getElementById("duration-input").value) || 5,
       to = 24;
@@ -196,7 +197,7 @@ function updateList(data){
   $('#list-item-group').html('');
 
   data.forEach(function(item) {
-    var currentTime = (new Date()).getHours(),
+    var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' })),
         currentBPM = item.data.find(function(entry) { return entry[0] == currentTime; })[1];
 
     var average = calculateAverage(item.data);
@@ -463,27 +464,32 @@ function createBPMTypeMap() {
 var heartList = [document.getElementById('red-heart'), document.getElementById('yellow-heart'), document.getElementById('green-heart')];
 
 function truncateData(color, event) {
+  var heartRateInputElement = document.getElementById('heart-rate-input');
   switch (color) {
     case 'red':
       leftPanelData = getDataBetween(redRangeMin, redRangeMax);
-      document.getElementById('heart-rate-input').value = typeMap['redmin'];
+      heartRateInputElement.value = typeMap['redmin'];
+      heartRateInputElement.min = 10;
+      document.getElementById('average-range').innerText = "( " + redRangeMin + " - " + redRangeMax + " )";
       context = 'red';
       break;
     case 'yellow':
       leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
-      document.getElementById('heart-rate-input').value = typeMap['yellowmin'];
+      heartRateInputElement.value = typeMap['yellowmin'];
+      document.getElementById('average-range').innerText = "( " + yellowRangeMin + " - " + yellowRangeMax + " )";
       context = 'yellow';
       break;
     case 'green':
       leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
-      document.getElementById('heart-rate-input').value = typeMap['greenmin'];
+      heartRateInputElement.value = typeMap['greenmin'];
       context = 'green';
+      document.getElementById('average-range').innerText = "( " + greenRangeMin + " - " + greenRangeMax + " )";
       break;
     default:
       leftPanelData = data();
   }
   context = color;
-  showSelected(getFilteredDataOnBpmAndTime(leftPanelData), null);
+  showSelected(getFilteredDataOnBpmAndTime(leftPanelData), false, null);
 
   if(event != null) {
     heartList.forEach(function(element) {

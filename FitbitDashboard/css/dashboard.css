@@ -35,13 +35,12 @@ body {
   /*width: 27%;*/
   max-width: 340px;
   min-width: 340px;
-  height: 900px;
   top: 51px;
   bottom: 0;
   left: 0;
   padding: 0px;
   overflow-x: hidden;
-  overflow-y: hidden; 
+  overflow-y: hidden;
   background-color: #f5f5f5;
   border-right: 1px solid #eee;
 }
@@ -84,6 +83,7 @@ body {
 .main-container-flex {
   display: flex;
   justify-content: space-between;
+  overflow-x: hidden;
 }
 
 .sub-chart-name {
@@ -417,6 +417,18 @@ body {
   margin-right: 10px;
 }
 
+.highcharts-color-1 {
+  stroke: #2f3841;
+}
+
+#main-chart .highcharts-xaxis .highcharts-axis-line {
+	stroke-width: 2px;
+  stroke: #2f3841;
+}
+
+/*#main-chart .highcharts-yaxis .highcharts-axis-line {
+  stroke: #eb4646
+}*/
 
 /*
  * Placeholder dashboard ideas

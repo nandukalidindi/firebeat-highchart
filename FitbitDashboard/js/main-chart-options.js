@@ -4,11 +4,17 @@ var mainChartOptions = {
     subtitle: { text: '' },
     exporting: { enabled: false },
     credits: { enabled: false },
-    xAxis: {
-      title: { text: '' },
-      gridLineWidth: 1,
-      tickInterval: 1
-    },
+    xAxis: [
+      {
+        title: { text: '' },
+        gridLineWidth: 1,
+        tickInterval: 1
+      },
+      {
+        className: "highcharts-color-1",
+        opposite: true,
+      }
+    ],
     legend: {
         enabled: false
     },

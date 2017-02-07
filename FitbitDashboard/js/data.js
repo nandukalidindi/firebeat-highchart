@@ -166,7 +166,7 @@ var fullData = [
     [24, 99]
   ]
 }, {
-  name: "Dongwuei",
+  name: "Dong",
   gender: 'Male',
   age: 23,
   cell: '(616) 123-456',
