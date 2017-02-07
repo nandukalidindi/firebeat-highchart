@@ -149,8 +149,9 @@ function showSeriousNumber(number, event) {
   updateList(options.series);
 }
 
-function showSelected(selectedData=[], event) {
+function showSelected(selectedData=[], emptyData=false, event) {
   var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : getFilteredDataOnBpmAndTime(leftPanelData);
+  minifiedData = emptyData === true ? [] : minifiedData;
   var newData = [];
   minifiedData.forEach(function(series) {
     var element = document.getElementById(series.name + "-checkbox");
@@ -189,7 +190,7 @@ document.getElementById("duration-input").addEventListener("keyup", updateChartO
 document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
 document.getElementById("show-serious-5").addEventListener("click", showSeriousNumber.bind(null, 5));
 document.getElementById("show-serious-10").addEventListener("click", showSeriousNumber.bind(null, 10));
-document.getElementById("show-selected").addEventListener("click", showSelected.bind(null, []));
+document.getElementById("show-selected").addEventListener("click", showSelected.bind(null, [], false));
 
 
 
@@ -266,6 +267,7 @@ function buildUserStatisticDOM(series) {
     </div>`;
 
   $("#left-panel").append(statisticHTML);
+  document.getElementById(series.name + "-checkbox").addEventListener('change', changedEvent);
 }
 
 function renderChartForData(data, retainSortOptions=true) {
@@ -380,6 +382,7 @@ function selectDeselectAllAvaiableCheckboxes(event) {
   } else {
     event.target.innerText = "Select all";
   }
+  changedEvent(null);
   selectAllToggle = !selectAllToggle;
 }
 document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes);
@@ -489,7 +492,7 @@ function truncateData(color, event) {
       leftPanelData = data();
   }
   context = color;
-  showSelected(getFilteredDataOnBpmAndTime(leftPanelData), false, null);
+  showSelected(getFilteredDataOnBpmAndTime(leftPanelData), null, false);
 
   if(event != null) {
     heartList.forEach(function(element) {
@@ -527,3 +530,20 @@ function resetAll() {
 }
 
 document.getElementById('red-heart').click();
+
+function changedEvent(event) {
+  var toBeDisabled = true;
+  (data() || []).forEach(function(series) {
+    var element = document.getElementById(series.name + "-checkbox");
+    if(element && element.checked) {
+      toBeDisabled = false;
+    }
+  });
+  if(toBeDisabled) {
+    document.getElementById('show-selected').style = "pointer-events: none; opacity: 0.5;";
+    showSelected([], true, null)
+  } else {
+    document.getElementById('show-selected').style = "";
+    showSelected([], false, null)
+  }
+}
