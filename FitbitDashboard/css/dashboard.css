@@ -41,7 +41,7 @@ body {
   left: 0;
   padding: 0px;
   overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  overflow-y: hidden; 
   background-color: #f5f5f5;
   border-right: 1px solid #eee;
 }
@@ -188,7 +188,7 @@ body {
   justify-content: space-between;
   align-items: baseline;
   width: 70%;
-  height: 35px;
+  height: 45px;
   padding-left: 10px;
 }
 
