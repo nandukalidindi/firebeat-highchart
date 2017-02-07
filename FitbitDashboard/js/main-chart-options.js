@@ -5,13 +5,19 @@ var mainChartOptions = {
     exporting: { enabled: false },
     credits: { enabled: false },
     xAxis: {
-      title: { text: '' }
+      title: { text: '' },
+      gridLineWidth: 1,
+      tickInterval: 1
     },
     legend: {
         enabled: false
     },
     yAxis: {
-      title: { text: '' }
+      title: { text: '' },
+      tickInterval: 60,
+      gridLineWidth: 0,
+      minorTickLength: 0,
+      tickLength: 0
     },
     tooltip: {
       headerFormat: '<b>{series.name}</b><br>',
