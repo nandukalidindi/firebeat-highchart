@@ -77,6 +77,15 @@ var mainChartOptions = {
         }
       },
     },
-
-    series: null
+    series: null,
+    lang: {
+        noData: "No data to display"
+    },
+    noData: {
+        style: {
+            fontWeight: 'bold',
+            fontSize: '15px',
+            color: '#303030'
+        }
+    }
 }

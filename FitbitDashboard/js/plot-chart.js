@@ -51,7 +51,7 @@ function calculateAverage(data, lastHours = 5) {
   return Math.round(sum/count);
 }
 
-function getFilteredDataOnBpmAndTime(initialData = null) {
+function getFilteredDataOnBpmAndTime(initialData = null, calculateColors = true) {
   var currentTime = (new Date()).getHours();
   var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
       from = parseInt(document.getElementById("duration-input").value) || 5,
@@ -76,14 +76,16 @@ function getFilteredDataOnBpmAndTime(initialData = null) {
     });
   });
 
-  filterData = filterData.filter(function(series) {
-    if(calculateAverage(series.data) >= average) {
-      series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
-      return true;
-    } else {
-      return false;
-    }
-  });
+  if(calculateColors) {
+    filterData = filterData.filter(function(series) {
+      if(calculateAverage(series.data) >= average) {
+        series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
 
   return filterData;
 }
@@ -146,7 +148,7 @@ function showSeriousNumber(number, event) {
 }
 
 function showSelected(selectedData=[], event) {
-  var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : getFilteredDataOnBpmAndTime(data());
+  var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : getFilteredDataOnBpmAndTime(leftPanelData);
   var newData = [];
   minifiedData.forEach(function(series) {
     var element = document.getElementById(series.name + "-checkbox");
@@ -440,10 +442,10 @@ function getDataBetween(above, below) {
 }
 
 function createBPMTypeMap() {
-  var data = this.data();
+  var dataBPMType = getFilteredDataOnBpmAndTime(data(), false);
   var typeMap = {red: [], yellow: [], green: []};
 
-  data.forEach(function(series) {
+  dataBPMType.forEach(function(series) {
     var average = calculateAverage(series.data);
     if(average > redRangeMin && average <= redRangeMax) {
       typeMap.red.push(average);
@@ -491,7 +493,7 @@ function truncateData(color, event) {
     });
   }
 
-  renderChartForData(leftPanelData);
+  renderChartForData(getFilteredDataOnBpmAndTime(leftPanelData));
   return leftPanelData;
 }
 document.getElementById('red-heart').addEventListener('click', truncateData.bind(null, 'red'));
