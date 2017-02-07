@@ -130,6 +130,7 @@ function showAll(number, event) {
 
 function showSeriousNumber(number, event) {
   var options = chart.options;
+  document.getElementById('heart-rate-input').value = typeMap[context + 'min'];
   options.series = getFilteredDataOnBpmAndTime(leftPanelData);
 
   options.series = options.series.sort(function(a, b) {
@@ -466,14 +467,17 @@ function truncateData(color, event) {
     case 'red':
       leftPanelData = getDataBetween(redRangeMin, redRangeMax);
       document.getElementById('heart-rate-input').value = typeMap['redmin'];
+      context = 'red';
       break;
     case 'yellow':
       leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
       document.getElementById('heart-rate-input').value = typeMap['yellowmin'];
+      context = 'yellow';
       break;
     case 'green':
       leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
       document.getElementById('heart-rate-input').value = typeMap['greenmin'];
+      context = 'green';
       break;
     default:
       leftPanelData = data();
