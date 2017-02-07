@@ -478,7 +478,6 @@ function truncateData(color, event) {
     default:
       leftPanelData = data();
   }
-
   context = color;
   showSelected(getFilteredDataOnBpmAndTime(leftPanelData), null);
 
