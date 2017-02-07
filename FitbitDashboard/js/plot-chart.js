@@ -146,7 +146,7 @@ function showSeriousNumber(number, event) {
 }
 
 function showSelected(selectedData=[], event) {
-  var minifiedData = selectedData && selectedData.length !== 0 ? selectedData : getFilteredDataOnBpmAndTime(data());
+  var minifiedData = selectedData;
   var newData = [];
   minifiedData.forEach(function(series) {
     var element = document.getElementById(series.name + "-checkbox");
@@ -476,7 +476,6 @@ function truncateData(color, event) {
     default:
       leftPanelData = data();
   }
-
   context = color;
   showSelected(getFilteredDataOnBpmAndTime(leftPanelData), null);
 
