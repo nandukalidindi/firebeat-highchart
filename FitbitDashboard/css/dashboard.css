@@ -426,6 +426,12 @@ body {
   stroke: #2f3841;
 }
 
+.greater-icon {
+  position: absolute;
+  margin-top: 12.0px;
+  margin-left: 5px;
+}
+
 /*#main-chart .highcharts-yaxis .highcharts-axis-line {
   stroke: #eb4646
 }*/
