@@ -435,7 +435,7 @@ document.getElementById('sort-alphabet').addEventListener('click', sortAlphabeti
 document.getElementById('sort-numeric').addEventListener('click', sortNumerically);
 
 function getDataBetween(above, below) {
-  var filterData = data();
+  var filterData = getFilteredDataOnBpmAndTime(data(), false);
   return filterData.filter(function(series) {
     var average = parseInt(calculateAverage(series.data));
     if(average <= below && average > above) {
