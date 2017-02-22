@@ -121,9 +121,6 @@ function showAll(number, event) {
     series.dashStyle = "solid";
   });
 
-  // document.getElementById('heart-rate-input').value = 60;
-  // document.getElementById('duration-input').value = "-";
-
   chart = new Highcharts.Chart('main-chart', options);
 
   updateList(options.series);
