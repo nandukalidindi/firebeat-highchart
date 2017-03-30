@@ -10,9 +10,11 @@ var sedentary = 3,
     active = 2,
     highlyActive = 1;
 
-var green = 1,
-    yellow = 2,
-    red = 3;
+var activityMap = {
+  "SEDENTARY": 3,
+  "ACTIVE": 2,
+  "HIGHLY_ACTIVE": 1
+}
 
 var greenZone = [0, 100],
     yellowZone = [100, 150],
@@ -56,10 +58,61 @@ function compareEpochAndDaily() {
     });
     finalHash[timeOffset] = { heartRate: daily[timeOffset], activities: epochs };
   });
+  return finalHash;
 }
 
 function calculateZone() {
-  
+  var finalHash = compareEpochAndDaily();
+  var finalZone = 0;
+  var finalZoneCount = 0;
+  Object.keys(finalHash).forEach(function(timeOffset) {
+    var offsetZone = calculateOffsetZone(finalHash[timeOffset]);
+    if(offsetZone !== 0) {
+      finalZone += offsetZone;
+      finalZoneCount += 1;
+    }
+  });
+
+  return Math.floor(finalZone / finalZoneCount);
 }
 
-compareEpochAndDaily();
+function calculateOffsetZone(offsetObject) {
+  var sum = 0,
+      points = 0;
+
+  offsetObject["heartRate"].forEach(function(data) {
+    if(data) {
+      sum += data;
+      points += 1;
+    }
+  });
+
+  var avgRate = (sum / points);
+  var zone = 0;
+
+  if(avgRate === 0) {
+    return 0;
+  }
+
+  if(avgRate >= greenZone[0] && avgRate < greenZone[1]) {
+    zone = getWeighedValue(1, offsetObject["activities"]);
+  } else if (avgRate >= yellowZone[0] && avgRate < yellowZone[1]) {
+    zone = getWeighedValue(2, offsetObject["activities"]);
+  } else if (avgRate >= redZone[0] && avgRate < redZone[1]) {
+    zone = getWeighedValue(3, offsetObject["activities"]);
+  }
+
+  return zone;
+}
+
+
+function getWeighedValue(avgHeartRateZone, activities) {
+  var sum = 0;
+  activities.forEach(function(activity) {
+    sum += activityMap[activity];
+  });
+
+  return avgHeartRateZone * (sum / (activities.length));
+}
+
+console.log(calculateZone());
