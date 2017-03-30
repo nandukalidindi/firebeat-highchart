@@ -6,6 +6,13 @@ var fullData = [
     cell: '(917) 123-456',
     district: 'Brooklyn',
     current_location: 'Abu Dhabi',
+    intervals: [{
+      from: 15,
+      to: 17
+    }, {
+      from: 19,
+      to: 23
+    }],
     data: [
       [1, 105],
       [2, 130],
@@ -24,7 +31,7 @@ var fullData = [
       [15, 137],
       [16, 138],
       [17, 73],
-      [18, 140],
+      // [18, 140],
       [19, 149],
       [20, 99],
       [21, 129],
