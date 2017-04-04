@@ -2,13 +2,11 @@ function epoch() {
   return epochSummaries;
 }
 
+var exportableData;
+
 function daily() {
   return dailySummary;
 }
-
-var sedentary = 3,
-    active = 2,
-    highlyActive = 1;
 
 var activityMap = {
   "SEDENTARY": 3,
@@ -16,14 +14,18 @@ var activityMap = {
   "HIGHLY_ACTIVE": 1
 }
 
+var zoneRangeMap = {
+  green: [0, 3],
+  yellow: [3, 5],
+  red: [5, 100]
+}
+
 var greenZone = [0, 100],
     yellowZone = [100, 150],
     redZone = [150, 1000];
 
-function mergeAllDailySummaries() {
+function mergeAllDailySummaries(startTime, endTime) {
   var data = daily();
-  var startTime = 1490587200,
-      endTime = 1490673600;
 
   var startTimeList = data.map(function(summary) { return summary["startTimeInSeconds"] });
   var heartRateOffsets = {};
@@ -33,6 +35,9 @@ function mergeAllDailySummaries() {
     });
   });
 
+  exportableData = [];
+  avgHeartRate = 0;
+  var counter = 0;
 
   var fifteenOffsets = {};
   var offsetCounter = startTime;
@@ -40,14 +45,21 @@ function mergeAllDailySummaries() {
     var offset = startTime + (900 * (Math.floor((offsetCounter - startTime)/900)));
     fifteenOffsets[offset] = (fifteenOffsets[offset] || []);
     fifteenOffsets[offset].push(heartRateOffsets[offsetCounter - startTime]);
+    exportableData.push(heartRateOffsets[offsetCounter - startTime] || null);
+    if(heartRateOffsets[offsetCounter - startTime]) {
+      counter += 1;
+      avgHeartRate = avgHeartRate + (heartRateOffsets[offsetCounter - startTime]);
+    }
     offsetCounter = offsetCounter + 15;
   }
+
+  avgHeartRate = Math.floor((avgHeartRate) / (counter));
   return fifteenOffsets;
 }
 
 
-function compareEpochAndDaily() {
-  var daily = mergeAllDailySummaries();
+function compareEpochAndDaily(startTime, endTime) {
+  var daily = mergeAllDailySummaries(startTime, endTime);
   var ep = epoch();
   var finalHash = {};
   Object.keys(daily).forEach(function(timeOffset) {
@@ -61,8 +73,8 @@ function compareEpochAndDaily() {
   return finalHash;
 }
 
-function calculateZone() {
-  var finalHash = compareEpochAndDaily();
+function calculateZone(startTime, endTime) {
+  var finalHash = compareEpochAndDaily(startTime, endTime);
   var finalZone = 0;
   var finalZoneCount = 0;
   Object.keys(finalHash).forEach(function(timeOffset) {
@@ -72,7 +84,7 @@ function calculateZone() {
       finalZoneCount += 1;
     }
   });
-
+  
   return Math.floor(finalZone / finalZoneCount);
 }
 
@@ -114,5 +126,3 @@ function getWeighedValue(avgHeartRateZone, activities) {
 
   return avgHeartRateZone * (sum / (activities.length));
 }
-
-console.log(calculateZone());
