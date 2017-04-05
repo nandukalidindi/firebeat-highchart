@@ -4,17 +4,16 @@ var mainChartOptions = {
     subtitle: { text: '' },
     exporting: { enabled: false },
     credits: { enabled: false },
-    xAxis: [
-      {
-        title: { text: '' },
-        gridLineWidth: 1,
-        tickInterval: 1
-      },
-      {
-        className: "highcharts-color-1",
-        opposite: true,
+    xAxis: {
+      title: { text: '' },
+      gridLineWidth: 1,
+      tickInterval: 3600/15,
+      labels: {
+        formatter: function() {
+          return ((this.value * 15)/3600);
+        }
       }
-    ],
+    },
     legend: {
         enabled: false
     },
