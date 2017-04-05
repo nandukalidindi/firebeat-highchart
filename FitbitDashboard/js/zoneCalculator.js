@@ -41,7 +41,7 @@ function mergeAllDailySummaries(startTime, endTime) {
 
   var fifteenOffsets = {};
   var offsetCounter = startTime;
-  while(endTime - offsetCounter !== 0) {
+  while(endTime - offsetCounter >= 0) {
     var offset = startTime + (900 * (Math.floor((offsetCounter - startTime)/900)));
     fifteenOffsets[offset] = (fifteenOffsets[offset] || []);
     fifteenOffsets[offset].push(heartRateOffsets[offsetCounter - startTime]);
@@ -84,7 +84,7 @@ function calculateZone(startTime, endTime) {
       finalZoneCount += 1;
     }
   });
-  
+
   return Math.floor(finalZone / finalZoneCount);
 }
 
