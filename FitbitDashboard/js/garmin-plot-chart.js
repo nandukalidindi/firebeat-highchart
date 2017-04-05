@@ -3,32 +3,17 @@ var leftPanelData = [];
 var sortAlphabeticToggle = true;
 var sortNumericToggle = true;
 var selectAllToggle = true;
+var context = "green";
 
 function data(startTime, endTime) {
   return fullData(startTime, endTime);
 }
 
-var finalData = getFilteredDataOnBpmAndTime(false);
-
 var typeMap = {red: [], yellow: [], green: []}
 
+updateTypeMap(false);
+
 var heartList = [document.getElementById('red-heart'), document.getElementById('yellow-heart'), document.getElementById('green-heart')];
-
-finalData.forEach(function(series) {
-  if(series.zone >=6) {
-    typeMap.red.push(series);
-  } else if (series.zone >=4 && series.zone < 6) {
-    typeMap.yellow.push(series);
-  } else if (series.zone < 4) {
-    typeMap.green.push(series);
-  }
-});
-
-Object.keys(typeMap).forEach(function(type) {
-  typeMap[type+'min'] = Math.min.apply(null, typeMap[type]);
-  var element = document.getElementById(type + '-heart');
-  element.children[1].textContent = typeMap[type].length;
-});
 
 mainChartOptions.series = finalData;
 
@@ -58,6 +43,28 @@ document.getElementById('sort-numeric').addEventListener('click', sortNumericall
 
 document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes);
 
+function updateTypeMap(colors = true) {
+  finalData = getFilteredDataOnBpmAndTime(colors);
+
+  typeMap = {red: [], yellow: [], green: []};
+
+  finalData.forEach(function(series) {
+    if(series.zone >=6) {
+      typeMap.red.push(series);
+    } else if (series.zone >=4 && series.zone < 6) {
+      typeMap.yellow.push(series);
+    } else if (series.zone < 4) {
+      typeMap.green.push(series);
+    }
+  });
+
+  Object.keys(typeMap).forEach(function(type) {
+    typeMap[type+'min'] = Math.min.apply(null, typeMap[type]);
+    var element = document.getElementById(type + '-heart');
+    element.children[1].textContent = typeMap[type].length;
+  });
+}
+
 function getFilteredDataOnBpmAndTime(calculateColors = true) {
   var currentTime = 1490673600; //(new Date()).getTime();
   var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
@@ -78,14 +85,14 @@ function getFilteredDataOnBpmAndTime(calculateColors = true) {
 }
 
 function updateChartOnTime(event) {
-  genericUpdate();
+  updateTypeMap(true);
+  truncateData(context, null);
 }
 
 function genericUpdate() {
   var options = chart.options;
 
-  options.series = getFilteredDataOnBpmAndTime();
-  finalData = options.series;
+  options.series = finalData;
   chart = new Highcharts.Chart('main-chart', options);
   updateList(options.series);
 }
@@ -312,8 +319,7 @@ function showSelected(selectedData, event) {
 
 function showAll(number, event) {
   var options = chart.options;
-  options.series = finalData;
-  finalData = options.series;
+  options.series = leftPanelData;
 
   options.series.forEach(function(series) {
     series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
