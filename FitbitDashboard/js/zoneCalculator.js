@@ -27,7 +27,6 @@ var greenZone = [0, 100],
 function mergeAllDailySummaries(startTime, endTime) {
   var data = daily();
 
-  var startTimeList = data.map(function(summary) { return summary["startTimeInSeconds"] });
   var heartRateOffsets = {};
   data.forEach(function(summary) {
     Object.keys(summary["timeOffsetHeartRateSamples"]).forEach(function(timeOffset) {
@@ -45,7 +44,7 @@ function mergeAllDailySummaries(startTime, endTime) {
     var offset = startTime + (900 * (Math.floor((offsetCounter - startTime)/900)));
     fifteenOffsets[offset] = (fifteenOffsets[offset] || []);
     fifteenOffsets[offset].push(heartRateOffsets[offsetCounter - startTime]);
-    exportableData.push(heartRateOffsets[offsetCounter - startTime] || null);
+    exportableData.push([offsetCounter - startTime, heartRateOffsets[offsetCounter - startTime] || null]);
     if(heartRateOffsets[offsetCounter - startTime]) {
       counter += 1;
       avgHeartRate = avgHeartRate + (heartRateOffsets[offsetCounter - startTime]);
