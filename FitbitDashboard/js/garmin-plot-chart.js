@@ -26,7 +26,7 @@ document.getElementById('red-heart').addEventListener('click', truncateData.bind
 document.getElementById('yellow-heart').addEventListener('click', truncateData.bind(null, 'yellow'));
 document.getElementById('green-heart').addEventListener('click', truncateData.bind(null, 'green'));
 
-document.getElementById('green-heart').click();
+document.getElementById('red-heart').click();
 
 document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnAvgBPM);
 document.getElementById("duration-input").addEventListener("keyup", updateChartOnTime);
@@ -48,11 +48,11 @@ function updateTypeMap() {
   typeMap = {red: [], yellow: [], green: []};
 
   finalData.forEach(function(series) {
-    if(series.zone >=6) {
+    if(series.zone >=4) {
       typeMap.red.push(series);
-    } else if (series.zone >=4 && series.zone < 6) {
+    } else if (series.zone >=3 && series.zone < 4) {
       typeMap.yellow.push(series);
-    } else if (series.zone < 4) {
+    } else if (series.zone < 3) {
       typeMap.green.push(series);
     }
   });
