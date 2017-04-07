@@ -1,4 +1,4 @@
-var epochSummary = [ {
+var prabodhEpoch = [ {
   "summaryId" : "u186e2b-58d88e40-8",
   "activityType" : "SEDENTARY",
   "activeKilocalories" : 0,

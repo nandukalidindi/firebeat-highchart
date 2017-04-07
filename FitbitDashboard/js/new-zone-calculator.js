@@ -6,19 +6,8 @@ function FireFighter() {
   this.zone = 0;
 
   this.consolidateDailySummaries = consolidateDailySummaries;
-
   this.epochSummariesMap = epochSummariesMap;
-
   this.fullyProcessedMap = fullyProcessedMap;
-}
-
-
-function epochSummaries() {
-  return epochSummary;
-}
-
-function dailySummaries() {
-  return dailySummary;
 }
 
 zoneHash = {
@@ -39,7 +28,7 @@ function heartRateZone(heartRate) {
 
 function consolidateDailySummaries() {
   heartRateOffsets = {}
-  dailySummaries().forEach(function(summary) {
+  this.dailyData.forEach(function(summary) {
     Object.keys(summary["timeOffsetHeartRateSamples"]).forEach(function(timeOffset) {
       heartRateOffsets[summary["startTimeInSeconds"] + ( 15 * Math.floor(parseInt(timeOffset)/15))] = summary["timeOffsetHeartRateSamples"][timeOffset];
     });
@@ -49,23 +38,23 @@ function consolidateDailySummaries() {
 
 function epochSummariesMap() {
   epochMap = {};
-  epochSummaries().forEach(function(summary) {
+  this.epochData.forEach(function(summary) {
     if(summary["activeTimeInSeconds"] === 900) {
       epochMap[summary["startTimeInSeconds"]] = [summary["intensity"]]
     } else {
-      epochMap[summary["startTimeInSeconds"]] = epochSummaries().filter(function(filterSummary) {
+      epochMap[summary["startTimeInSeconds"]] = this.epochData.filter(function(filterSummary) {
         return filterSummary["startTimeInSeconds"] === summary["startTimeInSeconds"];
       }).map(function(selectSummary) {
         return selectSummary["intensity"];
       });
     }
-  });
+  }.bind(this));
   return epochMap;
 }
 
-function fullyProcessedMap(startTime, endTime) {
-  epochMap = epochSummariesMap();
-  heartRateMap = consolidateDailySummaries();
+function fullyProcessedMap(startTime = 1490587200, endTime = 1490673600) {
+  epochMap = this.epochSummariesMap();
+  heartRateMap = this.consolidateDailySummaries();
   finalMap = [];
   zoneMap = [];
 
@@ -96,8 +85,16 @@ function fullyProcessedMap(startTime, endTime) {
     counterTime += 15;
   }
 
-  avgHeartRate = avgHeartRate / heartTotal;
-  zone = zone / zoneCounter;
+  this.avgHeartRate = avgHeartRate / heartTotal;
+  this.zone = zone / zoneCounter;
 }
 
-fullyProcessedMap(1490587200, 1490673600)
+var prabodh = new FireFighter();
+prabodh.epochData = prabodhEpoch;
+prabodh.dailyData = prabodhDaily;
+prabodh.fullyProcessedMap();
+
+// var nandu = new FireFighter();
+// nandu.epochData = nanduEpoch;
+// nandu.dailyData = nanduDaily;
+// nandu.fullyProcessedMap();

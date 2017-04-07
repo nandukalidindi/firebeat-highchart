@@ -1,4 +1,4 @@
-var dailySummary = [ {
+var prabodhDaily = [ {
   "summaryId" : "u186e2b-58d88e40-15180-6",
   "activityType" : "WALKING",
   "activeKilocalories" : 72,
