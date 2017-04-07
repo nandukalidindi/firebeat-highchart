@@ -5,7 +5,6 @@ function fullData(startTime, endTime) {
   prabodh.startTime = startTime;
   prabodh.endTime = endTime;
   prabodh.fullyProcessedMap();
-
   return [
     {
       name: 'Prabodh',

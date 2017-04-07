@@ -159,6 +159,9 @@ function renderChartForData(data, retainSortOptions=false) {
           pointFormat: '{point.y} BPM at {point.x}:00'
         },
         plotOptions: {
+          series: {
+            turboThreshold: 10000,
+          },
             area: {
                 fillColor: {
                     linearGradient: {

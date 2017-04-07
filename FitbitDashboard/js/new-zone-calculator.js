@@ -68,7 +68,7 @@ function fullyProcessedMap() {
   zoneCounter = 0;
 
   while(counterTime < (this.endTime - this.startTime)) {
-    finalMap.push([counterTime, heartRateMap[this.startTime + counterTime] || null, epochMap[this.startTime + 900 * ((counterTime - this.startTime)/900)]]);
+    finalMap.push({x: counterTime, y: heartRateMap[this.startTime + counterTime] || null, activity: (epochMap[this.startTime + 900 * Math.floor((counterTime)/900)] || []).toString()});
 
     if(heartRateMap[this.startTime + counterTime]) {
       avgHeartRate += heartRateMap[this.startTime + counterTime];

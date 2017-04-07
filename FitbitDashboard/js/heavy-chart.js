@@ -1,5 +1,5 @@
 var mainChartOptions = {
-    chart: { type: 'line' },
+    chart: { type: 'spline' },
     title: { text: '' },
     subtitle: { text: '' },
     exporting: { enabled: false },
@@ -23,12 +23,11 @@ var mainChartOptions = {
     },
     tooltip: {
       headerFormat: '<b>{series.name}</b><br>',
-      pointFormat: '{point.y} BPM at {point.x}:00'
+      pointFormat: '{point.y} BPM at {point.x}:00 {point.activity}'
     },
 
     series: [{
-      // data: [ {x: 62519, y:72, activity: 0}, {x: 62521, y:null, activity: 0}, {x: 62521, y:72, activity: 0} ]
-      data: [ [0, 1], [4, 3] ]
+      data: [ {x: 0, y:72, activity: 0}, {x: 5, y:null, activity: 0}, {x: 10, y:72, activity: 0} ]
 }],
     lang: {
         noData: "No data to display"

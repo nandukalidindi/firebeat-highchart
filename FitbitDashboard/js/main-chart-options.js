@@ -1,5 +1,5 @@
 var mainChartOptions = {
-    chart: { type: 'spline' },
+    chart: { type: 'line' },
     title: { text: '' },
     subtitle: { text: '' },
     exporting: { enabled: false },
@@ -26,11 +26,11 @@ var mainChartOptions = {
     },
     tooltip: {
       headerFormat: '<b>{series.name}</b><br>',
-      pointFormat: '{point.y} BPM at {point.x}:00'
+      pointFormat: '{point.y} BPM at {point.x}:00 {point.activity} '
     },
     plotOptions: {
       series: {
-        // lineWidth: 2,
+        turboThreshold: 10000,
         events: {
           click: function(event) {
             var seriesName = this.name;
