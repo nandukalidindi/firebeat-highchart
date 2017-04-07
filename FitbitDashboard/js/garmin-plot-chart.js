@@ -5,6 +5,10 @@ var sortNumericToggle = true;
 var selectAllToggle = true;
 var context = "green";
 
+var localHour = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'UTC' }));
+
+document.getElementById("duration-input").value = localHour;
+
 function data(startTime, endTime) {
   return fullData(startTime, endTime);
 }
@@ -68,14 +72,14 @@ function getFilteredDataOnBpmAndTime(calculateColors = true) {
   // 1490587200
   // 1490673600
   // var currentTime = 1490673600 + (3600 * parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' })));
-  var currentTime = 1490587200 + (3600 * 24);
+  var currentTime = 1490587200 + (3600 * localHour);
   var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
-      from = parseInt(document.getElementById("duration-input").value) || 24;
+      from = parseInt(document.getElementById("duration-input").value) || localHour;
 
   var fromTime = currentTime - (from * 3600);
 
   var filterData = fullData(fromTime, currentTime);
-
+  // debugger;
   if(calculateColors) {
     filterData.forEach(function(series) {
       series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
@@ -130,10 +134,15 @@ function renderChartForData(data, retainSortOptions=false) {
         },
         xAxis: {
             title: { text: '' },
+            gridLineWidth: 1,
+            tickInterval: 9800,
             labels: {
               align: 'left',
               x: 3,
-              y: -3
+              y: -3,
+              formatter: function() {
+                return Math.floor((this.value)%86400/3600);
+              }
             }
         },
         yAxis: {
@@ -161,6 +170,7 @@ function renderChartForData(data, retainSortOptions=false) {
         plotOptions: {
           series: {
             turboThreshold: 10000,
+            lineWidth: 0.75,
           },
             area: {
                 fillColor: {
@@ -188,7 +198,6 @@ function renderChartForData(data, retainSortOptions=false) {
         },
 
         series: [{
-            type: 'area',
             name: series.name,
             data: series.data
         }]

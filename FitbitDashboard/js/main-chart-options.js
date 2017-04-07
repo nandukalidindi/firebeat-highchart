@@ -10,7 +10,7 @@ var mainChartOptions = {
       tickInterval: 3600,
       labels: {
         formatter: function() {
-          return ((this.value)/3600);
+          return Math.floor((this.value)%86400/3600);
         }
       }
     },
@@ -31,6 +31,7 @@ var mainChartOptions = {
     plotOptions: {
       series: {
         turboThreshold: 10000,
+        lineWidth: 0.75,
         events: {
           click: function(event) {
             var seriesName = this.name;

@@ -20,6 +20,13 @@ function fullData(startTime, endTime) {
   nandu.endTime = endTime;
   nandu.fullyProcessedMap();
 
+  var parth = new FireFighter();
+  parth.epochData = prabodhEpoch;
+  parth.dailyData = parthDaily;
+  parth.startTime = startTime;
+  parth.endTime = endTime;
+  parth.fullyProcessedMap();
+
   return [
     {
       name: 'Prabodh',
@@ -54,16 +61,16 @@ function fullData(startTime, endTime) {
       avgBPM: nandu.avgHeartRate,
       data: nandu.plottableData
     },
-    // {
-    //   name: 'Parth',
-    //   gender: 'Male',
-    //   age: 24,
-    //   cell: '(917) 909-552',
-    //   district: 'NJ',
-    //   current_location: 'Brooklyn',
-    //   zone: calculateZone(startTime, endTime) + 2,
-    //   avgBPM: avgHeartRate,
-    //   data: exportableData
-    // }
+    {
+      name: 'Parth',
+      gender: 'Male',
+      age: 24,
+      cell: '(917) 909-552',
+      district: 'NJ',
+      current_location: 'Brooklyn',
+      zone: parth.zone,
+      avgBPM: parth.avgHeartRate,
+      data: parth.plottableData
+    }
   ];
 }

@@ -1,7 +1,7 @@
 function FireFighter() {
   this.name = "";
-  this.startTime = 1490587200;
-  this.endTime = 1490673600;
+  this.startTime = 0;
+  this.endTime = 0;
   this.epochData = [];
   this.dailyData = [];
   this.avgHeartRate = 0;
@@ -68,7 +68,7 @@ function fullyProcessedMap() {
   zoneCounter = 0;
 
   while(counterTime < (this.endTime - this.startTime)) {
-    finalMap.push({x: counterTime, y: heartRateMap[this.startTime + counterTime] || null, activity: (epochMap[this.startTime + 900 * Math.floor((counterTime)/900)] || []).toString()});
+    finalMap.push({x: ((this.startTime + counterTime)), y: heartRateMap[this.startTime + counterTime] || null, activity: (epochMap[this.startTime + 900 * Math.floor((counterTime)/900)] || []).toString()});
 
     if(heartRateMap[this.startTime + counterTime]) {
       avgHeartRate += heartRateMap[this.startTime + counterTime];
@@ -87,6 +87,7 @@ function fullyProcessedMap() {
     }
     counterTime += 15;
   }
+
   this.plottableData = finalMap;
   this.avgHeartRate = Math.floor(avgHeartRate / heartTotal);
   this.zone = zone / zoneCounter;
