@@ -7,10 +7,10 @@ var mainChartOptions = {
     xAxis: {
       title: { text: '' },
       gridLineWidth: 1,
-      tickInterval: 3600/15,
+      tickInterval: 3600,
       labels: {
         formatter: function() {
-          return ((this.value * 15)/3600);
+          return ((this.value)/3600);
         }
       }
     },

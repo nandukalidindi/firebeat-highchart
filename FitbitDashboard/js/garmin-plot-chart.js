@@ -11,6 +11,7 @@ function data(startTime, endTime) {
 
 var typeMap = {red: [], yellow: [], green: []}
 
+finalData = getFilteredDataOnBpmAndTime(false);
 updateTypeMap(false);
 
 var heartList = [document.getElementById('red-heart'), document.getElementById('yellow-heart'), document.getElementById('green-heart')];
@@ -27,7 +28,7 @@ document.getElementById('green-heart').addEventListener('click', truncateData.bi
 
 document.getElementById('green-heart').click();
 
-document.getElementById("heart-rate-input").addEventListener("keyup", null);
+document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnAvgBPM);
 document.getElementById("duration-input").addEventListener("keyup", updateChartOnTime);
 
 document.getElementById("show-all").addEventListener("click", showAll.bind(null, 0));
@@ -43,9 +44,7 @@ document.getElementById('sort-numeric').addEventListener('click', sortNumericall
 
 document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes);
 
-function updateTypeMap(colors = true) {
-  finalData = getFilteredDataOnBpmAndTime(colors);
-
+function updateTypeMap() {
   typeMap = {red: [], yellow: [], green: []};
 
   finalData.forEach(function(series) {
@@ -66,14 +65,16 @@ function updateTypeMap(colors = true) {
 }
 
 function getFilteredDataOnBpmAndTime(calculateColors = true) {
-  var currentTime = 1490673600; //(new Date()).getTime();
+  // 1490587200
+  // 1490673600
+  // var currentTime = 1490673600 + (3600 * parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' })));
+  var currentTime = 1490587200 + (3600 * 24);
   var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
-      from = parseInt(document.getElementById("duration-input").value) || 5,
-      to = 24;
+      from = parseInt(document.getElementById("duration-input").value) || 24;
 
-  var fromTime = 1490587200 + (from * 3600);
+  var fromTime = currentTime - (from * 3600);
 
-  var filterData = data(fromTime, currentTime);
+  var filterData = fullData(fromTime, currentTime);
 
   if(calculateColors) {
     filterData.forEach(function(series) {
@@ -85,6 +86,15 @@ function getFilteredDataOnBpmAndTime(calculateColors = true) {
 }
 
 function updateChartOnTime(event) {
+  finalData = getFilteredDataOnBpmAndTime(true);
+  updateTypeMap(true);
+  truncateData(context, null);
+}
+
+function updateChartOnAvgBPM(event) {
+  finalData = getFilteredDataOnBpmAndTime(true).filter(function(series) {
+    return series.avgBPM > event.target.value;
+  });
   updateTypeMap(true);
   truncateData(context, null);
 }
@@ -267,7 +277,6 @@ function buildUserStatisticDOM(series) {
 }
 
 function truncateData(color, event) {
-  var heartRateInputElement = document.getElementById('heart-rate-input');
   switch (color) {
     case 'red':
       leftPanelData = typeMap.red;
