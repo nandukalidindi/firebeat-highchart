@@ -5,7 +5,7 @@ var sortNumericToggle = true;
 var selectAllToggle = true;
 var context = "green";
 
-var localHour = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'UTC' }));
+var localHour = 24 //parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'UTC' }));
 
 document.getElementById("duration-input").value = localHour;
 

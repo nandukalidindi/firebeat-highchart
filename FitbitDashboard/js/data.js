@@ -27,6 +27,20 @@ function fullData(startTime, endTime) {
   parth.endTime = endTime;
   parth.fullyProcessedMap();
 
+  var ananth = new FireFighter();
+  ananth.epochData = prabodhEpoch;
+  ananth.dailyData = ananthDaily;
+  ananth.startTime = startTime;
+  ananth.endTime = endTime;
+  ananth.fullyProcessedMap();
+
+  var dong = new FireFighter();
+  dong.epochData = prabodhEpoch;
+  dong.dailyData = dongDaily;
+  dong.startTime = startTime;
+  dong.endTime = endTime;
+  dong.fullyProcessedMap();
+
   return [
     {
       name: 'Prabodh',
@@ -71,6 +85,28 @@ function fullData(startTime, endTime) {
       zone: parth.zone,
       avgBPM: parth.avgHeartRate,
       data: parth.plottableData
+    },
+    {
+      name: 'Ananth',
+      gender: 'Male',
+      age: 22,
+      cell: '(917) 909-5521',
+      district: 'Brooklyn',
+      current_location: 'Brooklyn',
+      zone: ananth.zone,
+      avgBPM: ananth.avgHeartRate,
+      data: ananth.plottableData
+    },
+    {
+      name: "Dong",
+      gender: 'Male',
+      age: 23,
+      cell: '(616) 123-456',
+      district: 'Manhattan',
+      current_location: "Brooklyn",
+      zone: dong.zone,
+      avgBPM: dong.avgHeartRate,
+      data: dong.plottableData
     }
   ];
 }
