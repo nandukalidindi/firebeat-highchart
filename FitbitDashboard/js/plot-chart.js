@@ -4,92 +4,23 @@ function data() {
 
 var context = "red";
 
-var redRangeMin = 120,
-    redRangeMax = 200,
+var typeMap = {red: [], yellow: [], green: []}
 
-    yellowRangeMin = 110,
-    yellowRangeMax = 120,
+data().forEach(function(series) {
+  if(series.zone >=6) {
+    typeMap.red.push(series);
+  } else if (series.zone >=4 && series.zone < 6) {
+    typeMap.yellow.push(series);
+  } else if (series.zone < 4) {
+    typeMap.green.push(series);
+  }
+});
 
-    greenRangeMin = 0,
-    greenRangeMax = 110;
-
-var contextData = data();
-var sortAlphabeticToggle = true;
-
-var typeMap = createBPMTypeMap();
 Object.keys(typeMap).forEach(function(type) {
   typeMap[type+'min'] = Math.min.apply(null, typeMap[type]);
   var element = document.getElementById(type + '-heart');
   element.children[1].textContent = typeMap[type].length;
 });
-
-function calculateAverageOnWholeData(data) {
-  var size = data.length,
-      sum = 0;
-  data.forEach(function(entry) {
-    sum += entry[1];
-  });
-
-  return Math.round(sum/size);
-}
-
-function calculateAverage(data, lastHours = 5) {
-  // var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));;
-  var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));
-  var size = data.length,
-      sum = 0,
-      count = 0;
-  if(currentTime < lastHours) {
-    currentTime = lastHours;
-  }
-  data.forEach(function(entry) {
-    if(currentTime - entry[0] >= 0 && currentTime - entry[0] < lastHours) {
-      sum += entry[1];
-      count += 1;
-    }
-  });
-
-  return Math.round(sum/count);
-}
-
-function getFilteredDataOnBpmAndTime(initialData = null, calculateColors = true) {
-  var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));;
-  var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
-      from = parseInt(document.getElementById("duration-input").value) || 5,
-      to = 24;
-
-  if(currentTime < from) {
-    from = 1;
-    to = currentTime;
-  } else {
-    from = currentTime - from;
-    to = currentTime;
-  }
-
-  var filterData = [];
-  var finalData = initialData ? initialData : dataMap[context]
-  finalData.forEach(function(series) {
-    filterData.push(jQuery.extend(true, {}, series));
-  });
-  filterData.forEach(function(series, index) {
-    series.data = series.data.filter(function(data) {
-      return data[0] >= from && data[0] <= to;
-    });
-  });
-
-  if(calculateColors) {
-    filterData = filterData.filter(function(series) {
-      if(calculateAverage(series.data) >= average) {
-        series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
-        return true;
-      } else {
-        return false;
-      }
-    });
-  }
-
-  return filterData;
-}
 
 function updateChartOnHeartRate(event) {
   if(event.target.value >= 200) {
@@ -174,11 +105,11 @@ chart = new Highcharts.Chart('main-chart', mainChartOptions)
 
 const colors = chart.series.map(function(series) { return { color: series.color, name: series.name }; });
 
-const redData = truncateData("red", null);
-const yellowData = truncateData("yellow", null);
-const greenData = truncateData("green", null);
-
-const dataMap = { "red": redData, "yellow": yellowData, "green": greenData };
+// const redData = truncateData("red", null);
+// const yellowData = truncateData("yellow", null);
+// const greenData = truncateData("green", null);
+//
+// const dataMap = { "red": redData, "yellow": yellowData, "green": greenData };
 
 
 document.getElementById("heart-rate-input").addEventListener("keyup", updateChartOnHeartRate);
@@ -195,10 +126,7 @@ function updateList(data){
   $('#list-item-group').html('');
 
   data.forEach(function(item) {
-    var currentTime = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' })),
-        currentBPM = item.data.find(function(entry) { return entry[0] == currentTime; })[1];
-
-    var average = calculateAverage(item.data);
+    var average = item.avgBPM;
     var htmlItem =
     `<div class="" style="display:flex; justify-content:space-between; margin: 10px;">
       <div style="width:15%"><img src="icons/user-icon.png" class="bottom-icon"></div>
@@ -216,7 +144,7 @@ function updateList(data){
             <div>Age: ${item.age}</div>
           </div>
           <div class="bottom-text" style="width: 32%;">
-            <div>Current: ${currentBPM} bpm</div>
+            <div>Current: ${100} bpm</div>
             <div>Rest: ${average - 15} bpm</div>
             <div>Average: ${average} bpm (Last 5 hours) </div>
           </div>
@@ -242,7 +170,7 @@ function updateList(data){
 
 function buildUserStatisticDOM(series) {
   var leftPanelDiv = document.getElementById('left-panel');
-  var avgInt = parseInt(calculateAverage(series.data));
+  var avgInt = series.avgBPM;
 
   var statisticHTML =
   `<div style="height: 140px; margin-top: 20px;">
@@ -443,53 +371,25 @@ function getDataBetween(above, below) {
   });
 }
 
-function createBPMTypeMap() {
-  var dataBPMType = getFilteredDataOnBpmAndTime(data(), false);
-  var typeMap = {red: [], yellow: [], green: []};
-
-  dataBPMType.forEach(function(series) {
-    var average = calculateAverage(series.data);
-    if(average > redRangeMin && average <= redRangeMax) {
-      typeMap.red.push(average);
-    } else if (average > yellowRangeMin && average <= yellowRangeMax) {
-      typeMap.yellow.push(average);
-    } else if (average > greenRangeMin && average <= greenRangeMax) {
-      typeMap.green.push(average);
-    }
-  });
-
-  return typeMap;
-}
-
 var heartList = [document.getElementById('red-heart'), document.getElementById('yellow-heart'), document.getElementById('green-heart')];
 
 function truncateData(color, event) {
   var heartRateInputElement = document.getElementById('heart-rate-input');
   switch (color) {
     case 'red':
-      leftPanelData = getDataBetween(redRangeMin, redRangeMax);
-      heartRateInputElement.value = typeMap['redmin'];
-      heartRateInputElement.min = 10;
-      document.getElementById('average-range').innerText = "( " + redRangeMin + " - " + redRangeMax + " )";
-      context = 'red';
+      leftPanelData = typeMap.red;
       break;
     case 'yellow':
-      leftPanelData = getDataBetween(yellowRangeMin, yellowRangeMax);
-      heartRateInputElement.value = typeMap['yellowmin'];
-      document.getElementById('average-range').innerText = "( " + yellowRangeMin + " - " + yellowRangeMax + " )";
-      context = 'yellow';
+      leftPanelData = typeMap.yellow;
       break;
     case 'green':
-      leftPanelData = getDataBetween(greenRangeMin, greenRangeMax);
-      heartRateInputElement.value = typeMap['greenmin'];
-      context = 'green';
-      document.getElementById('average-range').innerText = "( " + greenRangeMin + " - " + greenRangeMax + " )";
+      leftPanelData = typeMap.green;
       break;
     default:
       leftPanelData = data();
   }
   context = color;
-  showSelected(getFilteredDataOnBpmAndTime(leftPanelData), null, false);
+  showSelected(leftPanelData, null, false);
 
   if(event != null) {
     heartList.forEach(function(element) {
@@ -502,7 +402,7 @@ function truncateData(color, event) {
     });
   }
 
-  renderChartForData(getFilteredDataOnBpmAndTime(leftPanelData));
+  renderChartForData(leftPanelData);
   return leftPanelData;
 }
 document.getElementById('red-heart').addEventListener('click', truncateData.bind(null, 'red'));
@@ -526,7 +426,7 @@ function resetAll() {
     document.getElementById('sort-numeric').children[0].src = "icons/sort-numeric-ascending.png";
 }
 
-document.getElementById('red-heart').click();
+document.getElementById('green-heart').click();
 
 function changedEvent(event) {
   var toBeDisabled = true;

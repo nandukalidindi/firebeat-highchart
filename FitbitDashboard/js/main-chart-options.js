@@ -1,20 +1,19 @@
 var mainChartOptions = {
-    chart: { type: 'spline' },
+    chart: { type: 'line' },
     title: { text: '' },
     subtitle: { text: '' },
     exporting: { enabled: false },
     credits: { enabled: false },
-    xAxis: [
-      {
-        title: { text: '' },
-        gridLineWidth: 1,
-        tickInterval: 1
-      },
-      {
-        className: "highcharts-color-1",
-        opposite: true,
+    xAxis: {
+      title: { text: '' },
+      gridLineWidth: 1,
+      tickInterval: 3600,
+      labels: {
+        formatter: function() {
+          return Math.floor((this.value)%86400/3600);
+        }
       }
-    ],
+    },
     legend: {
         enabled: false
     },
@@ -27,11 +26,12 @@ var mainChartOptions = {
     },
     tooltip: {
       headerFormat: '<b>{series.name}</b><br>',
-      pointFormat: '{point.y} BPM at {point.x}:00'
+      pointFormat: '{point.y} BPM at {point.x}:00 {point.activity} '
     },
     plotOptions: {
       series: {
-        // lineWidth: 2,
+        turboThreshold: 10000,
+        lineWidth: 0.75,
         events: {
           click: function(event) {
             var seriesName = this.name;
