@@ -26,7 +26,7 @@ var mainChartOptions = {
     },
     tooltip: {
       headerFormat: '<b>{series.name}</b><br>',
-      pointFormat: '{point.y} BPM at {point.x}:00 {point.activity} '
+      pointFormat: '{point.y} BPM at {point.displyableX} {point.activity} '
     },
     plotOptions: {
       series: {
