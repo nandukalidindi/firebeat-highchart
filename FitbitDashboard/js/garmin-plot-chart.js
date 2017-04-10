@@ -5,7 +5,7 @@ var sortNumericToggle = true;
 var selectAllToggle = true;
 var context = "green";
 
-var localHour = 24 //parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'UTC' }));
+var localHour = 5 //parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'UTC' }));
 
 document.getElementById("duration-input").value = localHour;
 
@@ -71,10 +71,11 @@ function updateTypeMap() {
 function getFilteredDataOnBpmAndTime(calculateColors = true) {
   // 1490587200
   // 1490673600
+  var localHour = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));
   // var currentTime = 1490673600 + (3600 * parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' })));
   var currentTime = 1490587200 + (3600 * localHour);
   var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
-      from = parseInt(document.getElementById("duration-input").value) || localHour;
+      from = parseInt(document.getElementById("duration-input").value) || 5;
 
   var fromTime = currentTime - (from * 3600);
 
