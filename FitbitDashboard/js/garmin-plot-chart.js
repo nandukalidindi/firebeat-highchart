@@ -1,4 +1,5 @@
 var finalData = [];
+var ghostData = [];
 var leftPanelData = [];
 var sortAlphabeticToggle = true;
 var sortNumericToggle = true;
@@ -49,15 +50,18 @@ document.getElementById('sort-numeric').addEventListener('click', sortNumericall
 document.getElementById('select-all').addEventListener('click', selectDeselectAllAvaiableCheckboxes);
 
 function updateTypeMap() {
+  ghostData = [];
   typeMap = {red: [], yellow: [], green: []};
 
   finalData.forEach(function(series) {
-    if(series.zone >=4) {
+    if(series.zone >=6) {
       typeMap.red.push(series);
-    } else if (series.zone >=3 && series.zone < 4) {
+    } else if (series.zone >=4 && series.zone < 6) {
       typeMap.yellow.push(series);
-    } else if (series.zone < 3) {
+    } else if (series.zone < 4) {
       typeMap.green.push(series);
+    } else if (isNaN(series.zone)) {
+      ghostData.push(series);
     }
   });
 
@@ -66,6 +70,8 @@ function updateTypeMap() {
     var element = document.getElementById(type + '-heart');
     element.children[1].textContent = typeMap[type].length;
   });
+
+  updateGhostList(ghostData);
 }
 
 function getFilteredDataOnBpmAndTime(calculateColors = true) {
@@ -214,6 +220,40 @@ function renderChartForData(data, retainSortOptions=false) {
 
     subChart = new Highcharts.Chart(container, subChartOptions);
   });
+}
+
+function updateGhostList(data){
+  $('#modal-list-item').html('');
+
+  ghostData.forEach(function(item) {
+    var htmlItem =
+    `<div class="" style="display:flex; justify-content:space-between; margin: 10px;">
+      <div style="width:25%"><img src="icons/user-icon.png" class="bottom-icon"></div>
+
+      <div class="bottom-details">
+        <div>
+          <div class="bottom-text-name detail-separation">${item.name}</div>
+          <div id=${item.name}online class="detail-separation" data-toggle="tooltip" data-placement="right" title="On duty">
+            <img src="icons/online-icon.png" width="8">
+          </div>
+        </div>
+        <div class="bottom-sub-details">
+          <div class="bottom-text" style="width: 30%;">
+            <div>${item.gender}</div>
+            <div>Age: ${item.age}</div>
+          </div>
+          <div class="bottom-text" style="width: 60%;">
+            <div>Cell: ${item.cell} </div>
+            <div>District: ${item.district} </div>
+            <div>Current Location: ${item.current_location} </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+    $('#modal-list-item').append(htmlItem);
+  });
+
 }
 
 function updateList(data){

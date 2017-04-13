@@ -154,6 +154,29 @@
                 <button type="button" style="border: none;" class="btn btn-default" id="sort-numeric">
                   <img src="icons/sort-numeric-ascending.png">
                 </button>
+
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">GHOSTS</button>
+
+              <!-- Modal -->
+              <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Listed users are most likely not wearing the Garmin™ device for the selected timeframe. Please increase the duration.</h4>
+                    </div>
+                    <div id="modal-list-item" class="modal-body">
+                      <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
              </div>
 
              <div id="left-panel" style="overflow-y:scroll;height:auto;">
