@@ -1,17 +1,17 @@
 function fullData(startTime, endTime, dailyData, epochData) {
+  var sunil = new FireFighter();
+  sunil.epochData = epochData[0];
+  sunil.dailyData = dailyData[0];
+  sunil.startTime = startTime;
+  sunil.endTime = endTime;
+  sunil.fullyProcessedMap();
+
   var prabodh = new FireFighter();
-  prabodh.epochData = epochData[0];
-  prabodh.dailyData = dailyData[0];
+  prabodh.epochData = epochData[1];
+  prabodh.dailyData = dailyData[1];
   prabodh.startTime = startTime;
   prabodh.endTime = endTime;
   prabodh.fullyProcessedMap();
-
-  var waqid = new FireFighter();
-  waqid.epochData = epochData[1];
-  waqid.dailyData = dailyData[1];
-  waqid.startTime = startTime;
-  waqid.endTime = endTime;
-  waqid.fullyProcessedMap();
 
   var nandu = new FireFighter();
   nandu.epochData = epochData[2];
@@ -19,29 +19,29 @@ function fullData(startTime, endTime, dailyData, epochData) {
   nandu.startTime = startTime;
   nandu.endTime = endTime;
   nandu.fullyProcessedMap();
-  
+
   return [
     {
-      name: 'Prabodh',
+      name: 'Sunil',
       gender: 'Male',
       age: 23,
       cell: '(917) 123-456',
       district: 'Brooklyn',
       current_location: 'Abu Dhabi',
       zone: 2,
-      avgBPM: prabodh.avgHeartRate,
-      data: prabodh.plottableData
+      avgBPM: sunil.avgHeartRate,
+      data: sunil.plottableData
     },
     {
-      name: 'Waqid',
+      name: 'Prabodh',
       gender: 'Male',
       age: 26,
       cell: '(917) 123-456',
       district: 'Bronx',
       current_location: 'NJ',
       zone: 2,
-      avgBPM: waqid.avgHeartRate,
-      data: waqid.plottableData
+      avgBPM: prabodh.avgHeartRate,
+      data: prabodh.plottableData
     },
     {
       name: 'Nandu',
@@ -59,43 +59,43 @@ function fullData(startTime, endTime, dailyData, epochData) {
 
 
 // function fullData(startTime, endTime) {
+//   var sunil = new FireFighter();
+//   sunil.epochData = sunilEpoch;
+//   sunil.dailyData = sunilDaily;
+//   sunil.startTime = startTime;
+//   sunil.endTime = endTime;
+//   sunil.fullyProcessedMap();
+//
 //   var prabodh = new FireFighter();
-//   prabodh.epochData = prabodhEpoch;
+//   prabodh.epochData = sunilEpoch;
 //   prabodh.dailyData = prabodhDaily;
 //   prabodh.startTime = startTime;
 //   prabodh.endTime = endTime;
 //   prabodh.fullyProcessedMap();
 //
-//   var waqid = new FireFighter();
-//   waqid.epochData = prabodhEpoch;
-//   waqid.dailyData = waqidDaily;
-//   waqid.startTime = startTime;
-//   waqid.endTime = endTime;
-//   waqid.fullyProcessedMap();
-//
 //   var nandu = new FireFighter();
-//   nandu.epochData = prabodhEpoch;
+//   nandu.epochData = sunilEpoch;
 //   nandu.dailyData = nanduDaily;
 //   nandu.startTime = startTime;
 //   nandu.endTime = endTime;
 //   nandu.fullyProcessedMap();
 //
 //   var parth = new FireFighter();
-//   parth.epochData = prabodhEpoch;
+//   parth.epochData = sunilEpoch;
 //   parth.dailyData = parthDaily;
 //   parth.startTime = startTime;
 //   parth.endTime = endTime;
 //   parth.fullyProcessedMap();
 //
 //   var ananth = new FireFighter();
-//   ananth.epochData = prabodhEpoch;
+//   ananth.epochData = sunilEpoch;
 //   ananth.dailyData = ananthDaily;
 //   ananth.startTime = startTime;
 //   ananth.endTime = endTime;
 //   ananth.fullyProcessedMap();
 //
 //   var dong = new FireFighter();
-//   dong.epochData = prabodhEpoch;
+//   dong.epochData = sunilEpoch;
 //   dong.dailyData = dongDaily;
 //   dong.startTime = startTime;
 //   dong.endTime = endTime;
@@ -103,26 +103,26 @@ function fullData(startTime, endTime, dailyData, epochData) {
 //
 //   return [
 //     {
-//       name: 'Prabodh',
+//       name: 'sunil',
 //       gender: 'Male',
 //       age: 23,
 //       cell: '(917) 123-456',
 //       district: 'Brooklyn',
 //       current_location: 'Abu Dhabi',
-//       zone: prabodh.zone,
-//       avgBPM: prabodh.avgHeartRate,
-//       data: prabodh.plottableData
+//       zone: sunil.zone,
+//       avgBPM: sunil.avgHeartRate,
+//       data: sunil.plottableData
 //     },
 //     {
-//       name: 'Waqid',
+//       name: 'prabodh',
 //       gender: 'Male',
 //       age: 26,
 //       cell: '(917) 123-456',
 //       district: 'Bronx',
 //       current_location: 'NJ',
-//       zone: waqid.zone,
-//       avgBPM: waqid.avgHeartRate,
-//       data: waqid.plottableData
+//       zone: prabodh.zone,
+//       avgBPM: prabodh.avgHeartRate,
+//       data: prabodh.plottableData
 //     },
 //     {
 //       name: 'Nandu',

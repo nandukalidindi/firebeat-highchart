@@ -1,8 +1,29 @@
-var epochsPromise = fetch("http://localhost:3000/epochs?uat=0f56f523-d22b-48e4-ab25-7ef622be19ec&uat_secret=tClYVRYKWr1K5J17g36S97lDT3gcQOrbmRt&startTime=1522036800&endTime=1522122800&type=dailies").then(res => res.json())
+var currentTime = (new Date());
 
-var dailiesPromise = fetch("http://localhost:3000/dailies?uat=0f56f523-d22b-48e4-ab25-7ef622be19ec&uat_secret=tClYVRYKWr1K5J17g36S97lDT3gcQOrbmRt&startTime=1522036800&endTime=1522122800&type=dailies").then(res => res.json())
+var endTimestamp = Math.floor(currentTime.getTime() / 1000);
 
-Promise.all([epochsPromise, dailiesPromise]).then(response => {
+var startTimestamp = Math.floor((endTimestamp - (3600 * 23)))
+
+startTimestamp = (startTimestamp - (startTimestamp % 15));
+
+const buildPromises = (startTimestamp, endTimestamp) => {
+  var akritiTokens = {"token": "c613b557-d0bd-498d-8145-8b77e1951c47", "secret": "CdCg9gY2ovwwdDj2jsYRpI1pzGFD1FQ9rPX"},
+      prabodhTokens = {"token": "30fd0f49-367e-45fc-aa8d-d8758f4b1545", "secret": "uCb3w0xnTQ676mMffEMViyGyOTjUCFRunwB"},
+      nanduTokens = {"token": "37d361f3-3fbb-4339-982c-7dd0f3a59c9a", "secret": "YnPJkfJ7gF4aaJY2X2OL3Cf1hhalCrqZVDr"};
+
+
+  var promises = [];
+  [akritiTokens, prabodhTokens, nanduTokens].forEach(tokens => {
+    promises.push(fetch(`http://firebeats-api.mt3ma2wmck.us-east-1.elasticbeanstalk.com/epochs?uat=${tokens.token}&uat_secret=${tokens.secret}&startTime=${startTimestamp}&endTime=${endTimestamp}&type=epochs`).then(res => res.json()))
+    promises.push(fetch(`http://firebeats-api.mt3ma2wmck.us-east-1.elasticbeanstalk.com/dailies?uat=${tokens.token}&uat_secret=${tokens.secret}&startTime=${startTimestamp}&endTime=${endTimestamp}&type=dailies`).then(res => res.json()))
+  })
+
+  return promises;
+}
+
+
+
+Promise.all(buildPromises(startTimestamp, endTimestamp)).then(response => {
   var finalData = [];
   var ghostData = [];
   var leftPanelData = [];
@@ -88,13 +109,10 @@ Promise.all([epochsPromise, dailiesPromise]).then(response => {
     var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
         from = parseInt(document.getElementById("duration-input").value) || 5;
 
-    var fromTime = currentTime - (from * 3600);
+    var fromTime = endTimestamp - (from * 3600);
 
-    var filterData = fullData(1522036800, 1522122800, [response[1], response[1], response[1]], [response[0], response[0], response[0]]);
+    var filterData = fullData(startTimestamp, fromTime, [response[1], response[3], response[5]], [response[0], response[2], response[4]]);
 
-    // var filterData = fullData(fromTime, currentTime);
-
-    // debugger;
     if(calculateColors) {
       filterData.forEach(function(series) {
         series.color = colors.find(function(chartSeries) { return chartSeries.name === series.name }).color;
