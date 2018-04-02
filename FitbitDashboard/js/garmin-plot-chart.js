@@ -4,6 +4,8 @@ var endTimestamp = Math.floor(currentTime.getTime() / 1000);
 
 var startTimestamp = Math.floor((endTimestamp - (3600 * 23)))
 
+endTimestamp = (endTimestamp - (endTimestamp % 15));
+
 startTimestamp = (startTimestamp - (startTimestamp % 15));
 
 const buildPromises = (startTimestamp, endTimestamp) => {
@@ -111,7 +113,7 @@ Promise.all(buildPromises(startTimestamp, endTimestamp)).then(response => {
 
     var fromTime = endTimestamp - (from * 3600);
 
-    var filterData = fullData(startTimestamp, fromTime, [response[1], response[3], response[5]], [response[0], response[2], response[4]]);
+    var filterData = fullData(fromTime, endTimestamp, [response[1], response[3], response[5]], [response[0], response[2], response[4]]);
 
     if(calculateColors) {
       filterData.forEach(function(series) {

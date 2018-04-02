@@ -28,7 +28,7 @@ function fullData(startTime, endTime, dailyData, epochData) {
       cell: '(917) 123-456',
       district: 'Brooklyn',
       current_location: 'Abu Dhabi',
-      zone: 2,
+      zone: sunil.zone || 2,
       avgBPM: sunil.avgHeartRate,
       data: sunil.plottableData
     },
@@ -39,7 +39,7 @@ function fullData(startTime, endTime, dailyData, epochData) {
       cell: '(917) 123-456',
       district: 'Bronx',
       current_location: 'NJ',
-      zone: 2,
+      zone: prabodh.zone || 2,
       avgBPM: prabodh.avgHeartRate,
       data: prabodh.plottableData
     },
@@ -50,7 +50,7 @@ function fullData(startTime, endTime, dailyData, epochData) {
       cell: '(718) 679-7382',
       district: 'Bayridge',
       current_location: 'NY',
-      zone: 2,
+      zone: nandu.zone || 2,
       avgBPM: nandu.avgHeartRate,
       data: nandu.plottableData
     }

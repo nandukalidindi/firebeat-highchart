@@ -68,18 +68,19 @@ function fullyProcessedMap() {
   zoneCounter = 0;
 
   while(counterTime < (this.endTime - this.startTime)) {
-    var displyableX = ((this.startTime + counterTime)%86400/3600).toFixed(2)
+    var edtOffset = (-4 * 3600);
+    var displyableX = ((this.startTime + counterTime + edtOffset)%86400/3600).toFixed(2)
     displyableX = Math.floor(displyableX).toString() + ":" + (Math.floor((displyableX - Math.floor(displyableX))*(60))).toString();
-    finalMap.push({x: ((this.startTime + counterTime)), displyableX: displyableX, y: heartRateMap[this.startTime + counterTime] || null, activity: (epochMap[this.startTime + 900 * Math.floor((counterTime)/900)] || []).toString()});
+    finalMap.push({x: ((this.startTime + counterTime + edtOffset)), displyableX: displyableX, y: heartRateMap[this.startTime + counterTime] || null, activity: (epochMap[(this.startTime - (this.startTime % 900)) + 900 * Math.floor((counterTime)/900)] || []).toString()});
 
     if(heartRateMap[this.startTime + counterTime]) {
       avgHeartRate += heartRateMap[this.startTime + counterTime];
       heartTotal += 1;
 
-      if(epochMap[this.startTime + 900 * Math.floor((counterTime)/900)]) {
+      if(epochMap[(this.startTime - (this.startTime % 900)) + 900 * Math.floor((counterTime)/900)]) {
         var fifteenActivity = 0
             count = 0;
-        epochMap[this.startTime + 900 * Math.floor((counterTime)/900)].forEach(function(activity) {
+        epochMap[(this.startTime - (this.startTime % 900)) + 900 * Math.floor((counterTime)/900)].forEach(function(activity) {
           fifteenActivity += zoneHash[activity];
           count += 1;
         });
