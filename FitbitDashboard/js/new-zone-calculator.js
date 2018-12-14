@@ -29,24 +29,24 @@ function heartRateZone(heartRate) {
   }
 }
 
-function consolidateDailySummaries() {
+function consolidateDailySummaries(offset) {
   heartRateOffsets = {}
   this.dailyData.forEach(function(summary) {
     Object.keys(summary["timeOffsetHeartRateSamples"]).forEach(function(timeOffset) {
-      heartRateOffsets[summary["startTimeInSeconds"] + ( 15 * Math.floor(parseInt(timeOffset)/15))] = summary["timeOffsetHeartRateSamples"][timeOffset];
+      heartRateOffsets[summary["startTimeInSeconds"] + ( 15 * Math.floor(parseInt(timeOffset)/15)) + (offset || 0)] = summary["timeOffsetHeartRateSamples"][timeOffset];
     });
   });
   return heartRateOffsets;
 }
 
-function epochSummariesMap() {
+function epochSummariesMap(offset) {
   epochMap = {};
   this.epochData.forEach(function(summary) {
     if(summary["activeTimeInSeconds"] === 900) {
-      epochMap[summary["startTimeInSeconds"]] = [summary["intensity"]]
+      epochMap[summary["startTimeInSeconds"] + (offset || 0)] = [summary["intensity"]]
     } else {
-      epochMap[summary["startTimeInSeconds"]] = this.epochData.filter(function(filterSummary) {
-        return filterSummary["startTimeInSeconds"] === summary["startTimeInSeconds"];
+      epochMap[summary["startTimeInSeconds"] + (offset || 0)] = this.epochData.filter(function(filterSummary) {
+        return filterSummary["startTimeInSeconds"] + (offset || 0) === summary["startTimeInSeconds"];
       }).map(function(selectSummary) {
         return selectSummary["intensity"];
       });
@@ -55,9 +55,9 @@ function epochSummariesMap() {
   return epochMap;
 }
 
-function fullyProcessedMap() {
-  epochMap = this.epochSummariesMap();
-  heartRateMap = this.consolidateDailySummaries();
+function fullyProcessedMap(offset) {
+  epochMap = this.epochSummariesMap(offset);
+  heartRateMap = this.consolidateDailySummaries(offset);
   finalMap = [];
   zoneMap = [];
 
@@ -68,7 +68,7 @@ function fullyProcessedMap() {
   zoneCounter = 0;
 
   while(counterTime < (this.endTime - this.startTime)) {
-    var edtOffset = (-4 * 3600);
+    var edtOffset = (4 * 3600);
     var displyableX = ((this.startTime + counterTime + edtOffset)%86400/3600).toFixed(2)
     displyableX = Math.floor(displyableX).toString() + ":" + (Math.floor((displyableX - Math.floor(displyableX))*(60))).toString();
     finalMap.push({x: ((this.startTime + counterTime + edtOffset)), displyableX: displyableX, y: heartRateMap[this.startTime + counterTime] || null, activity: (epochMap[(this.startTime - (this.startTime % 900)) + 900 * Math.floor((counterTime)/900)] || []).toString()});

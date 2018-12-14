@@ -4,21 +4,21 @@ function fullData(startTime, endTime, dailyData, epochData) {
   sunil.dailyData = dailyData[0];
   sunil.startTime = startTime;
   sunil.endTime = endTime;
-  sunil.fullyProcessedMap();
+  sunil.fullyProcessedMap(9*3600);
 
   var prabodh = new FireFighter();
   prabodh.epochData = epochData[1];
   prabodh.dailyData = dailyData[1];
   prabodh.startTime = startTime;
   prabodh.endTime = endTime;
-  prabodh.fullyProcessedMap();
+  prabodh.fullyProcessedMap(10*3600);
 
   var nandu = new FireFighter();
   nandu.epochData = epochData[2];
   nandu.dailyData = dailyData[2];
   nandu.startTime = startTime;
   nandu.endTime = endTime;
-  nandu.fullyProcessedMap();
+  nandu.fullyProcessedMap(9*3600);
 
   return [
     {

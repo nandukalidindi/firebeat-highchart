@@ -2,9 +2,9 @@ var currentTime = (new Date());
 
 var endTimestamp = Math.floor(currentTime.getTime() / 1000);
 
-var startTimestamp = Math.floor((endTimestamp - (3600 * 23)))
+var startTimestamp = Math.floor((endTimestamp - (3600 * 167)))
 
-endTimestamp = (endTimestamp - (endTimestamp % 15));
+endTimestamp = (endTimestamp - (endTimestamp % 15)) - (3600 * 144);
 
 startTimestamp = (startTimestamp - (startTimestamp % 15));
 
@@ -36,7 +36,7 @@ Promise.all(buildPromises(startTimestamp, endTimestamp)).then(response => {
 
   var localHour = 5 //parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'UTC' }));
 
-  document.getElementById("duration-input").value = localHour;
+  document.getElementById("duration-input").value = 5;
 
   // function data(startTime, endTime) {
   //   return fullData(startTime, endTime);
