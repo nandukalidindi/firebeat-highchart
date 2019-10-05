@@ -1,24 +1,19 @@
 var currentTime = (new Date());
 
-var endTimestamp = Math.floor(currentTime.getTime() / 1000);
+var timeZoneOffset = (currentTime.getTimezoneOffset() * 60);
 
-var startTimestamp = Math.floor((endTimestamp - (3600 * 167)))
+var endTimestamp = Math.floor(currentTime.getTime() / 1000) - timeZoneOffset;
 
-endTimestamp = (endTimestamp - (endTimestamp % 15)) - (3600 * 144);
+var startTimestamp = Math.floor((endTimestamp - (3600 * 23)))
+
+endTimestamp = (endTimestamp - (endTimestamp % 15))// - (3600 * 144);
 
 startTimestamp = (startTimestamp - (startTimestamp % 15));
 
 const buildPromises = (startTimestamp, endTimestamp) => {
-  var akritiTokens = {"token": "c613b557-d0bd-498d-8145-8b77e1951c47", "secret": "CdCg9gY2ovwwdDj2jsYRpI1pzGFD1FQ9rPX"},
-      prabodhTokens = {"token": "30fd0f49-367e-45fc-aa8d-d8758f4b1545", "secret": "uCb3w0xnTQ676mMffEMViyGyOTjUCFRunwB"},
-      nanduTokens = {"token": "37d361f3-3fbb-4339-982c-7dd0f3a59c9a", "secret": "YnPJkfJ7gF4aaJY2X2OL3Cf1hhalCrqZVDr"};
-
-
   var promises = [];
-  [akritiTokens, prabodhTokens, nanduTokens].forEach(tokens => {
-    promises.push(fetch(`http://firebeats-api.mt3ma2wmck.us-east-1.elasticbeanstalk.com/epochs?uat=${tokens.token}&uat_secret=${tokens.secret}&startTime=${startTimestamp}&endTime=${endTimestamp}&type=epochs`).then(res => res.json()))
-    promises.push(fetch(`http://firebeats-api.mt3ma2wmck.us-east-1.elasticbeanstalk.com/dailies?uat=${tokens.token}&uat_secret=${tokens.secret}&startTime=${startTimestamp}&endTime=${endTimestamp}&type=dailies`).then(res => res.json()))
-  })
+  
+  promises.push(fetch('https://firebeats.engineering.nyu.edu/data/heartRatewithActivity/user1').then(res => res.json()))
 
   return promises;
 }
@@ -105,15 +100,32 @@ Promise.all(buildPromises(startTimestamp, endTimestamp)).then(response => {
   function getFilteredDataOnBpmAndTime(calculateColors = true) {
     // 1490587200
     // 1490673600
+    // 1570307029118
     var localHour = parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' }));
     // var currentTime = 1490673600 + (3600 * parseInt((new Date()).toLocaleString('en-EN', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Dubai' })));
-    var currentTime = 1490587200 + (3600 * localHour);
+    // var currentTime = 1490587200 + (3600 * localHour);
     var average = parseInt(document.getElementById('heart-rate-input').value) || 0,
         from = parseInt(document.getElementById("duration-input").value) || 5;
 
     var fromTime = endTimestamp - (from * 3600);
 
-    var filterData = fullData(fromTime, endTimestamp, [response[1], response[3], response[5]], [response[0], response[2], response[4]]);
+    // var filterData = fullData(fromTime, endTimestamp, [response[1], response[3], response[5]], [response[0], response[2], response[4]]);
+
+    var filterData = [{
+      name: 'Anon',
+      gender: 'Male',
+      age: 23,
+      cell: '123456789',
+      district: 'Brooklyn',
+      current_location: 'Mars',
+      zone: 8,
+      avgBPM: 150,
+      data: response[0].heartRateWithActivity.map((entry, index) => ({
+        x: fromTime + (15 * index),
+        y: entry.heartRate,
+        activity: entry.activity
+      })).filter(entry => entry.x < endTimestamp)
+    }]
 
     if(calculateColors) {
       filterData.forEach(function(series) {
